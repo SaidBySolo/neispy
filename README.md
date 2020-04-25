@@ -2,6 +2,8 @@
 
 **현재 급식,학교정보만 가져올수있습니다.**
 
+[Discord.py](https://github.com/Rapptz/discord.py)와 쉽게 연동하여 사용하실수있습니다.
+
 Api키는 [이곳](https://open.neis.go.kr/)여기서 받으실수있습니다.
 
 ## 설치 방법
