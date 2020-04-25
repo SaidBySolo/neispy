@@ -4,6 +4,12 @@
 
 Api키는 [이곳](https://open.neis.go.kr/)여기서 받으실수있습니다.
 
+## 설치 방법
+
+```sh
+pip install neispy
+```
+
 ## Example
 
 ```py

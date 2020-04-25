@@ -1,5 +1,4 @@
 import aiohttp
-import json
 import datetime
 
 n = datetime.datetime.now()

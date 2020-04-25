@@ -1,5 +1,4 @@
 import aiohttp
-import json
 
 apimain = "https://open.neis.go.kr/hub/schoolInfo" 
         
