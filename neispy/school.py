@@ -1,8 +1,8 @@
 import aiohttp
 
-apimain = "https://open.neis.go.kr/hub/schoolInfo" 
+apimain = "https://open.neis.go.kr/hub/schoolInfo"
         
-async def schoolinfo(param, SD_SCHUL_CODE=None, SCHUL_NM=None, 
+async def schoolinfo(param, SD_SCHUL_CODE=None, SCHUL_NM=None,
 SCHUL_KND_SC_NM=None, LCTN_SC_NM=None, FOND_SC_NM=None):
     """
     ``param``은 필수인자값입니다.
@@ -47,4 +47,3 @@ SCHUL_KND_SC_NM=None, LCTN_SC_NM=None, FOND_SC_NM=None):
         async with cs.get(totalparam) as r:
             response = await r.text()
             return response
-            

@@ -6,8 +6,8 @@ now = f'{n.year}{n.month}{n.day}'
 
 apimain = 'https://open.neis.go.kr/hub/SchoolSchedule'
 
-async def schoolshd(param, ATPT_OFCDC_SC_CODE=None, SD_SCHUL_CODE=None, 
-DGHT_CRSE_SC_NM=None, SCHUL_CRSE_SC_NM=None, 
+async def schoolshd(param, ATPT_OFCDC_SC_CODE=None, SD_SCHUL_CODE=None,
+DGHT_CRSE_SC_NM=None, SCHUL_CRSE_SC_NM=None,
 AA_YMD=now, AA_FROM_YMD=None, AA_TO_YMD=None):
     """
     ``param``은 필수인자입니다.

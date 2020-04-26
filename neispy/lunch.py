@@ -6,7 +6,7 @@ now = f'{n.year}{n.month}{n.day}'
 
 apimain = "https://open.neis.go.kr/hub/mealServiceDietInfo" #오픈 api요청주소
 
-async def lunchinfo(param, ATPT_OFCDC_SC_CODE=None, SD_SCHUL_CODE=None, 
+async def lunchinfo(param, ATPT_OFCDC_SC_CODE=None, SD_SCHUL_CODE=None,
 MMEAL_SC_CODE=None, MLSV_YMD=now, MLSV_FROM_YMD=None, MLSV_TO_YMD=None) :
     """
     ``param``은 필수인자입니다.
@@ -55,4 +55,3 @@ MMEAL_SC_CODE=None, MLSV_YMD=now, MLSV_FROM_YMD=None, MLSV_TO_YMD=None) :
         async with cs.get(totalparam) as r:
             response = await r.text()
             return response
-
