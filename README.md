@@ -18,14 +18,14 @@ pip install neispy
 import asyncio
 from neispy import lunch, school, sort
 
-key = "Api key paste here"
+key = "API key paste here"
 name="인천기계공업고등학교"
 
 async def main():
     param = await sort.sort_reqarg(key)
-    scinfo = await school.schoolinfo(param, name)
+    scinfo = await school.schoolinfo(param, SCHUL_NM=name)
     AE, SE = await sort.sort_schoolcode(scinfo)
-    lunchinfo = await lunch.lunchinfo(param, AE, SE, 20190102)
+    lunchinfo = await lunch.lunchinfo(param, AE, SE, MLSV_YMD=20190102)
     lunchmenu = await sort.sort_lunchmenu(lunchinfo)
     print(lunchmenu)
 
