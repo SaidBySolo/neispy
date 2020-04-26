@@ -27,8 +27,9 @@ MMEAL_SC_CODE=None, MLSV_YMD=now, MLSV_FROM_YMD=None, MLSV_TO_YMD=None) :
 
     요청한 값은 ``str``로 반환됩니다.
     """
-    paramlist = []
     
+    paramlist = []
+
     if ATPT_OFCDC_SC_CODE is not None:
         AOSC = f'&ATPT_OFCDC_SC_CODE={ATPT_OFCDC_SC_CODE}'
         paramlist.append(AOSC)

@@ -16,7 +16,7 @@ pip install neispy
 
 ```py
 import asyncio
-from neispy import lunch, school, sort
+from neispy import lunch, school, schedule, sort
 
 key = "API key paste here"
 name="인천기계공업고등학교"
@@ -27,12 +27,16 @@ async def main():
     AE, SE = await sort.sort_schoolcode(scinfo)
     lunchinfo = await lunch.lunchinfo(param, AE, SE, MLSV_YMD=20190102)
     lunchmenu = await sort.sort_lunchmenu(lunchinfo)
+    scd = await schedule.schoolshd(param, AE, SE, AA_YMD=20190408)
+    eventname = await sort.sort_scdname(scd)
+    print(eventname)
     print(lunchmenu)
 
 loop = asyncio.get_event_loop()
 loop.run_until_complete(main())
 
 #실행 결과
+지방기능경기대회
 비빔밥(고)5.13.
 계란북어국(고)1.5.6.13.
 해시브라운/케찹(고)1.2.12.
