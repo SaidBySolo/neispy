@@ -1,6 +1,8 @@
 # neispy
 
-**현재 급식,학교 정보,학사 일정만 가져올수있습니다.**
+**현재 급식,학교 정보,학사 일정만 가져올수있습니다.**  
+
+![PyPI - Downloads](https://img.shields.io/pypi/dm/neispy)
 
 [Discord.py](https://github.com/Rapptz/discord.py)와 쉽게 연동하여 사용하실수있습니다.
 
