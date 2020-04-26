@@ -2,6 +2,7 @@
 
 **현재 급식,학교 정보,학사 일정만 가져올수있습니다.**  
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/26f53a7e434c4f079415ab23cb51700d)](https://www.codacy.com/manual/SaidBySolo/neispy?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=SaidBySolo/neispy&amp;utm_campaign=Badge_Grade)
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/neispy)
 
 [Discord.py](https://github.com/Rapptz/discord.py)와 쉽게 연동하여 사용하실수있습니다.
