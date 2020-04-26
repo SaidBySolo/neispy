@@ -1,4 +1,4 @@
-# open-neis-api-python
+# neispy
 
 **현재 급식,학교정보만 가져올수있습니다.**
 
