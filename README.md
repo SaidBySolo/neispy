@@ -56,6 +56,10 @@ loop.run_until_complete(main())
 
 ## Patch note
 
+### 0.2.1
+
+* 학사일정 추가
+
 ### 0.2.0
 
 * 학교정보,급식일정 모든 인자값 받을수있음.
