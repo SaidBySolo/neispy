@@ -49,3 +49,15 @@ loop.run_until_complete(main())
 |Type|STRING(필수)|호출 문서(xml, json)|기본값 : xml|
 |pIndex|INTEGER(필수)|페이지 위치|기본값 : 1(sample key는 1 고정)|
 |pSize|INTEGER(필수)|페이지 당 신청 숫자|기본값 : 100(sample key는 5 고정)|
+
+## Patch note
+
+### 0.2.0
+* 학교정보,급식일정 모든 인자값 받을수있음.
+
+### 0.1.1
+* 사용하지 않는 모듈 제거,사용하기쉽도록 함수이름 변경
+
+### 0.1.0
+* 첫 배포 시작
+
