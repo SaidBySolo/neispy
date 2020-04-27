@@ -28,12 +28,12 @@ import asyncio
 from neispy import lunch, school, schedule, sort
 
 #api키 없을시 샘플키로 요청함
-#사용을 제대로하시려면 api를 넣어주세요
+#사용을 제대로하시려면 api키를 넣어주세요
 
 name="인천기계공업고등학교"
 
 async def main():
-    param = await sort.sort_reqarg(key)
+    param = await sort.sort_reqarg()
     scinfo = await school.schoolinfo(param, SCHUL_NM=name)
     AE, SE = await sort.sort_schoolcode(scinfo)
     lunchinfo = await lunch.lunchinfo(param, AE, SE, MLSV_YMD=20190102)
