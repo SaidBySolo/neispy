@@ -49,6 +49,11 @@ async def sort_schoolcode(data):
     return(SC_CODE, SD_SCHUL_CODE)
 
 async def sort_scdname(data):
+    """
+    json 형식만 받아옵니다.
+
+    json을 정리하여 학사일정명을 ``str``로 반환합니다.
+    """
     loaddata = json.loads(data)
     datalist = loaddata['SchoolSchedule']
     datadict = datalist[1]
