@@ -2,7 +2,7 @@ import setuptools
 
 setuptools.setup(
     name="neispy",
-    version="0.2.1",
+    version="0.2.2-hotfix",
     license='MIT',
     author="Ryu ju heon",
     author_email="SaidBySolo@gmail.com",

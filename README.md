@@ -21,7 +21,9 @@ pip install neispy
 import asyncio
 from neispy import lunch, school, schedule, sort
 
-key = "API key paste here"
+#api키 없을시 샘플키로 요청함
+#사용을 제대로하시려면 api를 넣어주세요
+
 name="인천기계공업고등학교"
 
 async def main():

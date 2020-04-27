@@ -1,8 +1,8 @@
 import json
 
-async def sort_reqarg(KEY, Type="json", pIndex=str(1), pSize=str(100)):
+async def sort_reqarg(KEY='', Type='json', pIndex=str(1), pSize=str(100)):
     """
-    ``KEY``는 Open APi키를 필요로합니다.
+    ``KEY``는 Open APi키를 필요로합니다. 없을경우 샘플키로 요청합니다.
 
     ``Type``는 json 또는 xml값을 요청할수있습니다. 기본값은 json입니다.
 
@@ -25,7 +25,7 @@ async def sort_lunchmenu(data):
     json을 정리하여 급식 메뉴만을 ``str``로 반환합니다.
     """
     loaddata = json.loads(data)
-    datalist = loaddata['mealServericeDietInfo']
+    datalist = loaddata['mealServiceDietInfo']
     datadict = datalist[1]
     datalist1 = datadict['row']
     datadict1 = datalist1[0]
