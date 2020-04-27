@@ -15,6 +15,12 @@ Api키는 [이곳](https://open.neis.go.kr/)여기서 받으실수있습니다.
 pip install neispy
 ```
 
+## 업데이트 방법
+
+```sh
+pip install --upgrade neispy
+```
+
 ## Example
 
 ```py
@@ -60,6 +66,11 @@ loop.run_until_complete(main())
 |pSize|INTEGER(필수)|페이지 당 신청 숫자|기본값 : 100(sample key는 5 고정)|
 
 ## Patch note
+
+### 0.2.2
+
+* Issue #1 버그수정
+* 샘플키로 요청하도록 변경
 
 ### 0.2.1
 
