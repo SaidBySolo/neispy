@@ -87,6 +87,10 @@ loop.run_until_complete(main())
 
 ## Patch note
 
+### 0.2.3
+
+* 초등학생 시간표 추가
+
 ### 0.2.2
 
 * Issue #1 버그수정
