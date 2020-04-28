@@ -60,5 +60,18 @@ async def sort_scdname(data):
     datalist1 = datadict['row']
     datadict1 = datalist1[0]
     result = datadict1['EVENT_NM']
-    return(result)
+    return result
+
+async def sort_timetable(data):
+    """
+    json형식만 받아옵니다.
+
+    json을 정리하여 첫번째 교시부터 순서대로 ``list``로 반환합니다.
+    """
+    loaddata = json.loads(data)
+    datalist = loaddata['elsTimetable']
+    datadict = datalist[1]
+    datalist1 = datadict['row'] 
+    result = [f['ITRT_CNTNT'] for f in datalist1]
+    return result
 
