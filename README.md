@@ -5,7 +5,7 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/26f53a7e434c4f079415ab23cb51700d)](https://www.codacy.com/manual/SaidBySolo/neispy?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=SaidBySolo/neispy&amp;utm_campaign=Badge_Grade)
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/neispy)
 
-[Discord.py](https://github.com/Rapptz/discord.py)와 쉽게 연동하여 사용하실수있습니다.
+[Discord.py](https://github.com/Rapptz/discord.py)와 충돌이나지않게 aiohttp로 래핑하였습니다.
 
 Api키는 [이곳](https://open.neis.go.kr/)여기서 받으실수있습니다.
 
