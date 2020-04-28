@@ -12,9 +12,9 @@ AA_YMD=now, AA_FROM_YMD=None, AA_TO_YMD=None):
     """
     ``param``은 필수인자입니다.
 
-    ``ATPT_OFCDC_SC_CODE``은 시도교육청코드를 받습니다.
+    ``ATPT_OFCDC_SC_CODE``은 시도교육청코드를 받습니다.(필수)
 
-    ``SD_SCHUL_CODE``은 표준학교코드를 받습니다.
+    ``SD_SCHUL_CODE``은 표준학교코드를 받습니다.(필수)
 
     ``DGHT_CRSE_SC_NM``은 주야과정명을 받습니다.
 
