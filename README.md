@@ -7,7 +7,9 @@
 
 [Discord.py](https://github.com/Rapptz/discord.py)와 충돌이나지않게 aiohttp로 래핑하였습니다.
 
-Api키는 [이곳](https://open.neis.go.kr/)여기서 받으실수있습니다.
+Api키는 [이곳](https://open.neis.go.kr/)여기서 받으실수있습니다.  
+
+여러분의 스타는 제작자의 의욕입니다!
 
 ## 설치 방법
 
