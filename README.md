@@ -1,13 +1,13 @@
 # neispy
 
-**현재 급식,학교 정보,학사 일정만 가져올수있습니다.**  
+**현재 급식, 학교 정보, 학사 일정만 가져올수있습니다.**  
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/26f53a7e434c4f079415ab23cb51700d)](https://www.codacy.com/manual/SaidBySolo/neispy?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=SaidBySolo/neispy&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/26f53a7e434c4f079415ab23cb51700d)](https://app.codacy.com/manual/SaidBySolo/neispy/dashboard)
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/neispy)
 
-[Discord.py](https://github.com/Rapptz/discord.py)와 충돌이나지않게 aiohttp로 래핑하였습니다.
+[Discord.py](https://github.com/Rapptz/discord.py)와 충돌이 발생하지 않게 aiohttp로 래핑하였습니다.
 
-Api키는 [이곳](https://open.neis.go.kr/)여기서 받으실수있습니다.    
+Api키는 [이곳](https://open.neis.go.kr/portal/guide/actKeyPage.do)에서 받으실 수 있습니다.    
 
 ## 설치 방법
 
@@ -34,25 +34,25 @@ from neispy import lunch, school, schedule, sort, eletime
 name="인천석천초등학교"
 
 async def main():
-    #먼저 필수인자를 합칩니다. api키가없으면 샘플키로요청됩니다.
+    #먼저 필수인자를 합칩니다. api키가 없으면 샘플키로요청됩니다.
     param = await sort.sort_reqarg()
 
-    #필수인자와 이름을 인자로넣어주면 요청(json,xml)값에따른 형식인 str로반환됩니다.
+    #필수인자와 이름을 인자로 넣어주면 요청(json,xml)값에 따른 형식인 str로 반환됩니다.
     scinfo = await school.schoolinfo(param, SCHUL_NM=name)
     #json형식을 넣어주면 시도교육청코드와,표준학교코드를 튜플형식으로 반환됩니다.
     AE, SE = await sort.sort_schoolcode(scinfo)
 
-    #필수인자,시도교육청코드와,표준학교코드,급식일을 인자값으로 넣으면 요청(json,xml)값에따른 형식인 str로반환됩니다.
+    #필수인자, 시도교육청코드와 표준학교코드, 급식일을 인자값으로 넣으면 요청(json,xml)값에 따른 형식인 str로 반환됩니다.
     lunchinfo = await lunch.lunchinfo(param, AE, SE, MLSV_YMD=20190122)
     #json값을 정리하여 급식메뉴만 반환합니다.
     lunchmenu = await sort.sort_lunchmenu(lunchinfo)
 
-    #AE,SE는 교육청, 학교코드입니다. 2019학년도 2학기 2020년01월22일 1학년1반의 시간표를 요청(json,xml)값에따른 형식인 str로반환됩니다.
+    #AE, SE는 교육청, 학교코드 입니다. 2019학년도 2학기 2020년 01월 22일 1학년 1반의 시간표를 요청(json,xml)값에 따른 형식인 str로 반환됩니다.
     timetable = await eletime.timetable(param,AE,SE,2019,2,20200122,1,1)
-    #json값을 정리해 시간표 순서대로 리스트로반환합니다.
+    #json값을 정리해 시간표 순서대로 리스트로 반환합니다.
     sorttimetable = await sort.sort_timetable(timetable)
 
-    #20190307날의 학사일정을 요청(json,xml)값에따른 형식인 str로반환됩니다.
+    #2019년 03월 07일의 학사일정을 요청(json,xml)값에 따른 형식인 str로 반환됩니다.
     schdate = await schedule.schoolshd(param,AE,SE,AA_YMD=20190307)
     #json값을 정리해 학사일정명만 반환합니다.
     sortschdate = await sort.sort_scdname(schdate)
