@@ -1,23 +1,76 @@
-import asyncio
 import aiohttp
 import json
+from .error import *
 
+def status_info(response, querytype):
+    try:
+        datalist = response[querytype]
+        headlist = datalist[0]['head']
+        code = headlist[1]['RESULT']['CODE']
+        message = headlist[1]['RESULT']['MESSAGE']
+        return(code, message)
+    except KeyError:
+        code = response['RESULT']['CODE']
+        message = response['RESULT']['MESSAGE']
+        return(code, message)
 
+def check_apikey(key):
+    if any(key):
+        pass
+    else:
+        raise APIKeyNotFound()
+    
+    
 class Http:
 
     def __init__(self, KEY, Type, pIndex, pSize):
         self.requirement_query = self.requirement(KEY, Type, pIndex, pSize)
+        try:
+            check_apikey(KEY)
+        except:
+            import traceback
+            traceback.print_exc()
+            pass
 
     async def request(self, method, url, query):
 
-        base_url = 'https://open.neis.go.kr'
+        base_url = 'https://open.neis.go.kr/hub/'
         URL = base_url + url + self.requirement_query + query
 
         async with aiohttp.ClientSession() as cs:
             async with cs.request(method, URL) as r:
                 response = await r.text()
                 data = json.loads(response)
-                data['schoolInfo']
+                code, msg = status_info(data, url)
+                
+                if code == "INFO-000":
+                    return data
+
+                if code == "ERROR-300":
+                    raise MissingRequiredValues(code, msg)
+                if code == "ERROR-290":
+                    raise AuthenticationKeyInvaild(code, msg)
+                if code == "ERROR-310":
+                    raise ServiceNotFound(code, msg)
+                if code == "ERROR-333":
+                    raise LocationValueTypeInvaild(code, msg)  
+                if code == "ERROR-336":
+                    raise CannotExceed1000(code, msg)
+                if code == "ERROR-337":
+                    raise DailyTrafficLimit(code, msg)
+                if code == "ERROR-500":
+                    raise ServerError(code, msg)
+                if code == "ERROR-600":
+                    raise DatabaseConnectionError(code, msg)
+                if code == "ERROR-601":
+                    raise SQLStatementError(code, msg)
+                if code == "INFO-300":
+                    raise LimitUseAuthenticationkey(code, msg)
+                if code == "INFO-200":
+                    raise DataNotFound(code, msg)
+                else:
+                    raise HTTPException(code, msg)
+                                
 
     def requirement(self, KEY, Type, pIndex, pSize):
         """
@@ -38,13 +91,13 @@ class Http:
         return(apikey + reqtype + pindex + psize)
 
     async def schoolInfo(self, query):
-        return await self.request('get', '/hub/schoolInfo', query)
+        return await self.request('get', 'schoolInfo', query)
         
 
     async def mealServiceDietInfo(self, query):
-        return await self.request('get', '/hub/mealServiceDietInfo', query)
+        return await self.request('get', 'mealServiceDietInfo', query)
         
 
     async def SchoolSchedule(self, query):
-        return await self.request('get', '/hub/SchoolSchedule', query)
+        return await self.request('get', 'SchoolSchedule', query)
         

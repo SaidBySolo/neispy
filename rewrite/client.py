@@ -65,7 +65,7 @@ class Client:
         
         query = "".join(paramlist)
 
-        return await self.http.schoolInfo(query)
+        return await self.http.mealServiceDietInfo(query)
         
     async def SchoolSchedule(self, ATPT_OFCDC_SC_CODE=None, SD_SCHUL_CODE=None, DGHT_CRSE_SC_NM=None,
     SCHUL_CRSE_SC_NM=None, AA_YMD=now, AA_FROM_YMD=None, AA_TO_YMD=None):
@@ -102,4 +102,4 @@ class Client:
         
         query = "".join(paramlist)
 
-        return await self.http.schoolInfo(query)
+        return await self.http.SchoolSchedule(query)

@@ -1,38 +1,43 @@
 class NeispyException(Exception):
     pass
 
+class APIKeyNotFound(NeispyException):
+    def __init__(self):
+        super().__init__("API키를 찾을수없습니다. 샘플키로 요청합니다.")
+
 class HTTPException(NeispyException):
+    def __init__(self, code, message):
+        super().__init__(f'{code} {message}')
+
+class MissingRequiredValues(HTTPException):
     pass
 
-class MissingRequiredValues(NeispyException):
+class AuthenticationKeyInvaild(HTTPException):
     pass
 
-class AuthenticationKeyInvaild(NeispyException):
+class ServiceNotFound(HTTPException):
     pass
 
-class ServiceNotFound(NeispyException):
+class LocationValueTypeInvaild(HTTPException):
     pass
 
-class LocationValueTypeInvaild(NeispyException):
+class CannotExceed1000(HTTPException):
     pass
 
-class CannotExceed1000(NeispyException):
+class DailyTrafficLimit(HTTPException):
     pass
 
-class DailyTrafficLimit(NeispyException):
+class ServerError(HTTPException):
     pass
 
-class ServerError(NeispyException):
+class DatabaseConnectionError(HTTPException):
     pass
 
-class DatabaseConnectionError(NeispyException):
+class SQLStatementError(HTTPException):
     pass
 
-class SQLStatementError(NeispyException):
+class LimitUseAuthenticationkey(HTTPException):
     pass
 
-class LimitUseAuthenticationkey(NeispyException):
-    pass
-
-class DataNotFound(NeispyException):
+class DataNotFound(HTTPException):
     pass
