@@ -36,13 +36,13 @@ class Http:
         return(apikey + reqtype + pindex + psize)
 
     async def schoolInfo(self, query):
-        data = await self.request('get', '/hub/schoolInfo', query)
-        return data
+        return await self.request('get', '/hub/schoolInfo', query)
+        
 
-    # async def mealServiceDietInfo(self, ATPT_OFCDC_SC_CODE=None, SD_SCHUL_CODE=None,
-    # MMEAL_SC_CODE=None, MLSV_YMD=now, MLSV_FROM_YMD=None, MLSV_TO_YMD=None):
-    #    pass
+    async def mealServiceDietInfo(self, query):
+        return await self.request('get', '/hub/mealServiceDietInfo', query)
+        
 
-    # async def SchoolSchedule(self, ATPT_OFCDC_SC_CODE=None, SD_SCHUL_CODE=None, DGHT_CRSE_SC_NM=None,
-    # SCHUL_CRSE_SC_NM=None, AA_YMD=now, AA_FROM_YMD=None, AA_TO_YMD=None):
-    #    pass
+    async def SchoolSchedule(self, query):
+        return await self.request('get', '/hub/SchoolSchedule', query)
+        
