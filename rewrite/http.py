@@ -1,21 +1,23 @@
 import asyncio
 import aiohttp
+import json
 
 
 class Http:
 
     def __init__(self, KEY, Type, pIndex, pSize):
-        self.requirement = self.requirement(KEY, Type, pIndex, pSize)
+        self.requirement_query = self.requirement(KEY, Type, pIndex, pSize)
 
     async def request(self, method, url, query):
 
         base_url = 'https://open.neis.go.kr'
-        URL = base_url + url + self.requirement + query
+        URL = base_url + url + self.requirement_query + query
 
         async with aiohttp.ClientSession() as cs:
             async with cs.request(method, URL) as r:
                 response = await r.text()
-                return response
+                data = json.loads(response)
+                data['schoolInfo']
 
     def requirement(self, KEY, Type, pIndex, pSize):
         """
