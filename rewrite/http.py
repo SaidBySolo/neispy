@@ -1,6 +1,6 @@
 import aiohttp
 import json
-from .error import *
+from .error import * 
 
 def status_info(response, querytype):
     try:
@@ -26,7 +26,7 @@ class Http:
     def __init__(self, KEY, Type, pIndex, pSize):
         try:
             check_apikey(KEY)
-        except:
+        except APIKeyNotFound:
             import traceback
             traceback.print_exc()
             pass
@@ -34,7 +34,6 @@ class Http:
         
 
     async def request(self, method, url, query):
-
         base_url = 'https://open.neis.go.kr/hub/'
         URL = base_url + url + self.requirement_query + query
 
@@ -74,17 +73,6 @@ class Http:
                                 
 
     def requirement(self, KEY, Type, pIndex, pSize):
-        """
-        ``KEY``는 Open APi키를 필요로합니다. 없을경우 샘플키로 요청합니다.
-
-        ``Type``는 json 또는 xml값을 요청할수있습니다. 기본값은 json입니다.
-
-        ``pIndex``는 페이지 위치입니다. 기본값은 1입니다.
-
-        ``pSize``는 페이지 당 신청 숫자입니다. 기본값은 100입니다
-
-        ``str``로 반환됩니다.
-        """
         apikey = f"?KEY={KEY}"
         reqtype = f"&Type={Type}"
         pindex = f"&pindex={pIndex}"
@@ -101,4 +89,7 @@ class Http:
 
     async def SchoolSchedule(self, query):
         return await self.request('get', 'SchoolSchedule', query)
+
+    async def acaInsTiInfo(self, query):
+        return await self.request('get', 'acaInsTiInfo', query)
         
