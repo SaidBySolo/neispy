@@ -1,6 +1,6 @@
 class Model:
     def __init__(self, data):
-        self.meal = self.sort_lunchmenu(data)
+        self.meal = self.sort_meal(data)
         self.code = self.sort_code(data)
         self.schdule = self.sort_schedule(data)
         self.elstimetable = self.sort_elstimetable(data)

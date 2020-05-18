@@ -87,6 +87,10 @@ loop.run_until_complete(main())
 
 ## Patch note
 
+### 0.3.3
+
+* Model클래스에서 sort_meal함수의 이름이달라 생긴문제 수정
+
 ### 0.3.2
 
 * 코드 퀄리티 향상
