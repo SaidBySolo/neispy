@@ -72,7 +72,8 @@ class Http:
                 else:
                     raise HTTPException(code, msg)
 
-    def requirement(self, KEY, Type, pIndex, pSize):
+    @classmethod
+    def requirement(cls, KEY, Type, pIndex, pSize):
         apikey = f"?KEY={KEY}"
         reqtype = f"&Type={Type}"
         pindex = f"&pindex={pIndex}"

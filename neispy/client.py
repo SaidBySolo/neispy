@@ -1,4 +1,3 @@
-import aiohttp
 import datetime
 from .http import Http
 

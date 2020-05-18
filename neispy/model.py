@@ -5,7 +5,8 @@ class Model:
         self.schdule = self.sort_schedule(data)
         self.elstimetable = self.sort_elstimetable(data)
 
-    def sort_meal(self, data):
+    @classmethod
+    def sort_meal(cls, data):
         """
         json형식만 받아옵니다.
 
@@ -17,7 +18,8 @@ class Model:
         linebreak = result.replace('<br/>', '\n')
         return linebreak
 
-    def sort_code(self, data):
+    @classmethod
+    def sort_code(cls, data):
         """
         json형식만 받아옵니다.
 
@@ -27,9 +29,10 @@ class Model:
         datalist1 = datalist[1]['row']
         SC_CODE = datalist1[0]['ATPT_OFCDC_SC_CODE']
         SD_SCHUL_CODE = datalist1[0]['SD_SCHUL_CODE']
-        return(SD_SCHUL_CODE, SD_SCHUL_CODE)
+        return(SC_CODE, SD_SCHUL_CODE)
 
-    def sort_schedule(self, data):
+    @classmethod
+    def sort_schedule(cls, data):
         """
         json 형식만 받아옵니다.
 
@@ -40,7 +43,8 @@ class Model:
         result = datadict[0]['EVENT_NM']
         return result
 
-    def sort_elstimetable(self, data):
+    @classmethod
+    def sort_elstimetable(cls, data):
         """
         json형식만 받아옵니다.
 
