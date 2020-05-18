@@ -31,7 +31,6 @@ class Http:
         except APIKeyNotFound:
             import traceback
             traceback.print_exc()
-            pass
         self.requirement_query = self.requirement(KEY, Type, pIndex, pSize)
 
     async def request(self, method, url, query):
