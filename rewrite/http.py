@@ -1,6 +1,7 @@
 import aiohttp
 import json
-from .error import * 
+from .error import *
+
 
 def status_info(response, querytype):
     try:
@@ -14,13 +15,14 @@ def status_info(response, querytype):
         message = response['RESULT']['MESSAGE']
         return(code, message)
 
+
 def check_apikey(key):
     if any(key):
         pass
     else:
         raise APIKeyNotFound()
-    
-    
+
+
 class Http:
 
     def __init__(self, KEY, Type, pIndex, pSize):
@@ -31,7 +33,6 @@ class Http:
             traceback.print_exc()
             pass
         self.requirement_query = self.requirement(KEY, Type, pIndex, pSize)
-        
 
     async def request(self, method, url, query):
         base_url = 'https://open.neis.go.kr/hub/'
@@ -42,7 +43,7 @@ class Http:
                 response = await r.text()
                 data = json.loads(response)
                 code, msg = status_info(data, url)
-                
+
                 if code == "INFO-000":
                     return data
 
@@ -53,7 +54,7 @@ class Http:
                 if code == "ERROR-310":
                     raise ServiceNotFound(code, msg)
                 if code == "ERROR-333":
-                    raise LocationValueTypeInvaild(code, msg)  
+                    raise LocationValueTypeInvaild(code, msg)
                 if code == "ERROR-336":
                     raise CannotExceed1000(code, msg)
                 if code == "ERROR-337":
@@ -70,7 +71,6 @@ class Http:
                     raise DataNotFound(code, msg)
                 else:
                     raise HTTPException(code, msg)
-                                
 
     def requirement(self, KEY, Type, pIndex, pSize):
         apikey = f"?KEY={KEY}"
@@ -81,15 +81,12 @@ class Http:
 
     async def schoolInfo(self, query):
         return await self.request('get', 'schoolInfo', query)
-        
 
     async def mealServiceDietInfo(self, query):
         return await self.request('get', 'mealServiceDietInfo', query)
-        
 
     async def SchoolSchedule(self, query):
         return await self.request('get', 'SchoolSchedule', query)
 
     async def acaInsTiInfo(self, query):
         return await self.request('get', 'acaInsTiInfo', query)
-        
