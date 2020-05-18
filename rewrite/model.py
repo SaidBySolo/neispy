@@ -3,6 +3,7 @@ class Model:
         self.meal = self.sort_lunchmenu(data)
         self.code = self.sort_code(data)
         self.schdule = self.sort_schedule(data)
+        self.elstimetable = self.sort_elstimetable(data)
 
     def sort_meal(self, data):
         """
@@ -37,4 +38,15 @@ class Model:
         datalist = data['SchoolSchedule']
         datadict = datalist[1]['row']
         result = datadict[0]['EVENT_NM']
+        return result
+
+    def sort_elstimetable(self, data):
+        """
+        json형식만 받아옵니다.
+
+        json을 정리하여 첫번째 교시부터 순서대로 ``list``로 반환합니다.
+        """
+        datalist = data['elsTimetable']
+        datalist1 = datalist[1]['row']
+        result = [f['ITRT_CNTNT'] for f in datalist1]
         return result
