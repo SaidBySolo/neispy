@@ -93,3 +93,4 @@ class Http:
 
     async def elsTimetable(self, query):
         return await self.request('get', 'elsTimetable', query)
+        
