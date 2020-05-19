@@ -25,55 +25,42 @@ pip install --upgrade neispy
 
 ```py
 import asyncio
-import json
-from neispy import lunch, school, schedule, sort, eletime
-
-#api키가 없을시 샘플키로 요청함
-#사용을 제대로하시려면 api키를 넣어주세요
+import neispy
 
 name="인천석천초등학교"
 
 async def main():
-    #먼저 필수인자를 합칩니다. api키가 없으면 샘플키로요청됩니다.
-    param = await sort.sort_reqarg()
 
-    #필수인자와 이름을 인자로 넣어주면 요청(json,xml)값에 따른 형식인 str로 반환됩니다.
-    scinfo = await school.schoolinfo(param, SCHUL_NM=name)
-    #json형식을 넣어주면 시도교육청코드와,표준학교코드를 튜플형식으로 반환됩니다.
-    AE, SE = await sort.sort_schoolcode(scinfo)
+    #필수인자가 들어가는곳입니다. API키,json,xml등 받을방식등등..
+    #아무값이 없으니 샘플키로 요청합니다.
+    neis = neispy.Client()
 
-    #필수인자, 시도교육청코드와 표준학교코드, 급식일을 인자값으로 넣으면 요청(json,xml)값에 따른 형식인 str로 반환됩니다.
-    lunchinfo = await lunch.lunchinfo(param, AE, SE, MLSV_YMD=20190122)
-    #json값을 정리하여 급식메뉴만 반환합니다.
-    lunchmenu = await sort.sort_lunchmenu(lunchinfo)
+    #학교이름으로 학교정보를 요청하고 그 반환값을 정리하여 교육청코드와학교코드로 가져옵니다.
+    scinfo = await neis.schoolInfo(SCHUL_NM=name)
+    AE,SE = neispy.sort_code(scinfo)
 
-    #AE, SE는 교육청, 학교코드 입니다. 2019학년도 2학기 2020년 01월 22일 1학년 1반의 시간표를 요청(json,xml)값에 따른 형식인 str로 반환됩니다.
-    timetable = await eletime.timetable(param,AE,SE,2019,2,20200122,1,1)
-    #json값을 정리해 시간표 순서대로 리스트로 반환합니다.
-    sorttimetable = await sort.sort_timetable(timetable)
+    #학교코드로 20190122날의 급식정보를 요청하고 반환값을 정리하여 급식 항목만 가져옵니다.
+    scmeal = await neis.mealServiceDietInfo(AE,SE,MLSV_YMD=20190122)
+    mealinfo = neispy.sort_meal(scmeal)
 
-    #2019년 03월 07일의 학사일정을 요청(json,xml)값에 따른 형식인 str로 반환됩니다.
-    schdate = await schedule.schoolshd(param,AE,SE,AA_YMD=20190307)
-    #json값을 정리해 학사일정명만 반환합니다.
-    sortschdate = await sort.sort_scdname(schdate)
+    #학교코드로 20190307날의 학사일정을 요청하고 반환값을 정리하여 학사일정이름만 가져옵니다.
+    scschedule = await neis.SchoolSchedule(AE,SE,AA_YMD=20190307)
+    scheduleinfo = neispy.sort_schedule(scschedule)
 
-    print(lunchmenu)
-    print(sorttimetable)
-    print(sortschdate)
+    #학교코드로 20200122날의 시간표을 요청하고 반환값을 정리하여 시간표만 가져옵니다.
+    sctimetable = await neis.elsTimetable(AE,SE,2019,2,20200122,1,1)
+    timetableinfo = neispy.sort_elstimetable(sctimetable)
 
+    #출력
+    print(AE)
+    print(SE)
+    print(mealinfo)
+    print(scheduleinfo)
+    print(timetableinfo)
+    
 
 loop = asyncio.get_event_loop()
 loop.run_until_complete(main())
-
-#출력
-보리밥
-사과
-비엔나소시지케첩조림2.5.6.10.12.13.
-궁중떡볶이1.5.6.13.
-알타리김치9.13.
-청국장찌개(신)5.9.13.
-['즐거운생활', '수학', '국어', '즐거운생활']
-학급임원선거
 ```
 
 ## 인자값
