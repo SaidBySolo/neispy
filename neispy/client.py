@@ -141,7 +141,7 @@ class Client:
     async def timeTable(self, schclass, ATPT_OFCDC_SC_CODE=None,
                            SD_SCHUL_CODE=None, AY=None, SEM=None, ALL_TI_YMD=now,
                            GRADE=None, CLASS_NM=None, PERIO=None, TI_FROM_YMD=None, TI_TO_YMD=None):
-                           
+
         arg = ['els', 'mis', 'his']
         paramlist = []
 
