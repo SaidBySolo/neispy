@@ -40,16 +40,19 @@ async def main():
     AE,SE = neispy.sort_code(scinfo)
 
     #학교코드로 20190122날의 급식정보를 요청하고 반환값을 정리하여 급식 항목만 가져옵니다.
-    scmeal = await neis.mealServiceDietInfo(AE,SE,MLSV_YMD=20190122)
+    scmeal = await neis.mealServiceDietInfo(AE, SE, MLSV_YMD=20190122)
     mealinfo = neispy.sort_meal(scmeal)
 
     #학교코드로 20190307날의 학사일정을 요청하고 반환값을 정리하여 학사일정이름만 가져옵니다.
-    scschedule = await neis.SchoolSchedule(AE,SE,AA_YMD=20190307)
+    scschedule = await neis.SchoolSchedule(AE, SE, AA_YMD=20190307)
     scheduleinfo = neispy.sort_schedule(scschedule)
 
     #학교코드로 20200122날의 시간표을 요청하고 반환값을 정리하여 시간표만 가져옵니다.
-    sctimetable = await neis.elsTimetable(AE,SE,2019,2,20200122,1,1)
-    timetableinfo = neispy.sort_elstimetable(sctimetable)
+    #초등학교는 els
+    #중학교는 mis
+    #고등학교는 his 를 넣어주시면됩니다.
+    sctimetable = await neis.timeTable('els', AE, SE, 2019, 2, 20200122, 1, 1)
+    timetableinfo = neispy.sort_timeTable(sctimetable)
 
     #출력
     print(AE)
@@ -86,6 +89,10 @@ loop.run_until_complete(main())
 |pSize|INTEGER(필수)|페이지 당 신청 숫자|기본값 : 100(sample key는 5 고정)|
 
 ## Patch note
+
+### 0.4.0
+
+* 초,중,고 시간표엔드포인트 커버가능
 
 ### 0.3.4
 

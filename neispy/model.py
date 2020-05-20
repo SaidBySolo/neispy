@@ -33,13 +33,18 @@ def sort_schedule(data):
     result = datadict[0]['EVENT_NM']
     return result
 
-def sort_elstimetable(data):
+def sort_timetable(data):
     """
     json형식만 받아옵니다.
 
     json을 정리하여 첫번째 교시부터 순서대로 ``list``로 반환합니다.
     """
-    datalist = data['elsTimetable']
+    if 'elsTimetable' in data:
+        datalist = data['elsTimetable']
+    elif 'misTimetable' in data:
+        datalist = data['misTimetable']
+    elif 'hisTimetable' in data:
+        datalist = data['hisTimetable']
     datalist1 = datalist[1]['row']
     result = [f['ITRT_CNTNT'] for f in datalist1]
     return result

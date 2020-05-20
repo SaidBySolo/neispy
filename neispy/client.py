@@ -1,5 +1,6 @@
 import datetime
 from .http import Http
+from .error import *
 
 n = datetime.datetime.now()
 now = f'{n.year}{n.month}{n.day}'
@@ -137,10 +138,11 @@ class Client:
 
         return await self.http.acaInsTiInfo(query)
 
-    async def elsTimetable(self, ATPT_OFCDC_SC_CODE=None,
+    async def timeTable(self, schclass, ATPT_OFCDC_SC_CODE=None,
                            SD_SCHUL_CODE=None, AY=None, SEM=None, ALL_TI_YMD=now,
                            GRADE=None, CLASS_NM=None, PERIO=None, TI_FROM_YMD=None, TI_TO_YMD=None):
-
+                           
+        arg = ['els', 'mis', 'his']
         paramlist = []
 
         if ATPT_OFCDC_SC_CODE is not None:
@@ -185,4 +187,8 @@ class Client:
 
         query = "".join(paramlist)
 
-        return await self.http.elsTimetable(query)
+        if schclass in arg:
+            return await self.http.timeTable(schclass, query)
+        else:
+            raise ArgumentError
+            
