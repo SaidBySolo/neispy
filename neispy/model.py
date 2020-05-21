@@ -6,7 +6,7 @@ class NeispyResponse:
         """모든 모델의 기본이되는 클래스입니다.
 
         Arguments:
-    
+
             response {str} -- json형식의 값을 넣어주셔야합니다.
 
             sort {str} -- 밑의 항목에 있는 정리하고자하는 정보를 넣어주셔야하는 곳입니다.
@@ -58,7 +58,7 @@ class NeispyResponse:
 class NeispySchoolInfo(NeispyResponse):
     def __init__(self, response, sort='schoolInfo'):
         super().__init__(response, sort)
-    
+
 
 class NeispySchoolSchedule(NeispyResponse):
     def __init__(self, response, sort='SchoolSchedule'):

@@ -17,7 +17,7 @@ class Client:
             ``Type`` {str} -- json 또는 xml로 요청이 가능하지만 xml로 바꿀시 작동이 안됩니다. (default: {'json'})
 
             ``pIndex`` {str} -- 페이지 위치입니다. 샘플키는 1 고정입니다. (default: {1})
-            
+
             ``pSize`` {str} -- 페이지당 신청숫자 입니다. 샘플키는 5 고정입니다. (default: {100})
         """
         self.http = Http(KEY, Type, pIndex, pSize)
@@ -191,7 +191,7 @@ class Client:
                            ACA_ASNUM: str = None, REALM_SC_NM: str = None, LE_ORD_NM: str = None, LE_CRSE_NM: str = None):
         """학원교습소정보 입니다.
 
-        개설되어있는 학원 및 교습소의 학원명, 휴원일자, 등록상태, 정원, 분야, 계열 및 과정등을 확인할 수 있으며 
+        개설되어있는 학원 및 교습소의 학원명, 휴원일자, 등록상태, 정원, 분야, 계열 및 과정등을 확인할 수 있으며
         
         수강료 공개여부에 따라 수강료 내용을 확인할 수 있습니다.
 
@@ -245,7 +245,7 @@ class Client:
 
         return await self.http.acaInsTiInfo(query)
 
-    async def timeTable(self, schclass: str , ATPT_OFCDC_SC_CODE: str = None,
+    async def timeTable(self, schclass: str, ATPT_OFCDC_SC_CODE: str = None,
                         SD_SCHUL_CODE: str = None, AY: int = None, SEM: int = None, ALL_TI_YMD: int = now,
                         GRADE: int = None, CLASS_NM: str = None, PERIO: int = None, TI_FROM_YMD: int = None, TI_TO_YMD: int = None):
         """초,중,고 시간표
