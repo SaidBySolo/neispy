@@ -52,7 +52,7 @@ async def main():
     #중학교는 mis
     #고등학교는 his 를 넣어주시면됩니다.
     sctimetable = await neis.timeTable('els', AE, SE, 2019, 2, 20200122, 1, 1)
-    timetableinfo = neispy.sort_timeTable(sctimetable)
+    timetableinfo = neispy.sort_timetable(sctimetable)
 
     #출력
     print(AE)
