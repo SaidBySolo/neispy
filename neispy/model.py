@@ -12,13 +12,13 @@ class NeispyResponse:
             sort {str} -- 밑의 항목에 있는 정리하고자하는 정보를 넣어주셔야하는 곳입니다.
 
         Lists:
- 
+
             schoolInfo -- 학교정보입니다.
 
             SchoolSchedule -- 학사일정입니다.
 
             mealServiceDietInfo -- 급식및식단표입니다.
-            
+
             elsTimetable -- 초등학교 시간표입니다.
 
             misTimetable -- 중학교 시간표입니다.

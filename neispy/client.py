@@ -33,13 +33,13 @@ class Client:
             `ATPT_OFCDC_SC_CODE` {str} -- 시도교육청코드 (default: {None})
 
             `SD_SCHUL_CODE` {str} -- 표준학교코드 (default: {None})
-            
+
             `SCHUL_NM` {str} -- 학교명 (default: {None})
-            
+
             `SCHUL_KND_SC_NM` {str} -- 학교종류명 (default: {None})
 
             `LCTN_SC_NM` {str} -- 소재지명 (default: {None})
-            
+
             `FOND_SC_NM` {str} -- 설립명 (default: {None})
 
         Returns:
@@ -86,9 +86,9 @@ class Client:
             `ATPT_OFCDC_SC_CODE` {str} -- 시도교육청코드 (default: {None})
 
             `SD_SCHUL_CODE` {str} -- 표준학교코드 (default: {None})
-            
+
             `MMEAL_SC_CODE` {str} -- 식사코드 (default: {None})
-            
+
             `MLSV_YMD` {int} -- 급식일자(주어지지 않았을경우 사용자의 현재날짜로 요청합니다.) (default: {now})
 
             `MLSV_FROM_YMD` {int} -- 급식시작일자 (default: {None})
@@ -263,7 +263,7 @@ class Client:
             `SD_SCHUL_CODE` {str} -- 표준학교코드 (default: {None})
 
             `AY` {int} -- 학년도 (default: {None})
-            
+
             `SEM` {int} -- 학기 (default: {None})
 
             `ALL_TI_YMD` {int} -- 시간표일자(주어지지 않았을경우 사용자의 현재날짜로 요청합니다.) (default: {now})
@@ -275,7 +275,7 @@ class Client:
             `PERIO` {int} -- 교시 (default: {None})
 
             `TI_FROM_YMD` {int} -- 시간표시작일자 (default: {None})
-            
+
             `TI_TO_YMD` {int} -- 시간표종료일자 (default: {None})
 
         Raises:
