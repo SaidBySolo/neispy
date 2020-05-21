@@ -1,13 +1,23 @@
 # neispy
 
-**현재 급식, 학교 정보, 학사 일정만 가져올수있습니다.**  
-
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/26f53a7e434c4f079415ab23cb51700d)](https://app.codacy.com/manual/SaidBySolo/neispy/dashboard)
 [![PyPI - Downloads](https://img.shields.io/pypi/dm/neispy)](https://pypi.org/project/neispy/)
 
 [Discord.py](https://github.com/Rapptz/discord.py)와 충돌이 발생하지 않게 aiohttp로 래핑하였습니다.
 
 api키는 [이곳](https://open.neis.go.kr/portal/guide/actKeyPage.do)에서 받으실 수 있습니다.    
+
+## 현재 사용가능한 종류
+
+* 학교정보
+
+* 학원및교습소정보
+
+* 학사일정정보
+
+* 급식정보
+
+* 초,중,고 시간표정보
 
 ## 설치 방법
 
