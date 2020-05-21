@@ -29,7 +29,7 @@ class Client:
         학교 기본정보에 대한 학교명, 소재지, 주소, 전화번호, 홈페이지주소, 남녀공학여부, 주야구분, 개교기념일, 폐교여부 등을 확인할 수 있는 현황입니다.
 
         Keyword Arguments:
-        
+
             `ATPT_OFCDC_SC_CODE` {str} -- 시도교육청코드 (default: {None})
 
             `SD_SCHUL_CODE` {str} -- 표준학교코드 (default: {None})
