@@ -192,7 +192,7 @@ class Client:
         """학원교습소정보 입니다.
 
         개설되어있는 학원 및 교습소의 학원명, 휴원일자, 등록상태, 정원, 분야, 계열 및 과정등을 확인할 수 있으며
-        
+
         수강료 공개여부에 따라 수강료 내용을 확인할 수 있습니다.
 
 
@@ -201,7 +201,7 @@ class Client:
             `ATPT_OFCDC_SC_CODE` {str} -- 시도교육청코드 (default: {None})
 
             `ADMST_ZONE_NM` {str} -- 행정구역명 (default: {None})
-            
+
             `ACA_ASNUM` {str} -- 학원지정번호 (default: {None})
 
             `REALM_SC_NM` {str} -- 분야명 (default: {None})
@@ -211,7 +211,7 @@ class Client:
             `LE_CRSE_NM` {str} -- 교습과정명 (default: {None})
 
         Returns:
-        
+
             str -- 요청한값을 json형식을 반환합니다.
         """
 
