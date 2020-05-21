@@ -59,6 +59,7 @@ async def main():
     #중학교는 mis
     #고등학교는 his 를 넣어주시면됩니다.
     sctimetable = await neis.timeTable('els', AE, SE, 2019, 2, 20200122, 1, 1)
+
     timetableinfo = neispy.NeispyTimeTable(sctimetable, 'elsTimetable')#초,중,고학교를 정해주셔야합니다.
 
     timetable = timetableinfo.timetable()#시간표만 리스트로 반환합니다.
