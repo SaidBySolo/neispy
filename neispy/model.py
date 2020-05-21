@@ -1,50 +1,90 @@
-def sort_meal(data):
-    """
-    json형식만 받아옵니다.
+from .error import ArgumentError
 
-    json을 정리하여 급식 메뉴만을 ``str``로 반환합니다.
-    """
-    datalist = data['mealServiceDietInfo']
-    datadict = datalist[1]['row']
-    result = datadict[0]['DDISH_NM']
-    linebreak = result.replace('<br/>', '\n')
-    return linebreak
 
-def sort_code(data):
-    """
-    json형식만 받아옵니다.
+class NeispyResponse:
+    def __init__(self, response, sort):
+        """모든 모델의 기본이되는 클래스입니다.
 
-    json을 정리하여 시도교육청코드,표준학교코드를 ``tuple``로 반환합니다.
-    """
-    datalist = data['schoolInfo']
-    datalist1 = datalist[1]['row']
-    SC_CODE = datalist1[0]['ATPT_OFCDC_SC_CODE']
-    SD_SCHUL_CODE = datalist1[0]['SD_SCHUL_CODE']
-    return(SC_CODE, SD_SCHUL_CODE)
+        Arguments:
+    
+            response {str} -- json형식의 값을 넣어주셔야합니다.
 
-def sort_schedule(data):
-    """
-    json 형식만 받아옵니다.
+            sort {str} -- 밑의 항목에 있는 정리하고자하는 정보를 넣어주셔야하는 곳입니다.
 
-    json을 정리하여 학사일정명을 ``str``로 반환합니다.
-    """
-    datalist = data['SchoolSchedule']
-    datadict = datalist[1]['row']
-    result = datadict[0]['EVENT_NM']
-    return result
+        Lists:
+            
+            schoolInfo -- 학교정보입니다.
 
-def sort_timetable(data):
-    """
-    json형식만 받아옵니다.
+            SchoolSchedule -- 학사일정입니다.
 
-    json을 정리하여 첫번째 교시부터 순서대로 ``list``로 반환합니다.
-    """
-    if 'elsTimetable' in data:
-        datalist = data['elsTimetable']
-    elif 'misTimetable' in data:
-        datalist = data['misTimetable']
-    elif 'hisTimetable' in data:
-        datalist = data['hisTimetable']
-    datalist1 = datalist[1]['row']
-    result = [f['ITRT_CNTNT'] for f in datalist1]
-    return result
+            mealServiceDietInfo -- 급식및식단표입니다.
+            
+            elsTimetable -- 초등학교 시간표입니다.
+
+            misTimetable -- 중학교 시간표입니다.
+
+            hisTimetable -- 고등학교 시간표입니다.
+
+        Raises:
+
+            ArgumentError: sort에 Lists에있지않은 값을 넣을경우 Raise합니다.
+
+        """
+        sort_list = ['schoolInfo',
+                     'SchoolSchedule',
+                     'mealServiceDietInfo',
+                     'elsTimetable',
+                     'misTimetable',
+                     'hisTimetable']
+        if sort in sort_list:
+            if sort == sort_list[3] or sort == sort_list[4] or sort == sort_list[5]:
+                datalist = response[sort]
+                datadict = datalist[1]['row']
+                self.data = datadict
+            else:
+                datalist = response[sort]
+                datadict = datalist[1]['row']
+                self.data = datadict[0]
+        else:
+            raise ArgumentError
+
+    def __getattr__(self, attr):
+        return self.data.get(attr)
+
+    def __dict__(self):
+        return self.data
+
+
+class NeispySchoolInfo(NeispyResponse):
+    def __init__(self, response, sort='schoolInfo'):
+        super().__init__(response, sort)
+    
+
+class NeispySchoolSchedule(NeispyResponse):
+    def __init__(self, response, sort='SchoolSchedule'):
+        super().__init__(response, sort)
+
+
+class NeispyMealServiceDietInfo(NeispyResponse):
+    def __init__(self, response, sort='mealServiceDietInfo'):
+        super().__init__(response, sort)
+
+    def meal(self):
+        """
+        급식 메뉴만을 줄바꿈하여 ``str``로 반환합니다.
+        """
+        result = self.data['DDISH_NM']
+        linebreak = result.replace('<br/>', '\n')
+        return linebreak
+
+
+class NeispyTimeTable(NeispyResponse):
+    def __init__(self, response, sort):
+        super().__init__(response, sort)
+
+    def timetable(self):
+        """
+        첫번째 교시부터 순서대로 ``list``로 반환합니다.
+        """
+        result = [f['ITRT_CNTNT'] for f in self.data]
+        return result
