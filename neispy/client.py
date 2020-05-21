@@ -279,9 +279,11 @@ class Client:
             `TI_TO_YMD` {int} -- 시간표종료일자 (default: {None})
 
         Raises:
+
             ArgumentError: ``schclass``의 받은 인자중 일치한것이 없으면 raise합니다.
 
         Returns:
+
             str -- 요청한값을 json형식을 반환합니다.
         """
         arg = ['els', 'mis', 'his']
