@@ -24,10 +24,10 @@ pip install --upgrade neispy
 ## 사용 예시
 
 ```py
-import asyncio
 import neispy
+import asyncio
 
-name="인천석천초등학교"
+name = "인천석천초등학교"
 
 async def main():
 
@@ -35,32 +35,40 @@ async def main():
     #아무값이 없으니 샘플키로 요청합니다.
     neis = neispy.Client()
 
-    #학교이름으로 학교정보를 요청하고 그 반환값을 정리하여 교육청코드와학교코드로 가져옵니다.
-    scinfo = await neis.schoolInfo(SCHUL_NM=name)
-    AE,SE = neispy.sort_code(scinfo)
+    #학교이름으로 학교정보를 요청하고 교육청코드 와 학교코드로 가져옵니다.
+    schoolinfo = await neis.schoolInfo(SCHUL_NM=name)
+    scinfo = neispy.NeispySchoolInfo(schoolinfo)# 모델부분입니다 이클래스를 이용하여 밑에 변수와같이 쉽게 가져올수있습니다.
 
-    #학교코드로 20190122날의 급식정보를 요청하고 반환값을 정리하여 급식 항목만 가져옵니다.
+    AE = scinfo.ATPT_OFCDC_SC_CODE#교육청코드
+    SE = scinfo.SD_SCHUL_CODE#학교코드
+
+    #20190122날의 급식정보를 요청하고 급식 항목만 가져옵니다.
     scmeal = await neis.mealServiceDietInfo(AE, SE, MLSV_YMD=20190122)
-    mealinfo = neispy.sort_meal(scmeal)
+    mealinfo = neispy.NeispyMealServiceDietInfo(scmeal)
+    
+    meal = mealinfo.meal()#급식항목만 줄바꿈으로 변환하여 가져옵니다.
 
-    #학교코드로 20190307날의 학사일정을 요청하고 반환값을 정리하여 학사일정이름만 가져옵니다.
+    #20190307날의 학사일정을 요청하고 학사일정의 이름을 가져옵니다.
     scschedule = await neis.SchoolSchedule(AE, SE, AA_YMD=20190307)
-    scheduleinfo = neispy.sort_schedule(scschedule)
+    schinfo = neispy.NeispySchoolSchedule(scschedule)
+
+    schedule_name = schinfo.EVENT_NM
 
     #학교코드로 20200122날의 시간표을 요청하고 반환값을 정리하여 시간표만 가져옵니다.
     #초등학교는 els
     #중학교는 mis
     #고등학교는 his 를 넣어주시면됩니다.
     sctimetable = await neis.timeTable('els', AE, SE, 2019, 2, 20200122, 1, 1)
-    timetableinfo = neispy.sort_timetable(sctimetable)
 
-    #출력
+    timetableinfo = neispy.NeispyTimeTable(sctimetable, 'elsTimetable')#초,중,고학교를 정해주셔야합니다.
+
+    timetable = timetableinfo.timetable()#시간표만 리스트로 반환합니다.
+
     print(AE)
     print(SE)
-    print(mealinfo)
-    print(scheduleinfo)
-    print(timetableinfo)
-    
+    print(meal)
+    print(schedule_name)
+    print(timetable)
 
 loop = asyncio.get_event_loop()
 loop.run_until_complete(main())
@@ -88,7 +96,25 @@ loop.run_until_complete(main())
 |pIndex|INTEGER(필수)|페이지 위치|기본값 : 1(sample key는 1 고정)|
 |pSize|INTEGER(필수)|페이지 당 신청 숫자|기본값 : 100(sample key는 5 고정)|
 
+* [학교기본정보](https://open.neis.go.kr/portal/data/service/selectServicePage.do?page=1&rows=10&sortColumn=&sortDirection=&infId=OPEN17020190531110010104913&infSeq=2#2)
+
+* [급식식단정보](https://open.neis.go.kr/portal/data/service/selectServicePage.do?page=1&rows=10&sortColumn=&sortDirection=&infId=OPEN17320190722180924242823&infSeq=2#2)
+
+* [학사일정](https://open.neis.go.kr/portal/data/service/selectServicePage.do?page=1&rows=10&sortColumn=&sortDirection=&infId=OPEN17220190722175038389180&infSeq=2#2)
+
+* [학원교습소정보](https://open.neis.go.kr/portal/data/service/selectServicePage.do?page=1&rows=10&sortColumn=&sortDirection=&infId=OPEN15920190423094641415608&infSeq=2)
+
+* [시간표](https://open.neis.go.kr/portal/data/service/selectServicePage.do?page=1&rows=10&sortColumn=&sortDirection=&infId=OPEN15020190408160341416743&infSeq=2)
+
+**시간표 같은 부분은 초,중,고인걸 제외하고는 모두 같으니 출력 항목만 보시면됩니다.**
+
 ## Patch note
+
+### 0.5.0
+
+* Model 메커니즘 변경
+
+* docstring 추가
 
 ### 0.4.0
 
