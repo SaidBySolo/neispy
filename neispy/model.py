@@ -37,6 +37,7 @@ class NeispyResponse:
         sort_list = ['schoolInfo',
                      'SchoolSchedule',
                      'mealServiceDietInfo',
+                     'classInfo',
                      'elsTimetable',
                      'misTimetable',
                      'hisTimetable']
@@ -96,3 +97,7 @@ class NeispyTimeTable(NeispyResponse):
         """
         result = [f['ITRT_CNTNT'] for f in self.data]
         return result
+
+class NeisptClassInfo(NeispyResponse):
+    def __init__(self, response, sort='classInfo', rawlist=False):
+        super().__init__(response, sort, rawlist=rawlist)

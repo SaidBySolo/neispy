@@ -336,8 +336,45 @@ class Client:
         else:
             raise ArgumentError
 
-    async def classInfo(self):#이밑까지 래핑하면끝남
-        pass
+    async def classInfo(self, ATPT_OFCDC_SC_CODE=None, SD_SCHUL_CODE=None, AY=None, 
+                        GRADE=None, DGHT_CRSE_SC_NM=None, SCHUL_CRSE_SC_NM=None, ORD_SC_NM=None, DDDEP_NM=None):
+
+        paramlist = []
+
+        if ATPT_OFCDC_SC_CODE is not None:
+            AOSC = f'&ATPT_OFCDC_SC_CODE={ATPT_OFCDC_SC_CODE}'
+            paramlist.append(AOSC)
+
+        if SD_SCHUL_CODE is not None:
+            SSC = f'&SD_SCHUL_CODE={SD_SCHUL_CODE}'
+            paramlist.append(SSC)
+
+        if AY is not None:
+            AY = f'&AY={AY}'
+            paramlist.append(AY)
+
+        if GRADE is not None:
+            GE = f'&GE={GRADE}'
+            paramlist.append(GE)
+
+        if DGHT_CRSE_SC_NM is not None:
+            DCSN = f'&DGHT_CRSE_SCNM={DGHT_CRSE_SC_NM}'
+            paramlist.append(DCSN)
+        
+        if SCHUL_CRSE_SC_NM is not None:
+            SCSN = f'&SCHUL_CRSE_SC_NM={SCHUL_CRSE_SC_NM}'
+
+        if ORD_SC_NM is not None:
+            OSN = f'&ORD_SC_NM={ORD_SC_NM}'
+            paramlist.append(SCSN)
+
+        if DDDEP_NM is not None:
+            DN = f'&DDDEP_NM={DDDEP_NM}'
+            paramlist.append(DN)
+
+        query = "".join(paramlist)
+
+        return await self.http.classInfo(query)
 
     async def schoolMajorinfo(self):
         pass
