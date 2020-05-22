@@ -335,3 +335,18 @@ class Client:
             return await self.http.timeTable(schclass, query)
         else:
             raise ArgumentError
+
+    async def classInfo(self):#이밑까지 래핑하면끝남
+        pass
+
+    async def schoolMajorinfo(self):
+        pass
+
+    async def schulAflcoinfo(self):
+        pass
+
+    async def tiClrminfo(self):
+        pass
+
+    async def spsTimetable(self):
+        pass

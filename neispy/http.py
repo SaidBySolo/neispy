@@ -93,3 +93,18 @@ class Http:
 
     async def timeTable(self, schclass, query):
         return await self.request('get', f'{schclass}Timetable', query)
+
+    async def classInfo(self, query):#이 밑까지 래핑하면 끝남
+        return await self.request('get', 'classInfo', query)
+
+    async def schoolMajorinfo(self, query):
+        return await self.request('get', 'schoolMajorinfo', query)
+
+    async def sschulAflcoinfo(self, query):
+        return await self.request('get', 'sschulAflcoinfo', query)
+
+    async def tiClrminfo(self, query):
+        return await self.request('get', 'tiClrminfo', query)
+
+    async def spsTimetable(self,query):
+        return await self.request('get', 'spsTimetable', query)
