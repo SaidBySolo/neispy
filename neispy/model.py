@@ -2,28 +2,32 @@ from .error import ArgumentError
 
 
 class NeispyResponse:
-    def __init__(self, response, sort):
+    def __init__(self, response, sort, rawlist=False):
         """모든 모델의 기본이되는 클래스입니다.
 
         Arguments:
 
-            response {str} -- json형식의 값을 넣어주셔야합니다.
+            `response` {str} -- json형식의 값을 넣어주셔야합니다.
 
-            sort {str} -- 밑의 항목에 있는 정리하고자하는 정보를 넣어주셔야하는 곳입니다.
+            `sort` {str} -- 밑의 항목에 있는 정리하고자하는 정보를 넣어주셔야하는 곳입니다.
+
+        Keyword Arguments:
+
+            `rawlist` {bool} -- 여러개의 리스트를 받아올것인지에 대한 여부입니다. (default: {False})
 
         Lists:
 
-            schoolInfo -- 학교정보입니다.
+            `schoolInfo` -- 학교정보입니다.
 
-            SchoolSchedule -- 학사일정입니다.
+            `SchoolSchedule` -- 학사일정입니다.
 
-            mealServiceDietInfo -- 급식및식단표입니다.
+            `mealServiceDietInfo` -- 급식및식단표입니다.
 
-            elsTimetable -- 초등학교 시간표입니다.
+            `elsTimetable` -- 초등학교 시간표입니다.
 
-            misTimetable -- 중학교 시간표입니다.
+            `misTimetable` -- 중학교 시간표입니다.
 
-            hisTimetable -- 고등학교 시간표입니다.
+            `hisTimetable` -- 고등학교 시간표입니다.
 
         Raises:
 
@@ -41,6 +45,10 @@ class NeispyResponse:
                 datalist = response[sort]
                 datadict = datalist[1]['row']
                 self.data = datadict
+            elif rawlist is True:
+                datalist = response[sort]
+                datadict = datalist[1]['row']
+                self.data = datadict             
             else:
                 datalist = response[sort]
                 datadict = datalist[1]['row']
@@ -56,18 +64,18 @@ class NeispyResponse:
 
 
 class NeispySchoolInfo(NeispyResponse):
-    def __init__(self, response, sort='schoolInfo'):
-        super().__init__(response, sort)
+    def __init__(self, response, sort='schoolInfo', rawlist=False):
+        super().__init__(response, sort=sort, rawlist=rawlist)
 
 
 class NeispySchoolSchedule(NeispyResponse):
-    def __init__(self, response, sort='SchoolSchedule'):
-        super().__init__(response, sort)
+    def __init__(self, response, sort='SchoolSchedule', rawlist=False):
+        super().__init__(response, sort=sort, rawlist=rawlist)
 
 
 class NeispyMealServiceDietInfo(NeispyResponse):
-    def __init__(self, response, sort='mealServiceDietInfo'):
-        super().__init__(response, sort)
+    def __init__(self, response, sort='mealServiceDietInfo', rawlist=False):
+        super().__init__(response, sort=sort, rawlist=rawlist)
 
     def meal(self):
         """
