@@ -48,7 +48,7 @@ class NeispyResponse:
             elif rawlist is True:
                 datalist = response[sort]
                 datadict = datalist[1]['row']
-                self.data = datadict             
+                self.data = datadict
             else:
                 datalist = response[sort]
                 datadict = datalist[1]['row']

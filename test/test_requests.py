@@ -1,5 +1,4 @@
 import neispy
-import asyncio
 import pytest
 
 fail_list = []
@@ -49,7 +48,7 @@ async def test_requests():
             fail_list.append(f"timeTableELS: {e}")
 
     try:
-        await neis.timeTable('mis', AE, SE1)
+        await neis.timeTable('mis', AE, SE2)
     except Exception as e:
         if e.__class__.__name__ == itsok:
             pass
@@ -57,7 +56,7 @@ async def test_requests():
             fail_list.append(f"timeTableMIS: {e}")
 
     try:
-        await neis.timeTable('his', AE, SE1)
+        await neis.timeTable('his', AE, SE3)
     except Exception as e:
         if e.__class__.__name__ == itsok:
             pass
