@@ -82,7 +82,7 @@ class Client:
         return SchoolInfo(data, 'schoolInfo', rawdata)
 
     async def mealServiceDietInfo(self, ATPT_OFCDC_SC_CODE: str = None, SD_SCHUL_CODE: str = None,
-                                  MMEAL_SC_CODE: str = None, MLSV_YMD: int = now, MLSV_FROM_YMD: int = None, MLSV_TO_YMD: int = None):
+                                  MMEAL_SC_CODE: str = None, MLSV_YMD: int = now, MLSV_FROM_YMD: int = None, MLSV_TO_YMD: int = None, rawdata: bool = None):
         """급식 식단정보를 요청합니다.
 
         Keyword Arguments:
@@ -129,10 +129,10 @@ class Client:
         query = "".join(paramlist)
 
         data = await self.http.mealServiceDietInfo(query)
-        return MealServiceDietInfo(data, 'mealServiceDietInfo', False)
+        return MealServiceDietInfo(data, 'mealServiceDietInfo', rawdata)
 
     async def SchoolSchedule(self, ATPT_OFCDC_SC_CODE: str = None, SD_SCHUL_CODE: str = None, DGHT_CRSE_SC_NM: str = None,
-                             SCHUL_CRSE_SC_NM: str = None, AA_YMD: int = now, AA_FROM_YMD: int = None, AA_TO_YMD: int = None):
+                             SCHUL_CRSE_SC_NM: str = None, AA_YMD: int = now, AA_FROM_YMD: int = None, AA_TO_YMD: int = None, rawdata: bool = False):
         """학사일정입니다.
 
         학년도, 학교별 주요 행사 정보에 대한 학사일자, 행사명, 행사내용, 학년별 행사여부 등의 현황입니다.
@@ -191,7 +191,7 @@ class Client:
         query = "".join(paramlist)
 
         data = await self.http.SchoolSchedule(query)
-        return SchoolSchedule(data, 'SchoolSchedule', False)
+        return SchoolSchedule(data, 'SchoolSchedule', rawdata)
 
     async def acaInsTiInfo(self, ATPT_OFCDC_SC_CODE: str = None, ADMST_ZONE_NM: str = None,
                            ACA_ASNUM: str = None, REALM_SC_NM: str = None, LE_ORD_NM: str = None, LE_CRSE_NM: str = None, rawdata: bool = False):
@@ -254,7 +254,7 @@ class Client:
 
     async def timeTable(self, schclass: str, ATPT_OFCDC_SC_CODE: str = None,
                         SD_SCHUL_CODE: str = None, AY: int = None, SEM: int = None, ALL_TI_YMD: int = now,
-                        GRADE: int = None, CLASS_NM: str = None, PERIO: int = None, TI_FROM_YMD: int = None, TI_TO_YMD: int = None):
+                        GRADE: int = None, CLASS_NM: str = None, PERIO: int = None, TI_FROM_YMD: int = None, TI_TO_YMD: int = None, rawdata: bool = True):
         """초,중,고 시간표
 
         초등학교,중학교,고등학교 학년도, 학교, 학기, 학년, 반, 교시별 시간표 수업내용을 확인할 수 있는 현황입니다
@@ -293,7 +293,7 @@ class Client:
 
             str -- 요청한값을 json형식을 반환합니다.
         """
-        arg = ['els', 'mis', 'his']
+        arg = ['els', 'mis', 'his', 'sps']
         paramlist = []
 
         if ATPT_OFCDC_SC_CODE is not None:
@@ -340,12 +340,12 @@ class Client:
 
         if schclass in arg:
             data = await self.http.timeTable(schclass, query)
-            return TimeTable(data, schclass + "Timetable", False)
+            return TimeTable(data, schclass + "Timetable", rawdata)
         else:
             raise ArgumentError
 
     async def classInfo(self, ATPT_OFCDC_SC_CODE=None, SD_SCHUL_CODE=None, AY=None,
-                        GRADE=None, DGHT_CRSE_SC_NM=None, SCHUL_CRSE_SC_NM=None, ORD_SC_NM=None, DDDEP_NM=None, rawdata=False):
+                        GRADE=None, DGHT_CRSE_SC_NM=None, SCHUL_CRSE_SC_NM=None, ORD_SC_NM=None, DDDEP_NM=None, rawdata:bool = True):
 
         paramlist = []
 
@@ -368,7 +368,7 @@ class Client:
         if DGHT_CRSE_SC_NM is not None:
             DCSN = f'&DGHT_CRSE_SCNM={DGHT_CRSE_SC_NM}'
             paramlist.append(DCSN)
- 
+
         if SCHUL_CRSE_SC_NM is not None:
             SCSN = f'&SCHUL_CRSE_SC_NM={SCHUL_CRSE_SC_NM}'
             paramlist.append(SCSN)
@@ -386,14 +386,97 @@ class Client:
         data = await self.http.classInfo(query)
         return ClassInfo(data, 'classInfo', rawdata)
 
-    async def schoolMajorinfo(self):
-        pass
+    async def schoolMajorinfo(self, ATPT_OFCDC_SC_CODE: str = None, SD_SCHUL_CODE: str = None, 
+                              DGHT_CRSE_SC_NM: str = None, ORD_SC_NM: str = None, rawdata: bool = True):
 
-    async def schulAflcoinfo(self):
-        pass
+        paramlist = []
 
-    async def tiClrminfo(self):
-        pass
+        if ATPT_OFCDC_SC_CODE is not None:
+            AOSC = f'&ATPT_OFCDC_SC_CODE={ATPT_OFCDC_SC_CODE}'
+            paramlist.append(AOSC)
 
-    async def spsTimetable(self):
-        pass
+        if SD_SCHUL_CODE is not None:
+            SSC = f'&SD_SCHUL_CODE={SD_SCHUL_CODE}'
+            paramlist.append(SSC)
+
+        if DGHT_CRSE_SC_NM is not None:
+            DCSN = f'&DGHT_CRSE_SC_NM={DGHT_CRSE_SC_NM}'
+            paramlist.append(DCSN)
+
+        if ORD_SC_NM is not None:
+            OSN = f'&ORD_SC_NM={ORD_SC_NM}'
+            paramlist.append(OSN)
+
+        query = "".join(paramlist)
+
+        data = await self.http.schoolMajorinfo(query)
+        return SchoolMajorInfo(data, 'schoolMajorinfo', rawdata)
+
+    async def schulAflcoinfo(self, ATPT_OFCDC_SC_CODE: str = None, SD_SCHUL_CODE: str = None, 
+                             DGHT_CRSE_SC_NM: str = None, rawdata: bool = True):
+
+        paramlist = []
+
+        if ATPT_OFCDC_SC_CODE is not None:
+            AOSC = f'&ATPT_OFCDC_SC_CODE={ATPT_OFCDC_SC_CODE}'
+            paramlist.append(AOSC)
+
+        if SD_SCHUL_CODE is not None:
+            SSC = f'&SD_SCHUL_CODE={SD_SCHUL_CODE}'
+            paramlist.append(SSC)
+
+        if DGHT_CRSE_SC_NM is not None:
+            DCSN = f'&DGHT_CRSE_SC_NM={DGHT_CRSE_SC_NM}'
+            paramlist.append(DCSN)
+
+        query = "".join(paramlist)
+
+        data = await self.http.schulAflcoinfo(query)
+        return SchulAflcoInfo(data, 'schulAflcoinfo', rawdata)
+
+    async def tiClrminfo(self, ATPT_OFCDC_SC_CODE: str = None, SD_SCHUL_CODE: str = None, AY: str = None, 
+                         GRADE: str = None, SEM: str = None, SCHUL_CRSE_SC_NM: str = None, DGHT_CRSE_SC_NM: str = None, 
+                         ORD_SC_NM: str = None, DDDEP_NM: str = None, rawdata:bool = True):
+
+        paramlist = []
+
+        if ATPT_OFCDC_SC_CODE is not None:
+            AOSC = f'&ATPT_OFCDC_SC_CODE={ATPT_OFCDC_SC_CODE}'
+            paramlist.append(AOSC)
+
+        if SD_SCHUL_CODE is not None:
+            SSC = f'&SD_SCHUL_CODE={SD_SCHUL_CODE}'
+            paramlist.append(SSC)
+
+        if AY is not None:
+            AY = f'&AY={AY}'
+            paramlist.append(AY)
+
+        if GRADE is not None:
+            GE = f'&GE={GRADE}'
+            paramlist.append(GE)
+
+        if SEM is not None:
+            SM = f'&SEM={SEM}'
+            paramlist.append(SM)
+
+        if DGHT_CRSE_SC_NM is not None:
+            DCSN = f'&DGHT_CRSE_SCNM={DGHT_CRSE_SC_NM}'
+            paramlist.append(DCSN)
+
+        if SCHUL_CRSE_SC_NM is not None:
+            SCSN = f'&SCHUL_CRSE_SC_NM={SCHUL_CRSE_SC_NM}'
+            paramlist.append(SCSN)
+
+        if ORD_SC_NM is not None:
+            OSN = f'&ORD_SC_NM={ORD_SC_NM}'
+            paramlist.append(OSN)
+
+        if DDDEP_NM is not None:
+            DN = f'&DDDEP_NM={DDDEP_NM}'
+            paramlist.append(DN)
+
+        query = "".join(paramlist)
+
+        data = await self.http.tiClrminfo(query)
+        return TiClrmInfo(data, 'tiClrminfo', rawdata)

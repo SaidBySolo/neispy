@@ -101,7 +101,7 @@ class Http:
         return await self.request('get', 'schoolMajorinfo', query)
 
     async def schulAflcoinfo(self, query):
-        return await self.request('get', 'sschulAflcoinfo', query)
+        return await self.request('get', 'schulAflcoinfo', query)
 
     async def tiClrminfo(self, query):
         return await self.request('get', 'tiClrminfo', query)
