@@ -89,8 +89,3 @@ class ClassInfo(NeispyResponse):
 class AcaInsTiInfo(NeispyResponse):
     def __init__(self, response, sort, rawdata):
         super().__init__(response, sort, rawdata)
-
-
-class ClassInfo(NeispyResponse):
-    def __init__(self, response, sort, rawdata):
-        super().__init__(response, sort, rawdata)
