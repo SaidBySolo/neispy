@@ -39,11 +39,15 @@ class NeispyResponse:
                      'mealServiceDietInfo',
                      'acaInsTiInfo',
                      'classInfo',
+                     'schoolMajorinfo',
+                     'schulAflcoinfo',
+                     'tiClrminfo',
                      'elsTimetable',
                      'misTimetable',
-                     'hisTimetable']
+                     'hisTimetable',
+                     'spsTimetable']
         if sort in sort_list:
-            if sort == sort_list[5] or sort == sort_list[6] or sort == sort_list[7] or rawdata is True:
+            if rawdata is True:
                 datalist = response[sort]
                 datadict = datalist[1]['row']
                 self.data = datadict
@@ -87,5 +91,20 @@ class ClassInfo(NeispyResponse):
 
 
 class AcaInsTiInfo(NeispyResponse):
+    def __init__(self, response, sort, rawdata):
+        super().__init__(response, sort, rawdata)
+
+
+class SchoolMajorInfo(NeispyResponse):
+    def __init__(self, response, sort, rawdata):
+        super().__init__(response, sort, rawdata)
+
+
+class SchulAflcoInfo(NeispyResponse):
+    def __init__(self, response, sort, rawdata):
+        super().__init__(response, sort, rawdata)
+
+
+class TiClrmInfo(NeispyResponse):
     def __init__(self, response, sort, rawdata):
         super().__init__(response, sort, rawdata)

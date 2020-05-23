@@ -71,7 +71,18 @@ async def main():
     scclass = await neis.classInfo(AE, SE, GRADE=1, rawdata=True)# 학교코드와 교육청 코드로 1학년의 모든 반정보 요청
     class_info = [i['CLASS_NM'] for i in scclass.data]# 리스트로만듬
 
-    #출력
+    hiscinfo = await neis.schoolInfo(SCHUL_NM="인천기계")# 다른정보를 위해 공고로 가져옴
+    hAE = hiscinfo.ATPT_OFCDC_SC_CODE  # 교육청코드
+    hSE = hiscinfo.SD_SCHUL_CODE  # 학교코드
+    scmajorinfo = await neis.schoolMajorinfo(hAE,hSE)# 학과정보 요청
+    majorinfo = [m['DDDEP_NM'] for m in scmajorinfo.data]# 리스트로 만듬
+
+    scAflcoinfo = await neis.schulAflcoinfo(hAE,hSE)# 학교 계열정보 요청
+    Aflco = [a['ORD_SC_NM'] for a in scAflcoinfo.data]
+
+    sctiClrm = await neis.tiClrminfo(hAE,hSE,rawdata=True)#시간표 강의실 정보 요청
+    tiClem = [t['CLRM_NM'] for t in sctiClrm.data]
+
     print(AE)
     print(SE)
     print(meal)
@@ -79,6 +90,8 @@ async def main():
     print(academy)
     print(class_info)
     print(timetable)
+    print(majorinfo)
+    print(Aflco)
 
 # 실행
 loop = asyncio.get_event_loop()
@@ -98,6 +111,9 @@ loop.run_until_complete(main())
 #A+수학교습소
 #['1', '2', '3', '4', '5']
 #['즐거운생활', '수학', '국어', '즐거운생활']
+#['기계과', '공동실습소', '건축과', '건축디자인과', '금속과']
+#['공업계', '공동실습소', '공업계']
+#['건축1-1', '건축1-2', '도시1-1', '도시1-2', '메카1-1']
 ```
 
 ## 인자값
@@ -122,6 +138,10 @@ loop.run_until_complete(main())
 **시간표 같은 부분은 초,중,고인걸 제외하고는 모두 같으니 출력 항목만 보시면됩니다.**
 
 ## Patch note
+
+### 1.0.0
+
+* 모든 엔드포인트를 커버합니다.
 
 ### 0.6.0
 
