@@ -368,7 +368,7 @@ class Client:
         if DGHT_CRSE_SC_NM is not None:
             DCSN = f'&DGHT_CRSE_SCNM={DGHT_CRSE_SC_NM}'
             paramlist.append(DCSN)
-
+ 
         if SCHUL_CRSE_SC_NM is not None:
             SCSN = f'&SCHUL_CRSE_SC_NM={SCHUL_CRSE_SC_NM}'
             paramlist.append(SCSN)
