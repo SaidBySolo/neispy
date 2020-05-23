@@ -32,7 +32,7 @@ async def test_requests():
             fail_list.append(f"SchoolSchedule: {e}")
 
     try:
-        await neis.acaInsTiInfo()
+        await neis.acaInsTiInfo(AE)
     except Exception as e:
         if e.__class__.__name__ == itsok:
             pass
