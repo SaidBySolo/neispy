@@ -41,47 +41,46 @@ import asyncio
 
 name = "인천석천초등학교"
 
+
 async def main():
 
-    #필수인자가 들어가는곳입니다. API키,json,xml등 받을방식등등..
-    #아무값이 없으니 샘플키로 요청합니다.
+    # 필수인자가 들어가는곳입니다. API키,json,xml등 받을방식등등..
+    # 아무값이 없으니 샘플키로 요청합니다.
     neis = neispy.Client()
 
-    #학교이름으로 학교정보를 요청하고 교육청코드 와 학교코드로 가져옵니다.
-    schoolinfo = await neis.schoolInfo(SCHUL_NM=name)
-    scinfo = neispy.NeispySchoolInfo(schoolinfo)# 모델부분입니다 이클래스를 이용하여 밑에 변수와같이 쉽게 가져올수있습니다.
+    # 학교이름으로 학교정보를 요청하고 교육청코드 와 학교코드로 가져옵니다.
+    scinfo = await neis.schoolInfo(SCHUL_NM=name)
+    AE = scinfo.ATPT_OFCDC_SC_CODE  # 교육청코드
+    SE = scinfo.SD_SCHUL_CODE  # 학교코드
 
-    AE = scinfo.ATPT_OFCDC_SC_CODE#교육청코드
-    SE = scinfo.SD_SCHUL_CODE#학교코드
-
-    #20190122날의 급식정보를 요청하고 급식 항목만 가져옵니다.
+    # 학교코드와 교육청 코드로 2019년 1월 22일의 급식 정보 요청
     scmeal = await neis.mealServiceDietInfo(AE, SE, MLSV_YMD=20190122)
-    mealinfo = neispy.NeispyMealServiceDietInfo(scmeal)
-    
-    meal = mealinfo.meal()#급식항목만 줄바꿈으로 변환하여 가져옵니다.
+    meal = scmeal.DDISH_NM.replace('<br/>', '\n')# 줄바꿈으로 만든뒤 출력
 
-    #20190307날의 학사일정을 요청하고 학사일정의 이름을 가져옵니다.
+    # 학교코드와 교육청 코드로 2019년 3월 7일날 학사일정 요청
     scschedule = await neis.SchoolSchedule(AE, SE, AA_YMD=20190307)
-    schinfo = neispy.NeispySchoolSchedule(scschedule)
+    schedule = scschedule.EVENT_NM #학사일정명 가져옴
 
-    schedule_name = schinfo.EVENT_NM
-
-    #학교코드로 20200122날의 시간표을 요청하고 반환값을 정리하여 시간표만 가져옵니다.
-    #초등학교는 els
-    #중학교는 mis
-    #고등학교는 his 를 넣어주시면됩니다.
+    # 학교코드와 교육청 코드로 초등학교의 2020년 1월 22일의 시간표가져옴
     sctimetable = await neis.timeTable('els', AE, SE, 2019, 2, 20200122, 1, 1)
+    timetable = [i['ITRT_CNTNT'] for i in sctimetable.data]# 리스트로 만듬
 
-    timetableinfo = neispy.NeispyTimeTable(sctimetable, 'elsTimetable')#초,중,고학교를 정해주셔야합니다.
+    academyinfo = await neis.acaInsTiInfo(AE) # 교육청 코드로 학원및 교습소 정보 요청
+    academy = academyinfo.ACA_NM # 학교이름 출력
 
-    timetable = timetableinfo.timetable()#시간표만 리스트로 반환합니다.
+    scclass = await neis.classInfo(AE, SE, GRADE=1, rawdata=True)# 학교코드와 교육청 코드로 1학년의 모든 반정보 요청
+    class_info = [i['CLASS_NM'] for i in scclass.data]# 리스트로만듬
 
+    #출력
     print(AE)
     print(SE)
     print(meal)
-    print(schedule_name)
+    print(schedule)
+    print(academy)
+    print(class_info)
     print(timetable)
 
+# 실행
 loop = asyncio.get_event_loop()
 loop.run_until_complete(main())
 
@@ -96,6 +95,8 @@ loop.run_until_complete(main())
 #알타리김치9.13.
 #청국장찌개(신)5.9.13.
 #학급임원선거
+#A+수학교습소
+#['1', '2', '3', '4', '5']
 #['즐거운생활', '수학', '국어', '즐거운생활']
 ```
 
@@ -121,6 +122,14 @@ loop.run_until_complete(main())
 **시간표 같은 부분은 초,중,고인걸 제외하고는 모두 같으니 출력 항목만 보시면됩니다.**
 
 ## Patch note
+
+### 0.6.0
+
+* 모델 적용완료
+
+* 반정보 엔드포인트 커버 완료
+
+* 모든 정보가 필요할때 rawdata를 이용하여 리스트로 가져올수있습니다.
 
 ### 0.5.0
 

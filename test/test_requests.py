@@ -63,4 +63,13 @@ async def test_requests():
         else:
             fail_list.append(f"timeTableHIS: {e}")
 
+    try:
+        await neis.classInfo(AE,SE1)
+    except Exception as e:
+        if e.__class__.__name__ == itsok:
+            pass
+        else:
+            fail_list.append(f"classInfo: {e}")
+
+
     assert(len(fail_list) == 0)
