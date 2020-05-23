@@ -43,6 +43,8 @@ class Client:
 
             `FOND_SC_NM` {str} -- 설립명 (default: {None})
 
+            `rawdata` {bool} -- 여러개의 검색결과를 받아올것인지에 대한 여부입니다. (default: {False})
+
         Returns:
 
             str -- 요청한값을 json형식으로 반환합니다.
@@ -192,7 +194,7 @@ class Client:
         return SchoolSchedule(data, 'SchoolSchedule', False)
 
     async def acaInsTiInfo(self, ATPT_OFCDC_SC_CODE: str = None, ADMST_ZONE_NM: str = None,
-                           ACA_ASNUM: str = None, REALM_SC_NM: str = None, LE_ORD_NM: str = None, LE_CRSE_NM: str = None):
+                           ACA_ASNUM: str = None, REALM_SC_NM: str = None, LE_ORD_NM: str = None, LE_CRSE_NM: str = None, rawdata: bool = False):
         """학원교습소정보 입니다.
 
         개설되어있는 학원 및 교습소의 학원명, 휴원일자, 등록상태, 정원, 분야, 계열 및 과정등을 확인할 수 있으며
@@ -247,7 +249,8 @@ class Client:
 
         query = "".join(paramlist)
 
-        return await self.http.acaInsTiInfo(query)
+        data = await self.http.acaInsTiInfo(query)
+        return AcaInsTiInfo(data, 'acaInsTiInfo', rawdata)
 
     async def timeTable(self, schclass: str, ATPT_OFCDC_SC_CODE: str = None,
                         SD_SCHUL_CODE: str = None, AY: int = None, SEM: int = None, ALL_TI_YMD: int = now,
@@ -342,7 +345,7 @@ class Client:
             raise ArgumentError
 
     async def classInfo(self, ATPT_OFCDC_SC_CODE=None, SD_SCHUL_CODE=None, AY=None,
-                        GRADE=None, DGHT_CRSE_SC_NM=None, SCHUL_CRSE_SC_NM=None, ORD_SC_NM=None, DDDEP_NM=None):
+                        GRADE=None, DGHT_CRSE_SC_NM=None, SCHUL_CRSE_SC_NM=None, ORD_SC_NM=None, DDDEP_NM=None, rawdata=False):
 
         paramlist = []
 
@@ -381,7 +384,7 @@ class Client:
         query = "".join(paramlist)
 
         data = await self.http.classInfo(query)
-        return ClassInfo(data, 'classInfo', False)
+        return ClassInfo(data, 'classInfo', rawdata)
 
     async def schoolMajorinfo(self):
         pass
