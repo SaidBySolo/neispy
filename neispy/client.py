@@ -386,7 +386,7 @@ class Client:
         data = await self.http.classInfo(query)
         return ClassInfo(data, 'classInfo', rawdata)
 
-    async def schoolMajorinfo(self, ATPT_OFCDC_SC_CODE: str = None, SD_SCHUL_CODE: str = None, 
+    async def schoolMajorinfo(self, ATPT_OFCDC_SC_CODE: str = None, SD_SCHUL_CODE: str = None,
                               DGHT_CRSE_SC_NM: str = None, ORD_SC_NM: str = None, rawdata: bool = True):
 
         paramlist = []
@@ -412,7 +412,7 @@ class Client:
         data = await self.http.schoolMajorinfo(query)
         return SchoolMajorInfo(data, 'schoolMajorinfo', rawdata)
 
-    async def schulAflcoinfo(self, ATPT_OFCDC_SC_CODE: str = None, SD_SCHUL_CODE: str = None, 
+    async def schulAflcoinfo(self, ATPT_OFCDC_SC_CODE: str = None, SD_SCHUL_CODE: str = None,
                              DGHT_CRSE_SC_NM: str = None, rawdata: bool = True):
 
         paramlist = []
@@ -434,8 +434,8 @@ class Client:
         data = await self.http.schulAflcoinfo(query)
         return SchulAflcoInfo(data, 'schulAflcoinfo', rawdata)
 
-    async def tiClrminfo(self, ATPT_OFCDC_SC_CODE: str = None, SD_SCHUL_CODE: str = None, AY: str = None, 
-                         GRADE: str = None, SEM: str = None, SCHUL_CRSE_SC_NM: str = None, DGHT_CRSE_SC_NM: str = None, 
+    async def tiClrminfo(self, ATPT_OFCDC_SC_CODE: str = None, SD_SCHUL_CODE: str = None, AY: str = None,
+                         GRADE: str = None, SEM: str = None, SCHUL_CRSE_SC_NM: str = None, DGHT_CRSE_SC_NM: str = None,
                          ORD_SC_NM: str = None, DDDEP_NM: str = None, rawdata:bool = True):
 
         paramlist = []
