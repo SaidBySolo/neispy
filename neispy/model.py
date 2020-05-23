@@ -2,7 +2,7 @@ from .error import ArgumentError
 
 
 class NeispyResponse:
-    def __init__(self, response, sort, rawlist=False):
+    def __init__(self, response, sort, rawdata: bool):
         """모든 모델의 기본이되는 클래스입니다.
 
         Arguments:
@@ -13,7 +13,7 @@ class NeispyResponse:
 
         Keyword Arguments:
 
-            `rawlist` {bool} -- 여러개의 리스트를 받아올것인지에 대한 여부입니다. (default: {False})
+            `rawdata` {bool} -- 여러개의 리스트를 받아올것인지에 대한 여부입니다. (default: {False})
 
         Lists:
 
@@ -41,11 +41,7 @@ class NeispyResponse:
                      'misTimetable',
                      'hisTimetable']
         if sort in sort_list:
-            if sort == sort_list[3] or sort == sort_list[4] or sort == sort_list[5]:
-                datalist = response[sort]
-                datadict = datalist[1]['row']
-                self.data = datadict
-            elif rawlist is True:
+            if sort == sort_list[4] or sort == sort_list[5] or sort == sort_list[6] or rawdata is True:
                 datalist = response[sort]
                 datadict = datalist[1]['row']
                 self.data = datadict
@@ -63,36 +59,25 @@ class NeispyResponse:
         return self.data
 
 
-class NeispySchoolInfo(NeispyResponse):
-    def __init__(self, response, sort='schoolInfo', rawlist=False):
-        super().__init__(response, sort=sort, rawlist=rawlist)
+class SchoolInfo(NeispyResponse):
+    def __init__(self, response, sort, rawdata):
+        super().__init__(response, sort, rawdata)
 
 
-class NeispySchoolSchedule(NeispyResponse):
-    def __init__(self, response, sort='SchoolSchedule', rawlist=False):
-        super().__init__(response, sort=sort, rawlist=rawlist)
+class SchoolSchedule(NeispyResponse):
+    def __init__(self, response, sort, rawdata):
+        super().__init__(response, sort, rawdata)
 
 
-class NeispyMealServiceDietInfo(NeispyResponse):
-    def __init__(self, response, sort='mealServiceDietInfo', rawlist=False):
-        super().__init__(response, sort=sort, rawlist=rawlist)
-
-    def meal(self):
-        """
-        급식 메뉴만을 줄바꿈하여 ``str``로 반환합니다.
-        """
-        result = self.data['DDISH_NM']
-        linebreak = result.replace('<br/>', '\n')
-        return linebreak
+class MealServiceDietInfo(NeispyResponse):
+    def __init__(self, response, sort, rawdata):
+        super().__init__(response, sort, rawdata)
 
 
-class NeispyTimeTable(NeispyResponse):
-    def __init__(self, response, sort):
-        super().__init__(response, sort)
+class TimeTable(NeispyResponse):
+    def __init__(self, response, sort, rawdata):
+        super().__init__(response, sort, rawdata)
 
-    def timetable(self):
-        """
-        첫번째 교시부터 순서대로 ``list``로 반환합니다.
-        """
-        result = [f['ITRT_CNTNT'] for f in self.data]
-        return result
+class ClassInfo(NeispyResponse):
+    def __init__(self, response, sort, rawdata):
+        super().__init__(response, sort, rawdata)

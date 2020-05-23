@@ -48,25 +48,25 @@ class Http:
 
                 if code == "ERROR-300":
                     raise MissingRequiredValues(code, msg)
-                if code == "ERROR-290":
+                elif code == "ERROR-290":
                     raise AuthenticationKeyInvaild(code, msg)
-                if code == "ERROR-310":
+                elif code == "ERROR-310":
                     raise ServiceNotFound(code, msg)
-                if code == "ERROR-333":
+                elif code == "ERROR-333":
                     raise LocationValueTypeInvaild(code, msg)
-                if code == "ERROR-336":
+                elif code == "ERROR-336":
                     raise CannotExceed1000(code, msg)
-                if code == "ERROR-337":
+                elif code == "ERROR-337":
                     raise DailyTrafficLimit(code, msg)
-                if code == "ERROR-500":
+                elif code == "ERROR-500":
                     raise ServerError(code, msg)
-                if code == "ERROR-600":
+                elif code == "ERROR-600":
                     raise DatabaseConnectionError(code, msg)
-                if code == "ERROR-601":
+                elif code == "ERROR-601":
                     raise SQLStatementError(code, msg)
-                if code == "INFO-300":
+                elif code == "INFO-300":
                     raise LimitUseAuthenticationkey(code, msg)
-                if code == "INFO-200":
+                elif code == "INFO-200":
                     raise DataNotFound(code, msg)
                 else:
                     raise HTTPException(code, msg)
