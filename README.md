@@ -1,5 +1,7 @@
 # neispy
 
+> **모든 엔드포인트를 커버합니다.**
+
 [![GitHub license](https://img.shields.io/github/license/SaidBySolo/neispy)](https://github.com/SaidBySolo/neispy/blob/master/LICENSE)
 ![Python package](https://github.com/SaidBySolo/neispy/workflows/Python%20package/badge.svg)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/26f53a7e434c4f079415ab23cb51700d)](https://app.codacy.com/manual/SaidBySolo/neispy/dashboard)
@@ -8,20 +10,6 @@
 [Discord.py](https://github.com/Rapptz/discord.py)와 충돌이 발생하지 않게 aiohttp로 래핑하였습니다.
 
 api키는 [이곳](https://open.neis.go.kr/portal/guide/actKeyPage.do)에서 받으실 수 있습니다.    
-
-## 현재 사용가능한 종류
-
-* 학교정보
-
-* 학원및교습소정보
-
-* 학사일정정보
-
-* 급식정보
-
-* 초,중,고 시간표정보
-
-## 설치 방법
 
 ```sh
 pip install neispy
@@ -125,17 +113,9 @@ loop.run_until_complete(main())
 |pIndex|INTEGER(필수)|페이지 위치|기본값 : 1(sample key는 1 고정)|
 |pSize|INTEGER(필수)|페이지 당 신청 숫자|기본값 : 100(sample key는 5 고정)|
 
-* [학교기본정보](https://open.neis.go.kr/portal/data/service/selectServicePage.do?page=1&rows=10&sortColumn=&sortDirection=&infId=OPEN17020190531110010104913&infSeq=2#2)
+* [데이터셋](https://open.neis.go.kr/portal/data/dataset/searchDatasetPage.do)
 
-* [급식식단정보](https://open.neis.go.kr/portal/data/service/selectServicePage.do?page=1&rows=10&sortColumn=&sortDirection=&infId=OPEN17320190722180924242823&infSeq=2#2)
-
-* [학사일정](https://open.neis.go.kr/portal/data/service/selectServicePage.do?page=1&rows=10&sortColumn=&sortDirection=&infId=OPEN17220190722175038389180&infSeq=2#2)
-
-* [학원교습소정보](https://open.neis.go.kr/portal/data/service/selectServicePage.do?page=1&rows=10&sortColumn=&sortDirection=&infId=OPEN15920190423094641415608&infSeq=2)
-
-* [시간표](https://open.neis.go.kr/portal/data/service/selectServicePage.do?page=1&rows=10&sortColumn=&sortDirection=&infId=OPEN15020190408160341416743&infSeq=2)
-
-**시간표 같은 부분은 초,중,고인걸 제외하고는 모두 같으니 출력 항목만 보시면됩니다.**
+**시간표 같은 부분은 초,중,고,특수인걸 제외하고는 모두 같습니다.**
 
 ## Patch note
 
