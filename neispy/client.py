@@ -82,7 +82,7 @@ class Client:
         return SchoolInfo(data, 'schoolInfo', rawdata)
 
     async def mealServiceDietInfo(self, ATPT_OFCDC_SC_CODE: str = None, SD_SCHUL_CODE: str = None,
-                                  MMEAL_SC_CODE: str = None, MLSV_YMD: int = now, MLSV_FROM_YMD: int = None, MLSV_TO_YMD: int = None, rawdata: bool = None):
+                                  MMEAL_SC_CODE: str = None, MLSV_YMD: int = now, MLSV_FROM_YMD: int = None, MLSV_TO_YMD: int = None, rawdata: bool = False):
         """급식 식단정보를 요청합니다.
 
         Keyword Arguments:
@@ -344,8 +344,8 @@ class Client:
         else:
             raise ArgumentError
 
-    async def classInfo(self, ATPT_OFCDC_SC_CODE=None, SD_SCHUL_CODE=None, AY=None,
-                        GRADE=None, DGHT_CRSE_SC_NM=None, SCHUL_CRSE_SC_NM=None, ORD_SC_NM=None, DDDEP_NM=None, rawdata:bool = True):
+    async def classInfo(self, ATPT_OFCDC_SC_CODE:str = None, SD_SCHUL_CODE:str = None, AY:str = None,
+                        GRADE:str = None, DGHT_CRSE_SC_NM:str = None, SCHUL_CRSE_SC_NM:str = None, ORD_SC_NM:str = None, DDDEP_NM:str = None, rawdata:bool = True):
 
         paramlist = []
 
