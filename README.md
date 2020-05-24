@@ -56,7 +56,7 @@ async def main():
     academyinfo = await neis.acaInsTiInfo(AE) # 교육청 코드로 학원및 교습소 정보 요청
     academy = academyinfo.ACA_NM # 학교이름 출력
 
-    scclass = await neis.classInfo(AE, SE, GRADE=1, rawdata=True)# 학교코드와 교육청 코드로 1학년의 모든 반정보 요청
+    scclass = await neis.classInfo(AE, SE, GRADE=1)# 학교코드와 교육청 코드로 1학년의 모든 반정보 요청
     class_info = [i['CLASS_NM'] for i in scclass.data]# 리스트로만듬
 
     hiscinfo = await neis.schoolInfo(SCHUL_NM="인천기계")# 다른정보를 위해 공고로 가져옴
