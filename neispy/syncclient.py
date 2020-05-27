@@ -1,13 +1,10 @@
 import datetime
-from .http import Http
+from .synchttp import SyncHttp
 from .model import *
 from .error import ArgumentError
 
-n = datetime.datetime.now()
-now = f'{n.year}{n.month}{n.day}'
 
-
-class AsyncClient:
+class SyncClient:
     def __init__(self, KEY='', Type='json', pIndex: str = 1, pSize: str = 100):
         """필수인자값을 받습니다
 
@@ -21,10 +18,10 @@ class AsyncClient:
 
             ``pSize`` {str} -- 페이지당 신청숫자 입니다. 샘플키는 5 고정입니다. (default: {100})
         """
-        self.http = Http(KEY, Type, pIndex, pSize)
+        self.http = SyncHttp(KEY, Type, pIndex, pSize)
 
-    async def schoolInfo(self, ATPT_OFCDC_SC_CODE: str = None,  SD_SCHUL_CODE: str = None, SCHUL_NM: str = None,
-                         SCHUL_KND_SC_NM: str = None, LCTN_SC_NM: str = None, FOND_SC_NM: str = None, rawdata: bool = False):
+    def schoolInfo(self, ATPT_OFCDC_SC_CODE: str = None,  SD_SCHUL_CODE: str = None, SCHUL_NM: str = None,
+                   SCHUL_KND_SC_NM: str = None, LCTN_SC_NM: str = None, FOND_SC_NM: str = None, rawdata: bool = False):
         """학교기본정보를 요청합니다.
 
         학교 기본정보에 대한 학교명, 소재지, 주소, 전화번호, 홈페이지주소, 남녀공학여부, 주야구분, 개교기념일, 폐교여부 등을 확인할 수 있는 현황입니다.
@@ -78,11 +75,11 @@ class AsyncClient:
 
         query = "".join(paramlist)  # IDK
 
-        data = await self.http.schoolInfo(query)
+        data = self.http.schoolInfo(query)
         return SchoolInfo(data, 'schoolInfo', rawdata)
 
-    async def mealServiceDietInfo(self, ATPT_OFCDC_SC_CODE: str = None, SD_SCHUL_CODE: str = None,
-                                  MMEAL_SC_CODE: str = None, MLSV_YMD: int = now, MLSV_FROM_YMD: int = None, MLSV_TO_YMD: int = None, rawdata: bool = False):
+    def mealServiceDietInfo(self, ATPT_OFCDC_SC_CODE: str = None, SD_SCHUL_CODE: str = None,
+                            MMEAL_SC_CODE: str = None, MLSV_YMD: int = now, MLSV_FROM_YMD: int = None, MLSV_TO_YMD: int = None, rawdata: bool = False):
         """급식 식단정보를 요청합니다.
 
         Keyword Arguments:
@@ -128,11 +125,11 @@ class AsyncClient:
 
         query = "".join(paramlist)
 
-        data = await self.http.mealServiceDietInfo(query)
+        data = self.http.mealServiceDietInfo(query)
         return MealServiceDietInfo(data, 'mealServiceDietInfo', rawdata)
 
-    async def SchoolSchedule(self, ATPT_OFCDC_SC_CODE: str = None, SD_SCHUL_CODE: str = None, DGHT_CRSE_SC_NM: str = None,
-                             SCHUL_CRSE_SC_NM: str = None, AA_YMD: int = now, AA_FROM_YMD: int = None, AA_TO_YMD: int = None, rawdata: bool = False):
+    def SchoolSchedule(self, ATPT_OFCDC_SC_CODE: str = None, SD_SCHUL_CODE: str = None, DGHT_CRSE_SC_NM: str = None,
+                       SCHUL_CRSE_SC_NM: str = None, AA_YMD: int = now, AA_FROM_YMD: int = None, AA_TO_YMD: int = None, rawdata: bool = False):
         """학사일정입니다.
 
         학년도, 학교별 주요 행사 정보에 대한 학사일자, 행사명, 행사내용, 학년별 행사여부 등의 현황입니다.
@@ -190,11 +187,11 @@ class AsyncClient:
 
         query = "".join(paramlist)
 
-        data = await self.http.SchoolSchedule(query)
+        data = self.http.SchoolSchedule(query)
         return SchoolSchedule(data, 'SchoolSchedule', rawdata)
 
-    async def acaInsTiInfo(self, ATPT_OFCDC_SC_CODE: str = None, ADMST_ZONE_NM: str = None,
-                           ACA_ASNUM: str = None, REALM_SC_NM: str = None, LE_ORD_NM: str = None, LE_CRSE_NM: str = None, rawdata: bool = False):
+    def acaInsTiInfo(self, ATPT_OFCDC_SC_CODE: str = None, ADMST_ZONE_NM: str = None,
+                     ACA_ASNUM: str = None, REALM_SC_NM: str = None, LE_ORD_NM: str = None, LE_CRSE_NM: str = None, rawdata: bool = False):
         """학원교습소정보 입니다.
 
         개설되어있는 학원 및 교습소의 학원명, 휴원일자, 등록상태, 정원, 분야, 계열 및 과정등을 확인할 수 있으며
@@ -249,12 +246,12 @@ class AsyncClient:
 
         query = "".join(paramlist)
 
-        data = await self.http.acaInsTiInfo(query)
+        data = self.http.acaInsTiInfo(query)
         return AcaInsTiInfo(data, 'acaInsTiInfo', rawdata)
 
-    async def timeTable(self, schclass: str, ATPT_OFCDC_SC_CODE: str = None,
-                        SD_SCHUL_CODE: str = None, AY: int = None, SEM: int = None, ALL_TI_YMD: int = now,
-                        GRADE: int = None, CLASS_NM: str = None, PERIO: int = None, TI_FROM_YMD: int = None, TI_TO_YMD: int = None, rawdata: bool = True):
+    def timeTable(self, schclass: str, ATPT_OFCDC_SC_CODE: str = None,
+                  SD_SCHUL_CODE: str = None, AY: int = None, SEM: int = None, ALL_TI_YMD: int = now,
+                  GRADE: int = None, CLASS_NM: str = None, PERIO: int = None, TI_FROM_YMD: int = None, TI_TO_YMD: int = None, rawdata: bool = True):
         """초,중,고 시간표
 
         초등학교,중학교,고등학교 학년도, 학교, 학기, 학년, 반, 교시별 시간표 수업내용을 확인할 수 있는 현황입니다
@@ -339,13 +336,13 @@ class AsyncClient:
         query = "".join(paramlist)
 
         if schclass in arg:
-            data = await self.http.timeTable(schclass, query)
+            data = self.http.timeTable(schclass, query)
             return TimeTable(data, schclass + "Timetable", rawdata)
         else:
             raise ArgumentError
 
-    async def classInfo(self, ATPT_OFCDC_SC_CODE: str = None, SD_SCHUL_CODE: str = None, AY: str = None,
-                        GRADE: str = None, DGHT_CRSE_SC_NM: str = None, SCHUL_CRSE_SC_NM: str = None, ORD_SC_NM: str = None, DDDEP_NM: str = None, rawdata: bool = True):
+    def classInfo(self, ATPT_OFCDC_SC_CODE: str = None, SD_SCHUL_CODE: str = None, AY: str = None,
+                  GRADE: str = None, DGHT_CRSE_SC_NM: str = None, SCHUL_CRSE_SC_NM: str = None, ORD_SC_NM: str = None, DDDEP_NM: str = None, rawdata: bool = True):
 
         paramlist = []
 
@@ -383,11 +380,11 @@ class AsyncClient:
 
         query = "".join(paramlist)
 
-        data = await self.http.classInfo(query)
+        data = self.http.classInfo(query)
         return ClassInfo(data, 'classInfo', rawdata)
 
-    async def schoolMajorinfo(self, ATPT_OFCDC_SC_CODE: str = None, SD_SCHUL_CODE: str = None,
-                              DGHT_CRSE_SC_NM: str = None, ORD_SC_NM: str = None, rawdata: bool = True):
+    def schoolMajorinfo(self, ATPT_OFCDC_SC_CODE: str = None, SD_SCHUL_CODE: str = None,
+                        DGHT_CRSE_SC_NM: str = None, ORD_SC_NM: str = None, rawdata: bool = True):
 
         paramlist = []
 
@@ -409,11 +406,11 @@ class AsyncClient:
 
         query = "".join(paramlist)
 
-        data = await self.http.schoolMajorinfo(query)
+        data = self.http.schoolMajorinfo(query)
         return SchoolMajorInfo(data, 'schoolMajorinfo', rawdata)
 
-    async def schulAflcoinfo(self, ATPT_OFCDC_SC_CODE: str = None, SD_SCHUL_CODE: str = None,
-                             DGHT_CRSE_SC_NM: str = None, rawdata: bool = True):
+    def schulAflcoinfo(self, ATPT_OFCDC_SC_CODE: str = None, SD_SCHUL_CODE: str = None,
+                       DGHT_CRSE_SC_NM: str = None, rawdata: bool = True):
 
         paramlist = []
 
@@ -431,12 +428,12 @@ class AsyncClient:
 
         query = "".join(paramlist)
 
-        data = await self.http.schulAflcoinfo(query)
+        data = self.http.schulAflcoinfo(query)
         return SchulAflcoInfo(data, 'schulAflcoinfo', rawdata)
 
-    async def tiClrminfo(self, ATPT_OFCDC_SC_CODE: str = None, SD_SCHUL_CODE: str = None, AY: str = None,
-                         GRADE: str = None, SEM: str = None, SCHUL_CRSE_SC_NM: str = None, DGHT_CRSE_SC_NM: str = None,
-                         ORD_SC_NM: str = None, DDDEP_NM: str = None, rawdata: bool = True):
+    def tiClrminfo(self, ATPT_OFCDC_SC_CODE: str = None, SD_SCHUL_CODE: str = None, AY: str = None,
+                   GRADE: str = None, SEM: str = None, SCHUL_CRSE_SC_NM: str = None, DGHT_CRSE_SC_NM: str = None,
+                   ORD_SC_NM: str = None, DDDEP_NM: str = None, rawdata: bool = True):
 
         paramlist = []
 
@@ -478,5 +475,5 @@ class AsyncClient:
 
         query = "".join(paramlist)
 
-        data = await self.http.tiClrminfo(query)
+        data = self.http.tiClrminfo(query)
         return TiClrmInfo(data, 'tiClrminfo', rawdata)

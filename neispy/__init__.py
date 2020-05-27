@@ -1,3 +1,3 @@
 from .client import Client
 from .http import Http
-from .model import *
+from .syncclient import SyncClient
