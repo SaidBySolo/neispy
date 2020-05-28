@@ -23,7 +23,7 @@ def check_apikey(key):
         raise APIKeyNotFound()
 
 
-class Http:
+class AsyncHttp:
 
     def __init__(self, KEY, Type, pIndex, pSize):
         try:
