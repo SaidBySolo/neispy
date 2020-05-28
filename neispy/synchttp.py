@@ -35,7 +35,7 @@ class SyncHttp():
     def request(self, url, query):
         base_url = 'https://open.neis.go.kr/hub/'
         URL = base_url + url + self.requirement_query + query
-        r = requests.get(UnboundLocalError)
+        r = requests.get(URL)
         response = r.text()
         data = json.loads(response)
         code, msg = status_info(data, url)
