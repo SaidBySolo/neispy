@@ -3,6 +3,8 @@ from .synchttp import SyncHttp
 from .model import *
 from .error import ArgumentError
 
+n = datetime.datetime.now()
+now = f'{n.year}{n.month}{n.day}'
 
 class SyncClient:
     def __init__(self, KEY='', Type='json', pIndex: str = 1, pSize: str = 100):
