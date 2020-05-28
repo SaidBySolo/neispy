@@ -1,4 +1,3 @@
-from .asynchttp import AsyncHttp
 from .asyncclient import AsyncClient
-from .synchttp import SyncHttp
+from .http import Http
 from .syncclient import SyncClient
