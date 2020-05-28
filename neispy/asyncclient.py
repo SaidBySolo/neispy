@@ -1,6 +1,7 @@
 import datetime
 from .asynchttp import AsyncHttp
-from .model import *
+from .model import SchoolInfo, SchoolSchedule, MealServiceDietInfo, TimeTable, \
+    ClassInfo, AcaInsTiInfo, SchoolMajorInfo, SchulAflcoInfo, TiClrmInfo
 from .error import ArgumentError
 
 n = datetime.datetime.now()
