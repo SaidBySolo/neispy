@@ -1,5 +1,6 @@
 # neispy
 
+> **동기와 비동기 전부 지원합니다.**
 > **문제 발생시 이슈 넣어주세요!**
 
 [![GitHub license](https://img.shields.io/github/license/SaidBySolo/neispy)](https://github.com/SaidBySolo/neispy/blob/master/LICENSE)
