@@ -1,28 +1,9 @@
 import requests
 import json
+from .check import status_info, check_apikey
 from .error import APIKeyNotFound, MissingRequiredValues, AuthenticationKeyInvaild, \
     ServiceNotFound, LocationValueTypeInvaild, CannotExceed1000, DailyTrafficLimit, ServerError, \
     DatabaseConnectionError, SQLStatementError, LimitUseAuthenticationkey, DataNotFound, HTTPException
-
-
-def status_info(response, querytype):
-    try:
-        datalist = response[querytype]
-        headlist = datalist[0]['head']
-        code = headlist[1]['RESULT']['CODE']
-        message = headlist[1]['RESULT']['MESSAGE']
-        return(code, message)
-    except KeyError:
-        code = response['RESULT']['CODE']
-        message = response['RESULT']['MESSAGE']
-        return(code, message)
-
-
-def check_apikey(key):
-    if any(key):
-        pass
-    else:
-        raise APIKeyNotFound()
 
 
 class SyncHttp():
