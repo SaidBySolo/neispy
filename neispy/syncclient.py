@@ -1,10 +1,12 @@
 import datetime
 from .synchttp import SyncHttp
-from .model import *
+from .model import SchoolInfo, SchoolSchedule, MealServiceDietInfo, TimeTable, \
+    ClassInfo, AcaInsTiInfo, SchoolMajorInfo, SchulAflcoInfo, TiClrmInfo
 from .error import ArgumentError
 
 n = datetime.datetime.now()
 now = f'{n.year}{n.month}{n.day}'
+
 
 class SyncClient:
     def __init__(self, KEY='', Type='json', pIndex: str = 1, pSize: str = 100):

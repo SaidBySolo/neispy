@@ -1,3 +1,8 @@
+from collections import namedtuple
+
+from .asynchttp import AsyncHttp
 from .asyncclient import AsyncClient
-from .http import Http
+from .synchttp import SyncHttp
 from .syncclient import SyncClient
+
+from .error import *

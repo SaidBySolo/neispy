@@ -1,6 +1,7 @@
 import datetime
-from .http import Http
-from .model import *
+from .asynchttp import AsyncHttp
+from .model import SchoolInfo, SchoolSchedule, MealServiceDietInfo, TimeTable, \
+    ClassInfo, AcaInsTiInfo, SchoolMajorInfo, SchulAflcoInfo, TiClrmInfo
 from .error import ArgumentError
 
 n = datetime.datetime.now()
@@ -21,7 +22,7 @@ class AsyncClient:
 
             ``pSize`` {str} -- 페이지당 신청숫자 입니다. 샘플키는 5 고정입니다. (default: {100})
         """
-        self.http = Http(KEY, Type, pIndex, pSize)
+        self.http = AsyncHttp(KEY, Type, pIndex, pSize)
 
     async def schoolInfo(self, ATPT_OFCDC_SC_CODE: str = None,  SD_SCHUL_CODE: str = None, SCHUL_NM: str = None,
                          SCHUL_KND_SC_NM: str = None, LCTN_SC_NM: str = None, FOND_SC_NM: str = None, rawdata: bool = False):
