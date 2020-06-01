@@ -74,7 +74,7 @@ class SyncHttp():
     def timeTable(self, schclass, query):
         return self.request(f'{schclass}Timetable', query)
 
-    def classInfo(self, query):  # 이 밑까지 래핑하면 끝남
+    def classInfo(self, query):
         return self.request('classInfo', query)
 
     def schoolMajorinfo(self, query):
