@@ -7,7 +7,7 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/26f53a7e434c4f079415ab23cb51700d)](https://app.codacy.com/manual/SaidBySolo/neispy/dashboard)
 [![PyPI - Downloads](https://img.shields.io/pypi/dm/neispy)](https://pypi.org/project/neispy/)
 
-[Discord.py](https://github.com/Rapptz/discord.py)와 충돌이 발생하지 않게 aiohttp로 래핑하였습니다.
+기초적인 사용법은 [이곳](https://www.koreaminecraft.net/dev_best_lecture/1736749)을 봐주세요!
 
 api키는 [이곳](https://open.neis.go.kr/portal/guide/actKeyPage.do)에서 받으실 수 있습니다.    
 
