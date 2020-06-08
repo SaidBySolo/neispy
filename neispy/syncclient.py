@@ -5,7 +5,7 @@ from .model import SchoolInfo, SchoolSchedule, MealServiceDietInfo, TimeTable, \
 from .error import ArgumentError
 
 n = datetime.datetime.now()
-now = f'{n.year}{n.month}{n.day}'
+now = n.strftime("%Y%m%d")
 
 
 class SyncClient:
