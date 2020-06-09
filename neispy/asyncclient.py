@@ -254,8 +254,10 @@ class AsyncClient:
         return AcaInsTiInfo(data, 'acaInsTiInfo', rawdata)
 
     async def timeTable(self, schclass: str, ATPT_OFCDC_SC_CODE: str = None,
-                        SD_SCHUL_CODE: str = None, AY: int = None, SEM: int = None, ALL_TI_YMD: int = now,
-                        GRADE: int = None, CLASS_NM: str = None, PERIO: int = None, TI_FROM_YMD: int = None, TI_TO_YMD: int = None, rawdata: bool = True):
+                  SD_SCHUL_CODE: str = None, AY: int = None, SEM: int = None, ALL_TI_YMD: int = now,
+                  DGHT_CRSE_SC_NM = None, ORD_SC_NM = None, DDDEP_NM = None, GRADE: int = None, 
+                  CLASS_NM: str = None, PERIO: int = None, TI_FROM_YMD: int = None, 
+                  TI_TO_YMD: int = None, rawdata: bool = True):
         """초,중,고 시간표
 
         초등학교,중학교,고등학교 학년도, 학교, 학기, 학년, 반, 교시별 시간표 수업내용을 확인할 수 있는 현황입니다
@@ -275,6 +277,12 @@ class AsyncClient:
             `SEM` {int} -- 학기 (default: {None})
 
             `ALL_TI_YMD` {int} -- 시간표일자(주어지지 않았을경우 사용자의 현재날짜로 요청합니다.) (default: {now})
+
+            `DGHT_CRSE_SC_NM` {str} -- 주야과정명(고등학교일 경우만 받음) (default: {None})
+
+           ` ORD_SC_NM` {str} -- 계열명(고등학교일 경우만 받음) (default: {None})
+            
+            `DDDEP_NM` {str} -- 학과명(고등학교일 경우만 받음) (default: {None})
 
             `GRADE` {int} --학년 (default: {None})
 
@@ -317,6 +325,18 @@ class AsyncClient:
             ATY = f'&ALL_TI_YMD={ALL_TI_YMD}'
             paramlist.append(ATY)
 
+        if schclass == arg[2] and DGHT_CRSE_SC_NM is not None:
+            DCSN = f'&DGHT_CRSE_SCNM={DGHT_CRSE_SC_NM}'
+            paramlist.append(DCSN)
+
+        if schclass == arg[2] and ORD_SC_NM is not None:
+            OSN = f'&ORD_SC_NM={ORD_SC_NM}'
+            paramlist.append(OSN)
+
+        if schclass == arg[2] and DDDEP_NM is not None:
+            DN = f'&DDDEP_NM={DDDEP_NM}'
+            paramlist.append(DN)
+
         if GRADE is not None:
             GE = f'&GRADE={GRADE}'
             paramlist.append(GE)
@@ -340,7 +360,7 @@ class AsyncClient:
         query = "".join(paramlist)
 
         if schclass in arg:
-            data = await self.http.timeTable(schclass, query)
+            data = self.http.timeTable(schclass, query)
             return TimeTable(data, schclass + "Timetable", rawdata)
         else:
             raise ArgumentError
