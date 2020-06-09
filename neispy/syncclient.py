@@ -317,6 +317,18 @@ class SyncClient:
             ATY = f'&ALL_TI_YMD={ALL_TI_YMD}'
             paramlist.append(ATY)
 
+        if schclass == arg[2] and DGHT_CRSE_SC_NM is not None:
+            DCSN = f'&DGHT_CRSE_SCNM={DGHT_CRSE_SC_NM}'
+            paramlist.append(DCSN)
+
+        if schclass == arg[2] and ORD_SC_NM is not None:
+            OSN = f'&ORD_SC_NM={ORD_SC_NM}'
+            paramlist.append(OSN)
+
+        if schclass == arg[2] and DDDEP_NM is not None:
+            DN = f'&DDDEP_NM={DDDEP_NM}'
+            paramlist.append(DN)
+
         if GRADE is not None:
             GE = f'&GRADE={GRADE}'
             paramlist.append(GE)
