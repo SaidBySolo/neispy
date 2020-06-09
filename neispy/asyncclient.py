@@ -360,7 +360,7 @@ class AsyncClient:
         query = "".join(paramlist)
 
         if schclass in arg:
-            data = self.http.timeTable(schclass, query)
+            data = await self.http.timeTable(schclass, query)
             return TimeTable(data, schclass + "Timetable", rawdata)
         else:
             raise ArgumentError
