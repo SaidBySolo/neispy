@@ -19,7 +19,7 @@ class SyncHttp():
         base_url = 'https://open.neis.go.kr/hub/'
         URL = base_url + url + self.requirement_query + query
         r = requests.get(URL)
-        response = r.text()
+        response = r.text
         data = json.loads(response)
         code, msg = status_info(data, url)
 
