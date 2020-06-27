@@ -146,7 +146,7 @@ def main():
     hiscinfo = neis.schoolInfo(SCHUL_NM="인천기계")# 다른정보를 위해 공고로 가져옴
     hAE = hiscinfo.ATPT_OFCDC_SC_CODE  # 교육청코드
     hSE = hiscinfo.SD_SCHUL_CODE  # 학교코드
-    scmajorinfo = await neis.schoolMajorinfo(hAE,hSE)# 학과정보 요청
+    scmajorinfo = neis.schoolMajorinfo(hAE,hSE)# 학과정보 요청
     majorinfo = [m['DDDEP_NM'] for m in scmajorinfo.data]# 리스트로 만듬
 
     scAflcoinfo = neis.schulAflcoinfo(hAE,hSE)# 학교 계열정보 요청
