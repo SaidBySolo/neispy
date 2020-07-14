@@ -1,5 +1,5 @@
 import aiohttp
-import json
+import ujson
 from .check import status_info, check_apikey
 from .error import APIKeyNotFound, MissingRequiredValues, AuthenticationKeyInvaild, \
     ServiceNotFound, LocationValueTypeInvaild, CannotExceed1000, DailyTrafficLimit, ServerError, \
@@ -23,7 +23,7 @@ class AsyncHttp:
         async with aiohttp.ClientSession() as cs:
             async with cs.request(method, URL) as r:
                 response = await r.text()
-                data = json.loads(response)
+                data = ujson.loads(response)
                 code, msg = status_info(data, url)
 
                 if code == "INFO-000":

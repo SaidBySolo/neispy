@@ -13,7 +13,8 @@ setuptools.setup(
     packages=setuptools.find_packages(),
     install_requires=[
         'aiohttp[speedup]',
-        'requests'
+        'requests',
+        'ujson'
     ],
     classifiers=[
         # 패키지에 대한 태그

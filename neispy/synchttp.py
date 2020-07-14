@@ -1,5 +1,5 @@
 import requests
-import json
+import ujson
 from .check import status_info, check_apikey
 from .error import APIKeyNotFound, MissingRequiredValues, AuthenticationKeyInvaild, \
     ServiceNotFound, LocationValueTypeInvaild, CannotExceed1000, DailyTrafficLimit, ServerError, \
@@ -20,7 +20,7 @@ class SyncHttp():
         URL = base_url + url + self.requirement_query + query
         r = requests.get(URL)
         response = r.text
-        data = json.loads(response)
+        data = ujson.loads(response)
         code, msg = status_info(data, url)
 
         if code == "INFO-000":
