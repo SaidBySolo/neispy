@@ -115,6 +115,10 @@ class SyncClient:
             ASC = f'&SD_SCHUL_CODE={SD_SCHUL_CODE}'
             paramlist.append(ASC)
 
+        if MMEAL_SC_CODE is not None:
+            MSC = f'&MMEAL_SC_CODE={MMEAL_SC_CODE}'
+            paramlist.append(MSC)
+
         if MLSV_YMD is not None:
             MY = f'&MLSV_YMD={MLSV_YMD}'
             paramlist.append(MY)
@@ -255,8 +259,8 @@ class SyncClient:
 
     def timeTable(self, schclass: str, ATPT_OFCDC_SC_CODE: str = None,
                   SD_SCHUL_CODE: str = None, AY: int = None, SEM: int = None, ALL_TI_YMD: int = now,
-                  DGHT_CRSE_SC_NM = None, ORD_SC_NM = None, DDDEP_NM = None, GRADE: int = None, 
-                  CLASS_NM: str = None, PERIO: int = None, TI_FROM_YMD: int = None, 
+                  DGHT_CRSE_SC_NM=None, ORD_SC_NM=None, DDDEP_NM=None, GRADE: int = None,
+                  CLASS_NM: str = None, PERIO: int = None, TI_FROM_YMD: int = None,
                   TI_TO_YMD: int = None, rawdata: bool = True):
         """초,중,고 시간표
 

@@ -115,6 +115,10 @@ class AsyncClient:
             ASC = f'&SD_SCHUL_CODE={SD_SCHUL_CODE}'
             paramlist.append(ASC)
 
+        if MMEAL_SC_CODE is not None:
+            MSC = f'&MMEAL_SC_CODE={MMEAL_SC_CODE}'
+            paramlist.append(MSC)
+
         if MLSV_YMD is not None:
             MY = f'&MLSV_YMD={MLSV_YMD}'
             paramlist.append(MY)
@@ -254,10 +258,10 @@ class AsyncClient:
         return AcaInsTiInfo(data, 'acaInsTiInfo', rawdata)
 
     async def timeTable(self, schclass: str, ATPT_OFCDC_SC_CODE: str = None,
-                  SD_SCHUL_CODE: str = None, AY: int = None, SEM: int = None, ALL_TI_YMD: int = now,
-                  DGHT_CRSE_SC_NM = None, ORD_SC_NM = None, DDDEP_NM = None, GRADE: int = None, 
-                  CLASS_NM: str = None, PERIO: int = None, TI_FROM_YMD: int = None, 
-                  TI_TO_YMD: int = None, rawdata: bool = True):
+                        SD_SCHUL_CODE: str = None, AY: int = None, SEM: int = None, ALL_TI_YMD: int = now,
+                        DGHT_CRSE_SC_NM=None, ORD_SC_NM=None, DDDEP_NM=None, GRADE: int = None,
+                        CLASS_NM: str = None, PERIO: int = None, TI_FROM_YMD: int = None,
+                        TI_TO_YMD: int = None, rawdata: bool = True):
         """초,중,고 시간표
 
         초등학교,중학교,고등학교 학년도, 학교, 학기, 학년, 반, 교시별 시간표 수업내용을 확인할 수 있는 현황입니다
