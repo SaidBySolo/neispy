@@ -1,23 +1,35 @@
 import aiohttp
 import ujson
 from .check import status_info, check_apikey
-from .error import APIKeyNotFound, MissingRequiredValues, AuthenticationKeyInvaild, \
-    ServiceNotFound, LocationValueTypeInvaild, CannotExceed1000, DailyTrafficLimit, ServerError, \
-    DatabaseConnectionError, SQLStatementError, LimitUseAuthenticationkey, DataNotFound, HTTPException
+from .error import (
+    APIKeyNotFound,
+    MissingRequiredValues,
+    AuthenticationKeyInvaild,
+    ServiceNotFound,
+    LocationValueTypeInvaild,
+    CannotExceed1000,
+    DailyTrafficLimit,
+    ServerError,
+    DatabaseConnectionError,
+    SQLStatementError,
+    LimitUseAuthenticationkey,
+    DataNotFound,
+    HTTPException,
+)
 
 
 class AsyncHttp:
-
     def __init__(self, KEY, Type, pIndex, pSize):
         try:
             check_apikey(KEY)
         except APIKeyNotFound:
             import traceback
+
             traceback.print_exc()
         self.requirement_query = self.requirement(KEY, Type, pIndex, pSize)
 
     async def request(self, method, url, query) -> dict:
-        base_url = 'https://open.neis.go.kr/hub/'
+        base_url = "https://open.neis.go.kr/hub/"
         URL = base_url + url + self.requirement_query + query
 
         async with aiohttp.ClientSession() as cs:
@@ -60,34 +72,34 @@ class AsyncHttp:
         reqtype = f"&Type={Type}"
         pindex = f"&pindex={pIndex}"
         psize = f"&pSize={pSize}"
-        return(apikey + reqtype + pindex + psize)
+        return apikey + reqtype + pindex + psize
 
     async def schoolInfo(self, query) -> dict:
-        return await self.request('get', 'schoolInfo', query)
+        return await self.request("get", "schoolInfo", query)
 
     async def mealServiceDietInfo(self, query) -> dict:
-        return await self.request('get', 'mealServiceDietInfo', query)
+        return await self.request("get", "mealServiceDietInfo", query)
 
     async def SchoolSchedule(self, query) -> dict:
-        return await self.request('get', 'SchoolSchedule', query)
+        return await self.request("get", "SchoolSchedule", query)
 
     async def acaInsTiInfo(self, query) -> dict:
-        return await self.request('get', 'acaInsTiInfo', query)
+        return await self.request("get", "acaInsTiInfo", query)
 
     async def timeTable(self, schclass, query) -> dict:
-        return await self.request('get', f'{schclass}Timetable', query)
+        return await self.request("get", f"{schclass}Timetable", query)
 
     async def classInfo(self, query) -> dict:
-        return await self.request('get', 'classInfo', query)
+        return await self.request("get", "classInfo", query)
 
     async def schoolMajorinfo(self, query) -> dict:
-        return await self.request('get', 'schoolMajorinfo', query)
+        return await self.request("get", "schoolMajorinfo", query)
 
     async def schulAflcoinfo(self, query) -> dict:
-        return await self.request('get', 'schulAflcoinfo', query)
+        return await self.request("get", "schulAflcoinfo", query)
 
     async def tiClrminfo(self, query) -> dict:
-        return await self.request('get', 'tiClrminfo', query)
+        return await self.request("get", "tiClrminfo", query)
 
     async def spsTimetable(self, query) -> dict:
-        return await self.request('get', 'spsTimetable', query)
+        return await self.request("get", "spsTimetable", query)

@@ -14,7 +14,7 @@ class ArgumentError(NeispyException):
 
 class HTTPException(NeispyException):
     def __init__(self, code, message):
-        super().__init__(f'{code} {message}')
+        super().__init__(f"{code} {message}")
 
 
 class MissingRequiredValues(HTTPException):

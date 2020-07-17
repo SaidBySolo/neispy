@@ -1,7 +1,16 @@
 import datetime
 from .synchttp import SyncHttp
-from .model import SchoolInfo, SchoolSchedule, MealServiceDietInfo, TimeTable, \
-    ClassInfo, AcaInsTiInfo, SchoolMajorInfo, SchulAflcoInfo, TiClrmInfo
+from .model import (
+    SchoolInfo,
+    SchoolSchedule,
+    MealServiceDietInfo,
+    TimeTable,
+    ClassInfo,
+    AcaInsTiInfo,
+    SchoolMajorInfo,
+    SchulAflcoInfo,
+    TiClrmInfo,
+)
 from .error import ArgumentError
 
 n = datetime.datetime.now()
@@ -9,7 +18,7 @@ now = n.strftime("%Y%m%d")
 
 
 class SyncClient:
-    def __init__(self, KEY='', Type='json', pIndex: str = 1, pSize: str = 100):
+    def __init__(self, KEY="", Type="json", pIndex: str = 1, pSize: str = 100):
         """필수인자값을 받습니다
 
         Keyword Arguments:
@@ -24,8 +33,16 @@ class SyncClient:
         """
         self.http = SyncHttp(KEY, Type, pIndex, pSize)
 
-    def schoolInfo(self, ATPT_OFCDC_SC_CODE: str = None,  SD_SCHUL_CODE: str = None, SCHUL_NM: str = None,
-                   SCHUL_KND_SC_NM: str = None, LCTN_SC_NM: str = None, FOND_SC_NM: str = None, rawdata: bool = False) -> SchoolInfo:
+    def schoolInfo(
+        self,
+        ATPT_OFCDC_SC_CODE: str = None,
+        SD_SCHUL_CODE: str = None,
+        SCHUL_NM: str = None,
+        SCHUL_KND_SC_NM: str = None,
+        LCTN_SC_NM: str = None,
+        FOND_SC_NM: str = None,
+        rawdata: bool = False,
+    ) -> SchoolInfo:
         """학교기본정보를 요청합니다.
 
         학교 기본정보에 대한 학교명, 소재지, 주소, 전화번호, 홈페이지주소, 남녀공학여부, 주야구분, 개교기념일, 폐교여부 등을 확인할 수 있는 현황입니다.
@@ -54,36 +71,44 @@ class SyncClient:
         paramlist = []
 
         if ATPT_OFCDC_SC_CODE is not None:
-            AOSC = f'ATPT_OFCDC_SC_CODE={ATPT_OFCDC_SC_CODE}'
+            AOSC = f"ATPT_OFCDC_SC_CODE={ATPT_OFCDC_SC_CODE}"
             paramlist.append(AOSC)
 
         if SD_SCHUL_CODE is not None:
-            SSC = f'&SD_SCHUL_CODE={SD_SCHUL_CODE}'
+            SSC = f"&SD_SCHUL_CODE={SD_SCHUL_CODE}"
             paramlist.append(SSC)
 
         if SCHUL_NM is not None:
-            SN = f'&SCHUL_NM={SCHUL_NM}'
+            SN = f"&SCHUL_NM={SCHUL_NM}"
             paramlist.append(SN)
 
         if SCHUL_KND_SC_NM is not None:
-            SKSN = f'&SCHUL_KND_SC_NM={SCHUL_KND_SC_NM}'
+            SKSN = f"&SCHUL_KND_SC_NM={SCHUL_KND_SC_NM}"
             paramlist.append(SKSN)
 
         if LCTN_SC_NM is not None:
-            LSN = f'&LCTN_SC_NM={LCTN_SC_NM}'
+            LSN = f"&LCTN_SC_NM={LCTN_SC_NM}"
             paramlist.append(LSN)
 
         if FOND_SC_NM is not None:
-            FSN = f'&FOND_SC_NM={FOND_SC_NM}'
+            FSN = f"&FOND_SC_NM={FOND_SC_NM}"
             paramlist.append(FSN)
 
         query = "".join(paramlist)  # IDK
 
         data = self.http.schoolInfo(query)
-        return SchoolInfo(data, 'schoolInfo', rawdata)
+        return SchoolInfo(data, "schoolInfo", rawdata)
 
-    def mealServiceDietInfo(self, ATPT_OFCDC_SC_CODE: str = None, SD_SCHUL_CODE: str = None,
-                            MMEAL_SC_CODE: str = None, MLSV_YMD: int = now, MLSV_FROM_YMD: int = None, MLSV_TO_YMD: int = None, rawdata: bool = False) -> MealServiceDietInfo:
+    def mealServiceDietInfo(
+        self,
+        ATPT_OFCDC_SC_CODE: str = None,
+        SD_SCHUL_CODE: str = None,
+        MMEAL_SC_CODE: str = None,
+        MLSV_YMD: int = now,
+        MLSV_FROM_YMD: int = None,
+        MLSV_TO_YMD: int = None,
+        rawdata: bool = False,
+    ) -> MealServiceDietInfo:
         """급식 식단정보를 요청합니다.
 
         Keyword Arguments:
@@ -108,36 +133,45 @@ class SyncClient:
         paramlist = []
 
         if ATPT_OFCDC_SC_CODE is not None:
-            AOSC = f'&ATPT_OFCDC_SC_CODE={ATPT_OFCDC_SC_CODE}'
+            AOSC = f"&ATPT_OFCDC_SC_CODE={ATPT_OFCDC_SC_CODE}"
             paramlist.append(AOSC)
 
         if SD_SCHUL_CODE is not None:
-            ASC = f'&SD_SCHUL_CODE={SD_SCHUL_CODE}'
+            ASC = f"&SD_SCHUL_CODE={SD_SCHUL_CODE}"
             paramlist.append(ASC)
 
         if MMEAL_SC_CODE is not None:
-            MSC = f'&MMEAL_SC_CODE={MMEAL_SC_CODE}'
+            MSC = f"&MMEAL_SC_CODE={MMEAL_SC_CODE}"
             paramlist.append(MSC)
 
         if MLSV_YMD is not None:
-            MY = f'&MLSV_YMD={MLSV_YMD}'
+            MY = f"&MLSV_YMD={MLSV_YMD}"
             paramlist.append(MY)
 
         if MLSV_FROM_YMD is not None:
-            MFY = f'&MLSV_FROM_YMD={MLSV_FROM_YMD}'
+            MFY = f"&MLSV_FROM_YMD={MLSV_FROM_YMD}"
             paramlist.append(MFY)
 
         if MLSV_TO_YMD is not None:
-            MTY = f'&MLSV_TO_YMD={MLSV_TO_YMD}'
+            MTY = f"&MLSV_TO_YMD={MLSV_TO_YMD}"
             paramlist.append(MTY)
 
         query = "".join(paramlist)
 
         data = self.http.mealServiceDietInfo(query)
-        return MealServiceDietInfo(data, 'mealServiceDietInfo', rawdata)
+        return MealServiceDietInfo(data, "mealServiceDietInfo", rawdata)
 
-    def SchoolSchedule(self, ATPT_OFCDC_SC_CODE: str = None, SD_SCHUL_CODE: str = None, DGHT_CRSE_SC_NM: str = None,
-                       SCHUL_CRSE_SC_NM: str = None, AA_YMD: int = now, AA_FROM_YMD: int = None, AA_TO_YMD: int = None, rawdata: bool = False) -> SchoolSchedule:
+    def SchoolSchedule(
+        self,
+        ATPT_OFCDC_SC_CODE: str = None,
+        SD_SCHUL_CODE: str = None,
+        DGHT_CRSE_SC_NM: str = None,
+        SCHUL_CRSE_SC_NM: str = None,
+        AA_YMD: int = now,
+        AA_FROM_YMD: int = None,
+        AA_TO_YMD: int = None,
+        rawdata: bool = False,
+    ) -> SchoolSchedule:
         """학사일정입니다.
 
         학년도, 학교별 주요 행사 정보에 대한 학사일자, 행사명, 행사내용, 학년별 행사여부 등의 현황입니다.
@@ -166,40 +200,48 @@ class SyncClient:
         paramlist = []
 
         if ATPT_OFCDC_SC_CODE is not None:
-            AOSC = f'&ATPT_OFCDC_SC_CODE={ATPT_OFCDC_SC_CODE}'
+            AOSC = f"&ATPT_OFCDC_SC_CODE={ATPT_OFCDC_SC_CODE}"
             paramlist.append(AOSC)
 
         if SD_SCHUL_CODE is not None:
-            ASC = f'&SD_SCHUL_CODE={SD_SCHUL_CODE}'
+            ASC = f"&SD_SCHUL_CODE={SD_SCHUL_CODE}"
             paramlist.append(ASC)
 
         if DGHT_CRSE_SC_NM is not None:
-            DCSN = f'&DGHT_CRSE_SC_NM={DGHT_CRSE_SC_NM}'
+            DCSN = f"&DGHT_CRSE_SC_NM={DGHT_CRSE_SC_NM}"
             paramlist.append(DCSN)
 
         if SCHUL_CRSE_SC_NM is not None:
-            SCSN = f'&SCHUL_CRSE_SC_NM={SCHUL_CRSE_SC_NM}'
+            SCSN = f"&SCHUL_CRSE_SC_NM={SCHUL_CRSE_SC_NM}"
             paramlist.append(SCSN)
 
         if AA_YMD is not None:
-            AY = f'&AA_YMD={AA_YMD}'
+            AY = f"&AA_YMD={AA_YMD}"
             paramlist.append(AY)
 
         if AA_FROM_YMD is not None:
-            AFY = f'&AA_FROM_YMD={AA_FROM_YMD}'
+            AFY = f"&AA_FROM_YMD={AA_FROM_YMD}"
             paramlist.append(AFY)
 
         if AA_TO_YMD is not None:
-            ATY = f'&AA_TO_YMD={AA_TO_YMD}'
+            ATY = f"&AA_TO_YMD={AA_TO_YMD}"
             paramlist.append(ATY)
 
         query = "".join(paramlist)
 
         data = self.http.SchoolSchedule(query)
-        return SchoolSchedule(data, 'SchoolSchedule', rawdata)
+        return SchoolSchedule(data, "SchoolSchedule", rawdata)
 
-    def acaInsTiInfo(self, ATPT_OFCDC_SC_CODE: str = None, ADMST_ZONE_NM: str = None,
-                     ACA_ASNUM: str = None, REALM_SC_NM: str = None, LE_ORD_NM: str = None, LE_CRSE_NM: str = None, rawdata: bool = False) -> AcaInsTiInfo:
+    def acaInsTiInfo(
+        self,
+        ATPT_OFCDC_SC_CODE: str = None,
+        ADMST_ZONE_NM: str = None,
+        ACA_ASNUM: str = None,
+        REALM_SC_NM: str = None,
+        LE_ORD_NM: str = None,
+        LE_CRSE_NM: str = None,
+        rawdata: bool = False,
+    ) -> AcaInsTiInfo:
         """학원교습소정보 입니다.
 
         개설되어있는 학원 및 교습소의 학원명, 휴원일자, 등록상태, 정원, 분야, 계열 및 과정등을 확인할 수 있으며
@@ -229,39 +271,52 @@ class SyncClient:
         paramlist = []
 
         if ATPT_OFCDC_SC_CODE is not None:
-            AOSC = f'&ATPT_OFCDC_SC_CODE={ATPT_OFCDC_SC_CODE}'
+            AOSC = f"&ATPT_OFCDC_SC_CODE={ATPT_OFCDC_SC_CODE}"
             paramlist.append(AOSC)
 
         if ADMST_ZONE_NM is not None:
-            AZN = f'&ADMST_ZONE_NM={ADMST_ZONE_NM}'
+            AZN = f"&ADMST_ZONE_NM={ADMST_ZONE_NM}"
             paramlist.append(AZN)
 
         if ACA_ASNUM is not None:
-            AA = f'ACA_ASNUM={ACA_ASNUM}'
+            AA = f"ACA_ASNUM={ACA_ASNUM}"
             paramlist.append(AA)
 
         if REALM_SC_NM is not None:
-            RSC = f'REALM_SC_NM={REALM_SC_NM}'
+            RSC = f"REALM_SC_NM={REALM_SC_NM}"
             paramlist.append(RSC)
 
         if LE_ORD_NM is not None:
-            LON = f'LE_ORD_NM={LE_ORD_NM}'
+            LON = f"LE_ORD_NM={LE_ORD_NM}"
             paramlist.append(LON)
 
         if LE_CRSE_NM is not None:
-            LCN = f'LE_CRSE_NM={LE_CRSE_NM}'
+            LCN = f"LE_CRSE_NM={LE_CRSE_NM}"
             paramlist.append(LCN)
 
         query = "".join(paramlist)
 
         data = self.http.acaInsTiInfo(query)
-        return AcaInsTiInfo(data, 'acaInsTiInfo', rawdata)
+        return AcaInsTiInfo(data, "acaInsTiInfo", rawdata)
 
-    def timeTable(self, schclass: str, ATPT_OFCDC_SC_CODE: str = None,
-                  SD_SCHUL_CODE: str = None, AY: int = None, SEM: int = None, ALL_TI_YMD: int = now,
-                  DGHT_CRSE_SC_NM=None, ORD_SC_NM=None, DDDEP_NM=None, GRADE: int = None,
-                  CLASS_NM: str = None, PERIO: int = None, TI_FROM_YMD: int = None,
-                  TI_TO_YMD: int = None, rawdata: bool = True) -> TimeTable:
+    def timeTable(
+        self,
+        schclass: str,
+        ATPT_OFCDC_SC_CODE: str = None,
+        SD_SCHUL_CODE: str = None,
+        AY: int = None,
+        SEM: int = None,
+        ALL_TI_YMD: int = now,
+        DGHT_CRSE_SC_NM=None,
+        ORD_SC_NM=None,
+        DDDEP_NM=None,
+        GRADE: int = None,
+        CLASS_NM: str = None,
+        PERIO: int = None,
+        TI_FROM_YMD: int = None,
+        TI_TO_YMD: int = None,
+        rawdata: bool = True,
+    ) -> TimeTable:
         """초,중,고 시간표
 
         초등학교,중학교,고등학교 학년도, 학교, 학기, 학년, 반, 교시별 시간표 수업내용을 확인할 수 있는 현황입니다
@@ -306,59 +361,59 @@ class SyncClient:
 
             str -- 요청한값을 json형식을 반환합니다.
         """
-        arg = ['els', 'mis', 'his', 'sps']
+        arg = ["els", "mis", "his", "sps"]
         paramlist = []
 
         if ATPT_OFCDC_SC_CODE is not None:
-            AOSC = f'&ATPT_OFCDC_SC_CODE={ATPT_OFCDC_SC_CODE}'
+            AOSC = f"&ATPT_OFCDC_SC_CODE={ATPT_OFCDC_SC_CODE}"
             paramlist.append(AOSC)
 
         if SD_SCHUL_CODE is not None:
-            ASC = f'&SD_SCHUL_CODE={SD_SCHUL_CODE}'
+            ASC = f"&SD_SCHUL_CODE={SD_SCHUL_CODE}"
             paramlist.append(ASC)
 
         if AY is not None:
-            AY = f'&AY={AY}'
+            AY = f"&AY={AY}"
             paramlist.append(AY)
 
         if SEM is not None:
-            SEM = f'&SEM={SEM}'
+            SEM = f"&SEM={SEM}"
             paramlist.append(SEM)
 
         if ALL_TI_YMD is not None:
-            ATY = f'&ALL_TI_YMD={ALL_TI_YMD}'
+            ATY = f"&ALL_TI_YMD={ALL_TI_YMD}"
             paramlist.append(ATY)
 
         if schclass == arg[2] and DGHT_CRSE_SC_NM is not None:
-            DCSN = f'&DGHT_CRSE_SCNM={DGHT_CRSE_SC_NM}'
+            DCSN = f"&DGHT_CRSE_SCNM={DGHT_CRSE_SC_NM}"
             paramlist.append(DCSN)
 
         if schclass == arg[2] and ORD_SC_NM is not None:
-            OSN = f'&ORD_SC_NM={ORD_SC_NM}'
+            OSN = f"&ORD_SC_NM={ORD_SC_NM}"
             paramlist.append(OSN)
 
         if schclass == arg[2] and DDDEP_NM is not None:
-            DN = f'&DDDEP_NM={DDDEP_NM}'
+            DN = f"&DDDEP_NM={DDDEP_NM}"
             paramlist.append(DN)
 
         if GRADE is not None:
-            GE = f'&GRADE={GRADE}'
+            GE = f"&GRADE={GRADE}"
             paramlist.append(GE)
 
         if CLASS_NM is not None:
-            CN = f'&CLASS_NM={CLASS_NM}'
+            CN = f"&CLASS_NM={CLASS_NM}"
             paramlist.append(CN)
 
         if PERIO is not None:
-            PO = f'&PERIO={PERIO}'
+            PO = f"&PERIO={PERIO}"
             paramlist.append(PO)
 
         if TI_FROM_YMD is not None:
-            TFY = f'&TI_FROM_YMD={TI_FROM_YMD}'
+            TFY = f"&TI_FROM_YMD={TI_FROM_YMD}"
             paramlist.append(TFY)
 
         if TI_TO_YMD is not None:
-            TTY = f'&TI_TO_YMD={TI_TO_YMD}'
+            TTY = f"&TI_TO_YMD={TI_TO_YMD}"
             paramlist.append(TTY)
 
         query = "".join(paramlist)
@@ -369,139 +424,170 @@ class SyncClient:
         else:
             raise ArgumentError
 
-    def classInfo(self, ATPT_OFCDC_SC_CODE: str = None, SD_SCHUL_CODE: str = None, AY: str = None,
-                  GRADE: str = None, DGHT_CRSE_SC_NM: str = None, SCHUL_CRSE_SC_NM: str = None, ORD_SC_NM: str = None, DDDEP_NM: str = None, rawdata: bool = True) -> ClassInfo:
+    def classInfo(
+        self,
+        ATPT_OFCDC_SC_CODE: str = None,
+        SD_SCHUL_CODE: str = None,
+        AY: str = None,
+        GRADE: str = None,
+        DGHT_CRSE_SC_NM: str = None,
+        SCHUL_CRSE_SC_NM: str = None,
+        ORD_SC_NM: str = None,
+        DDDEP_NM: str = None,
+        rawdata: bool = True,
+    ) -> ClassInfo:
 
         paramlist = []
 
         if ATPT_OFCDC_SC_CODE is not None:
-            AOSC = f'&ATPT_OFCDC_SC_CODE={ATPT_OFCDC_SC_CODE}'
+            AOSC = f"&ATPT_OFCDC_SC_CODE={ATPT_OFCDC_SC_CODE}"
             paramlist.append(AOSC)
 
         if SD_SCHUL_CODE is not None:
-            SSC = f'&SD_SCHUL_CODE={SD_SCHUL_CODE}'
+            SSC = f"&SD_SCHUL_CODE={SD_SCHUL_CODE}"
             paramlist.append(SSC)
 
         if AY is not None:
-            AY = f'&AY={AY}'
+            AY = f"&AY={AY}"
             paramlist.append(AY)
 
         if GRADE is not None:
-            GE = f'&GE={GRADE}'
+            GE = f"&GE={GRADE}"
             paramlist.append(GE)
 
         if DGHT_CRSE_SC_NM is not None:
-            DCSN = f'&DGHT_CRSE_SCNM={DGHT_CRSE_SC_NM}'
+            DCSN = f"&DGHT_CRSE_SCNM={DGHT_CRSE_SC_NM}"
             paramlist.append(DCSN)
 
         if SCHUL_CRSE_SC_NM is not None:
-            SCSN = f'&SCHUL_CRSE_SC_NM={SCHUL_CRSE_SC_NM}'
+            SCSN = f"&SCHUL_CRSE_SC_NM={SCHUL_CRSE_SC_NM}"
             paramlist.append(SCSN)
 
         if ORD_SC_NM is not None:
-            OSN = f'&ORD_SC_NM={ORD_SC_NM}'
+            OSN = f"&ORD_SC_NM={ORD_SC_NM}"
             paramlist.append(OSN)
 
         if DDDEP_NM is not None:
-            DN = f'&DDDEP_NM={DDDEP_NM}'
+            DN = f"&DDDEP_NM={DDDEP_NM}"
             paramlist.append(DN)
 
         query = "".join(paramlist)
 
         data = self.http.classInfo(query)
-        return ClassInfo(data, 'classInfo', rawdata)
+        return ClassInfo(data, "classInfo", rawdata)
 
-    def schoolMajorinfo(self, ATPT_OFCDC_SC_CODE: str = None, SD_SCHUL_CODE: str = None,
-                        DGHT_CRSE_SC_NM: str = None, ORD_SC_NM: str = None, rawdata: bool = True) -> SchoolMajorInfo:
+    def schoolMajorinfo(
+        self,
+        ATPT_OFCDC_SC_CODE: str = None,
+        SD_SCHUL_CODE: str = None,
+        DGHT_CRSE_SC_NM: str = None,
+        ORD_SC_NM: str = None,
+        rawdata: bool = True,
+    ) -> SchoolMajorInfo:
 
         paramlist = []
 
         if ATPT_OFCDC_SC_CODE is not None:
-            AOSC = f'&ATPT_OFCDC_SC_CODE={ATPT_OFCDC_SC_CODE}'
+            AOSC = f"&ATPT_OFCDC_SC_CODE={ATPT_OFCDC_SC_CODE}"
             paramlist.append(AOSC)
 
         if SD_SCHUL_CODE is not None:
-            SSC = f'&SD_SCHUL_CODE={SD_SCHUL_CODE}'
+            SSC = f"&SD_SCHUL_CODE={SD_SCHUL_CODE}"
             paramlist.append(SSC)
 
         if DGHT_CRSE_SC_NM is not None:
-            DCSN = f'&DGHT_CRSE_SC_NM={DGHT_CRSE_SC_NM}'
+            DCSN = f"&DGHT_CRSE_SC_NM={DGHT_CRSE_SC_NM}"
             paramlist.append(DCSN)
 
         if ORD_SC_NM is not None:
-            OSN = f'&ORD_SC_NM={ORD_SC_NM}'
+            OSN = f"&ORD_SC_NM={ORD_SC_NM}"
             paramlist.append(OSN)
 
         query = "".join(paramlist)
 
         data = self.http.schoolMajorinfo(query)
-        return SchoolMajorInfo(data, 'schoolMajorinfo', rawdata)
+        return SchoolMajorInfo(data, "schoolMajorinfo", rawdata)
 
-    def schulAflcoinfo(self, ATPT_OFCDC_SC_CODE: str = None, SD_SCHUL_CODE: str = None,
-                       DGHT_CRSE_SC_NM: str = None, rawdata: bool = True) -> SchulAflcoInfo:
+    def schulAflcoinfo(
+        self,
+        ATPT_OFCDC_SC_CODE: str = None,
+        SD_SCHUL_CODE: str = None,
+        DGHT_CRSE_SC_NM: str = None,
+        rawdata: bool = True,
+    ) -> SchulAflcoInfo:
 
         paramlist = []
 
         if ATPT_OFCDC_SC_CODE is not None:
-            AOSC = f'&ATPT_OFCDC_SC_CODE={ATPT_OFCDC_SC_CODE}'
+            AOSC = f"&ATPT_OFCDC_SC_CODE={ATPT_OFCDC_SC_CODE}"
             paramlist.append(AOSC)
 
         if SD_SCHUL_CODE is not None:
-            SSC = f'&SD_SCHUL_CODE={SD_SCHUL_CODE}'
+            SSC = f"&SD_SCHUL_CODE={SD_SCHUL_CODE}"
             paramlist.append(SSC)
 
         if DGHT_CRSE_SC_NM is not None:
-            DCSN = f'&DGHT_CRSE_SC_NM={DGHT_CRSE_SC_NM}'
+            DCSN = f"&DGHT_CRSE_SC_NM={DGHT_CRSE_SC_NM}"
             paramlist.append(DCSN)
 
         query = "".join(paramlist)
 
         data = self.http.schulAflcoinfo(query)
-        return SchulAflcoInfo(data, 'schulAflcoinfo', rawdata)
+        return SchulAflcoInfo(data, "schulAflcoinfo", rawdata)
 
-    def tiClrminfo(self, ATPT_OFCDC_SC_CODE: str = None, SD_SCHUL_CODE: str = None, AY: str = None,
-                   GRADE: str = None, SEM: str = None, SCHUL_CRSE_SC_NM: str = None, DGHT_CRSE_SC_NM: str = None,
-                   ORD_SC_NM: str = None, DDDEP_NM: str = None, rawdata: bool = True) -> TiClrmInfo:
+    def tiClrminfo(
+        self,
+        ATPT_OFCDC_SC_CODE: str = None,
+        SD_SCHUL_CODE: str = None,
+        AY: str = None,
+        GRADE: str = None,
+        SEM: str = None,
+        SCHUL_CRSE_SC_NM: str = None,
+        DGHT_CRSE_SC_NM: str = None,
+        ORD_SC_NM: str = None,
+        DDDEP_NM: str = None,
+        rawdata: bool = True,
+    ) -> TiClrmInfo:
 
         paramlist = []
 
         if ATPT_OFCDC_SC_CODE is not None:
-            AOSC = f'&ATPT_OFCDC_SC_CODE={ATPT_OFCDC_SC_CODE}'
+            AOSC = f"&ATPT_OFCDC_SC_CODE={ATPT_OFCDC_SC_CODE}"
             paramlist.append(AOSC)
 
         if SD_SCHUL_CODE is not None:
-            SSC = f'&SD_SCHUL_CODE={SD_SCHUL_CODE}'
+            SSC = f"&SD_SCHUL_CODE={SD_SCHUL_CODE}"
             paramlist.append(SSC)
 
         if AY is not None:
-            AY = f'&AY={AY}'
+            AY = f"&AY={AY}"
             paramlist.append(AY)
 
         if GRADE is not None:
-            GE = f'&GE={GRADE}'
+            GE = f"&GE={GRADE}"
             paramlist.append(GE)
 
         if SEM is not None:
-            SM = f'&SEM={SEM}'
+            SM = f"&SEM={SEM}"
             paramlist.append(SM)
 
         if DGHT_CRSE_SC_NM is not None:
-            DCSN = f'&DGHT_CRSE_SCNM={DGHT_CRSE_SC_NM}'
+            DCSN = f"&DGHT_CRSE_SCNM={DGHT_CRSE_SC_NM}"
             paramlist.append(DCSN)
 
         if SCHUL_CRSE_SC_NM is not None:
-            SCSN = f'&SCHUL_CRSE_SC_NM={SCHUL_CRSE_SC_NM}'
+            SCSN = f"&SCHUL_CRSE_SC_NM={SCHUL_CRSE_SC_NM}"
             paramlist.append(SCSN)
 
         if ORD_SC_NM is not None:
-            OSN = f'&ORD_SC_NM={ORD_SC_NM}'
+            OSN = f"&ORD_SC_NM={ORD_SC_NM}"
             paramlist.append(OSN)
 
         if DDDEP_NM is not None:
-            DN = f'&DDDEP_NM={DDDEP_NM}'
+            DN = f"&DDDEP_NM={DDDEP_NM}"
             paramlist.append(DN)
 
         query = "".join(paramlist)
 
         data = self.http.tiClrminfo(query)
-        return TiClrmInfo(data, 'tiClrminfo', rawdata)
+        return TiClrmInfo(data, "tiClrminfo", rawdata)

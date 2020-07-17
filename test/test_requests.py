@@ -6,10 +6,10 @@ fail_list = []
 
 @pytest.mark.asyncio
 async def test_requests():
-    AE = 'B10'
-    SE1 = 'test001'
-    SE2 = 'test002'
-    SE3 = 'test003'
+    AE = "B10"
+    SE1 = "test001"
+    SE2 = "test002"
+    SE3 = "test003"
     itsok = "DataNotFound"
     neis = neispy.AsyncClient()
 
@@ -40,7 +40,7 @@ async def test_requests():
             fail_list.append(f"acaInsTiInfo: {e}")
 
     try:
-        await neis.timeTable('els', AE, SE1)
+        await neis.timeTable("els", AE, SE1)
     except Exception as e:
         if e.__class__.__name__ == itsok:
             pass
@@ -48,7 +48,7 @@ async def test_requests():
             fail_list.append(f"timeTableELS: {e}")
 
     try:
-        await neis.timeTable('mis', AE, SE2)
+        await neis.timeTable("mis", AE, SE2)
     except Exception as e:
         if e.__class__.__name__ == itsok:
             pass
@@ -56,7 +56,7 @@ async def test_requests():
             fail_list.append(f"timeTableMIS: {e}")
 
     try:
-        await neis.timeTable('his', AE, SE3)
+        await neis.timeTable("his", AE, SE3)
     except Exception as e:
         if e.__class__.__name__ == itsok:
             pass
@@ -64,12 +64,11 @@ async def test_requests():
             fail_list.append(f"timeTableHIS: {e}")
 
     try:
-        await neis.classInfo(AE,SE1)
+        await neis.classInfo(AE, SE1)
     except Exception as e:
         if e.__class__.__name__ == itsok:
             pass
         else:
             fail_list.append(f"classInfo: {e}")
 
-
-    assert(len(fail_list) == 0)
+    assert len(fail_list) == 0

@@ -34,26 +34,28 @@ class NeispyResponse:
             ArgumentError: sort에 Lists에있지않은 값을 넣을경우 Raise합니다.
 
         """
-        sort_list = ['schoolInfo',
-                     'SchoolSchedule',
-                     'mealServiceDietInfo',
-                     'acaInsTiInfo',
-                     'classInfo',
-                     'schoolMajorinfo',
-                     'schulAflcoinfo',
-                     'tiClrminfo',
-                     'elsTimetable',
-                     'misTimetable',
-                     'hisTimetable',
-                     'spsTimetable']
+        sort_list = [
+            "schoolInfo",
+            "SchoolSchedule",
+            "mealServiceDietInfo",
+            "acaInsTiInfo",
+            "classInfo",
+            "schoolMajorinfo",
+            "schulAflcoinfo",
+            "tiClrminfo",
+            "elsTimetable",
+            "misTimetable",
+            "hisTimetable",
+            "spsTimetable",
+        ]
         if sort in sort_list:
             if rawdata is True:
                 datalist = response[sort]
-                datadict = datalist[1]['row']
+                datadict = datalist[1]["row"]
                 self.data = datadict
             else:
                 datalist = response[sort]
-                datadict = datalist[1]['row']
+                datadict = datalist[1]["row"]
                 self.data = datadict[0]
         else:
             raise ArgumentError
