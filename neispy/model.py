@@ -61,7 +61,7 @@ class NeispyResponse:
     def __getattr__(self, attr):
         return self.data.get(attr)
 
-    def __dict__(self):
+    def __dict__(self) -> dict:
         return self.data
 
 

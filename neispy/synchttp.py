@@ -15,7 +15,7 @@ class SyncHttp():
             traceback.print_exc()
         self.requirement_query = self.requirement(KEY, Type, pIndex, pSize)
 
-    def request(self, url, query):
+    def request(self, url, query) -> dict:
         base_url = 'https://open.neis.go.kr/hub/'
         URL = base_url + url + self.requirement_query + query
         r = requests.get(URL)
@@ -52,39 +52,39 @@ class SyncHttp():
             raise HTTPException(code, msg)
 
     @classmethod
-    def requirement(cls, KEY, Type, pIndex, pSize):
+    def requirement(cls, KEY, Type, pIndex, pSize) -> tuple:
         apikey = f"?KEY={KEY}"
         reqtype = f"&Type={Type}"
         pindex = f"&pindex={pIndex}"
         psize = f"&pSize={pSize}"
         return(apikey + reqtype + pindex + psize)
 
-    def schoolInfo(self, query):
+    def schoolInfo(self, query) -> dict:
         return self.request('schoolInfo', query)
 
-    def mealServiceDietInfo(self, query):
+    def mealServiceDietInfo(self, query) -> dict:
         return self.request('mealServiceDietInfo', query)
 
-    def SchoolSchedule(self, query):
+    def SchoolSchedule(self, query) -> dict:
         return self.request('SchoolSchedule', query)
 
-    def acaInsTiInfo(self, query):
+    def acaInsTiInfo(self, query) -> dict:
         return self.request('acaInsTiInfo', query)
 
-    def timeTable(self, schclass, query):
+    def timeTable(self, schclass, query) -> dict:
         return self.request(f'{schclass}Timetable', query)
 
-    def classInfo(self, query):
+    def classInfo(self, query) -> dict:
         return self.request('classInfo', query)
 
-    def schoolMajorinfo(self, query):
+    def schoolMajorinfo(self, query) -> dict:
         return self.request('schoolMajorinfo', query)
 
-    def schulAflcoinfo(self, query):
+    def schulAflcoinfo(self, query) -> dict:
         return self.request('schulAflcoinfo', query)
 
-    def tiClrminfo(self, query):
+    def tiClrminfo(self, query) -> dict:
         return self.request('tiClrminfo', query)
 
-    def spsTimetable(self, query):
+    def spsTimetable(self, query) -> dict:
         return self.request('spsTimetable', query)
