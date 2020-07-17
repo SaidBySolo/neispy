@@ -115,6 +115,10 @@ class AsyncClient:
             ASC = f'&SD_SCHUL_CODE={SD_SCHUL_CODE}'
             paramlist.append(ASC)
 
+        if MMEAL_SC_CODE is not None:
+            MSC = f'&MMEAL_SC_CODE={MMEAL_SC_CODE}'
+            paramlist.append(MSC)
+
         if MLSV_YMD is not None:
             MY = f'&MLSV_YMD={MLSV_YMD}'
             paramlist.append(MY)
