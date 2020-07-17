@@ -25,7 +25,7 @@ class SyncClient:
         self.http = SyncHttp(KEY, Type, pIndex, pSize)
 
     def schoolInfo(self, ATPT_OFCDC_SC_CODE: str = None,  SD_SCHUL_CODE: str = None, SCHUL_NM: str = None,
-                   SCHUL_KND_SC_NM: str = None, LCTN_SC_NM: str = None, FOND_SC_NM: str = None, rawdata: bool = False):
+                   SCHUL_KND_SC_NM: str = None, LCTN_SC_NM: str = None, FOND_SC_NM: str = None, rawdata: bool = False) -> SchoolInfo:
         """학교기본정보를 요청합니다.
 
         학교 기본정보에 대한 학교명, 소재지, 주소, 전화번호, 홈페이지주소, 남녀공학여부, 주야구분, 개교기념일, 폐교여부 등을 확인할 수 있는 현황입니다.
@@ -83,7 +83,7 @@ class SyncClient:
         return SchoolInfo(data, 'schoolInfo', rawdata)
 
     def mealServiceDietInfo(self, ATPT_OFCDC_SC_CODE: str = None, SD_SCHUL_CODE: str = None,
-                            MMEAL_SC_CODE: str = None, MLSV_YMD: int = now, MLSV_FROM_YMD: int = None, MLSV_TO_YMD: int = None, rawdata: bool = False):
+                            MMEAL_SC_CODE: str = None, MLSV_YMD: int = now, MLSV_FROM_YMD: int = None, MLSV_TO_YMD: int = None, rawdata: bool = False) -> MealServiceDietInfo:
         """급식 식단정보를 요청합니다.
 
         Keyword Arguments:
@@ -137,7 +137,7 @@ class SyncClient:
         return MealServiceDietInfo(data, 'mealServiceDietInfo', rawdata)
 
     def SchoolSchedule(self, ATPT_OFCDC_SC_CODE: str = None, SD_SCHUL_CODE: str = None, DGHT_CRSE_SC_NM: str = None,
-                       SCHUL_CRSE_SC_NM: str = None, AA_YMD: int = now, AA_FROM_YMD: int = None, AA_TO_YMD: int = None, rawdata: bool = False):
+                       SCHUL_CRSE_SC_NM: str = None, AA_YMD: int = now, AA_FROM_YMD: int = None, AA_TO_YMD: int = None, rawdata: bool = False) -> SchoolSchedule:
         """학사일정입니다.
 
         학년도, 학교별 주요 행사 정보에 대한 학사일자, 행사명, 행사내용, 학년별 행사여부 등의 현황입니다.
@@ -199,7 +199,7 @@ class SyncClient:
         return SchoolSchedule(data, 'SchoolSchedule', rawdata)
 
     def acaInsTiInfo(self, ATPT_OFCDC_SC_CODE: str = None, ADMST_ZONE_NM: str = None,
-                     ACA_ASNUM: str = None, REALM_SC_NM: str = None, LE_ORD_NM: str = None, LE_CRSE_NM: str = None, rawdata: bool = False):
+                     ACA_ASNUM: str = None, REALM_SC_NM: str = None, LE_ORD_NM: str = None, LE_CRSE_NM: str = None, rawdata: bool = False) -> AcaInsTiInfo:
         """학원교습소정보 입니다.
 
         개설되어있는 학원 및 교습소의 학원명, 휴원일자, 등록상태, 정원, 분야, 계열 및 과정등을 확인할 수 있으며
@@ -261,7 +261,7 @@ class SyncClient:
                   SD_SCHUL_CODE: str = None, AY: int = None, SEM: int = None, ALL_TI_YMD: int = now,
                   DGHT_CRSE_SC_NM=None, ORD_SC_NM=None, DDDEP_NM=None, GRADE: int = None,
                   CLASS_NM: str = None, PERIO: int = None, TI_FROM_YMD: int = None,
-                  TI_TO_YMD: int = None, rawdata: bool = True):
+                  TI_TO_YMD: int = None, rawdata: bool = True) -> TimeTable:
         """초,중,고 시간표
 
         초등학교,중학교,고등학교 학년도, 학교, 학기, 학년, 반, 교시별 시간표 수업내용을 확인할 수 있는 현황입니다
@@ -370,7 +370,7 @@ class SyncClient:
             raise ArgumentError
 
     def classInfo(self, ATPT_OFCDC_SC_CODE: str = None, SD_SCHUL_CODE: str = None, AY: str = None,
-                  GRADE: str = None, DGHT_CRSE_SC_NM: str = None, SCHUL_CRSE_SC_NM: str = None, ORD_SC_NM: str = None, DDDEP_NM: str = None, rawdata: bool = True):
+                  GRADE: str = None, DGHT_CRSE_SC_NM: str = None, SCHUL_CRSE_SC_NM: str = None, ORD_SC_NM: str = None, DDDEP_NM: str = None, rawdata: bool = True) -> ClassInfo:
 
         paramlist = []
 
@@ -412,7 +412,7 @@ class SyncClient:
         return ClassInfo(data, 'classInfo', rawdata)
 
     def schoolMajorinfo(self, ATPT_OFCDC_SC_CODE: str = None, SD_SCHUL_CODE: str = None,
-                        DGHT_CRSE_SC_NM: str = None, ORD_SC_NM: str = None, rawdata: bool = True):
+                        DGHT_CRSE_SC_NM: str = None, ORD_SC_NM: str = None, rawdata: bool = True) -> SchoolMajorInfo:
 
         paramlist = []
 
@@ -438,7 +438,7 @@ class SyncClient:
         return SchoolMajorInfo(data, 'schoolMajorinfo', rawdata)
 
     def schulAflcoinfo(self, ATPT_OFCDC_SC_CODE: str = None, SD_SCHUL_CODE: str = None,
-                       DGHT_CRSE_SC_NM: str = None, rawdata: bool = True):
+                       DGHT_CRSE_SC_NM: str = None, rawdata: bool = True) -> SchulAflcoInfo:
 
         paramlist = []
 
@@ -461,7 +461,7 @@ class SyncClient:
 
     def tiClrminfo(self, ATPT_OFCDC_SC_CODE: str = None, SD_SCHUL_CODE: str = None, AY: str = None,
                    GRADE: str = None, SEM: str = None, SCHUL_CRSE_SC_NM: str = None, DGHT_CRSE_SC_NM: str = None,
-                   ORD_SC_NM: str = None, DDDEP_NM: str = None, rawdata: bool = True):
+                   ORD_SC_NM: str = None, DDDEP_NM: str = None, rawdata: bool = True) -> TiClrmInfo:
 
         paramlist = []
 

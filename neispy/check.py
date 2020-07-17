@@ -1,6 +1,6 @@
 from .error import APIKeyNotFound
 
-def status_info(response, querytype):
+def status_info(response, querytype) -> tuple:
     try:
         datalist = response[querytype]
         headlist = datalist[0]['head']
