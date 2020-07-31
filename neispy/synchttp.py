@@ -36,7 +36,7 @@ class SyncHttp:
         try:
             data = ujson.loads(response)
         except Exception:
-            raise HTTPException(r.status, "API서버로부터 잘못된 응답을 받았습니다. 서버 상태를 확인해주세요")
+            raise HTTPException(r.code, "API서버로부터 잘못된 응답을 받았습니다. 서버 상태를 확인해주세요")
         code, msg = status_info(data, url)
 
         if code == "INFO-000":
