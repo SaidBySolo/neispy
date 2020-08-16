@@ -19,13 +19,10 @@ from .error import (
 
 
 class AsyncHttp:
-    def __init__(self, KEY, Type, pIndex, pSize):
-        try:
+    def __init__(self, KEY, Type, pIndex, pSize, force):
+        if force is False:
             check_apikey(KEY)
-        except APIKeyNotFound:
-            import traceback
 
-            traceback.print_exc()
         self.requirement_query = self.requirement(KEY, Type, pIndex, pSize)
 
     async def request(self, method, url, query) -> dict:

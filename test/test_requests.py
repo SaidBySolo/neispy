@@ -11,7 +11,7 @@ async def test_requests():
     SE2 = "test002"
     SE3 = "test003"
     itsok = "DataNotFound"
-    neis = neispy.AsyncClient()
+    neis = neispy.AsyncClient(force=True)
 
     try:
         await neis.schoolInfo()
