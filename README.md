@@ -8,7 +8,7 @@
 
 기초적인 사용법은 [이곳](https://www.koreaminecraft.net/dev_portal/1790805)을 봐주세요!
 
-api키는 [이곳](https://open.neis.go.kr/portal/guide/actKeyPage.do)에서 받으실 수 있습니다.    
+api키는 [이곳](https://open.neis.go.kr/portal/guide/actKeyPage.do)에서 받으실 수 있습니다.
 
 [open Neis api](https://open.neis.go.kr/)의 모든 엔드포인트가 래핑되어있습니다
 
@@ -199,6 +199,14 @@ main()
 **시간표 같은 부분은 초,중,고,특수인걸 제외하고는 모두 같습니다.**
 
 ## Patch note
+
+### 2.0.6
+
+* #25번 이슈적용
+
+* APIKeyNotFound예외를 force인자를 통해 무시할수있습니다.
+
+* 시간표에 빠져있던 강의실명 파라미터를 추가했습니다.
 
 ### 2.0.4
 

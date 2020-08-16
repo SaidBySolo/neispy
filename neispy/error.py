@@ -4,7 +4,7 @@ class NeispyException(Exception):
 
 class APIKeyNotFound(NeispyException):
     def __init__(self):
-        super().__init__("API키를 찾을수없습니다. 샘플키로 요청하실수있습니다.")
+        super().__init__("API키를 찾을수없습니다. force인자를 True로 바꿔 샘플키로 요청하실수있습니다.")
 
 
 class ArgumentError(NeispyException):

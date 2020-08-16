@@ -20,13 +20,8 @@ from .error import (
 
 class AsyncHttp:
     def __init__(self, KEY, Type, pIndex, pSize, force):
-        try:
-            check_apikey(key)
-        except APIKeyNotFound:
-            if force is True:
-                pass
-            else:
-                raise APIKeyNotFound
+        if force is False:
+            check_apikey(KEY)
 
         self.requirement_query = self.requirement(KEY, Type, pIndex, pSize)
 

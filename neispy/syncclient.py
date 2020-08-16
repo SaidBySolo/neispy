@@ -18,7 +18,9 @@ now = n.strftime("%Y%m%d")
 
 
 class SyncClient:
-    def __init__(self, KEY="", Type="json", pIndex: str = 1, pSize: str = 100):
+    def __init__(
+        self, KEY="", Type="json", pIndex: str = 1, pSize: str = 100, force=False
+    ):
         """필수인자값을 받습니다
 
         Keyword Arguments:
@@ -30,8 +32,10 @@ class SyncClient:
             ``pIndex`` {str} -- 페이지 위치입니다. 샘플키는 1 고정입니다. (default: {1})
 
             ``pSize`` {str} -- 페이지당 신청숫자 입니다. 샘플키는 5 고정입니다. (default: {100})
+
+            ``force`` {bool} -- API키없음 예외를 무시하고 샘플키로 요청합니다. (default:{False})
         """
-        self.http = SyncHttp(KEY, Type, pIndex, pSize)
+        self.http = SyncHttp(KEY, Type, pIndex, pSize, force)
 
     def schoolInfo(
         self,
@@ -311,6 +315,7 @@ class SyncClient:
         ORD_SC_NM=None,
         DDDEP_NM=None,
         GRADE: int = None,
+        CLRM_NM: str = None,
         CLASS_NM: str = None,
         PERIO: int = None,
         TI_FROM_YMD: int = None,
@@ -344,6 +349,8 @@ class SyncClient:
             `DDDEP_NM` {str} -- 학과명(고등학교일 경우만 받음) (default: {None})
 
             `GRADE` {int} --학년 (default: {None})
+
+             `CLRM_NM` {str} -- 강의실명(고등학교일 경우만 받음) (default: {None})
 
             `CLASS_NM` {str} -- 반명 (default: {None})
 
@@ -399,6 +406,10 @@ class SyncClient:
         if GRADE is not None:
             GE = f"&GRADE={GRADE}"
             paramlist.append(GE)
+
+        if schclass == arg[2] and CLRM_NM is not None:
+            CLM = f"&CLRM_NM={CLRM_NM}"
+            paramlist.append(CLM)
 
         if CLASS_NM is not None:
             CN = f"&CLASS_NM={CLASS_NM}"
