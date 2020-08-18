@@ -35,7 +35,7 @@ async def main():
 
     # 필수인자가 들어가는곳입니다. API키,json,xml등 받을방식등등..
     # 아무값이 없으니 샘플키로 요청합니다.
-    neis = neispy.AsyncClient()
+    neis = neispy.AsyncClient(force=True)
 
     # 학교이름으로 학교정보를 요청하고 교육청코드 와 학교코드로 가져옵니다.
     scinfo = await neis.schoolInfo(SCHUL_NM=name)
@@ -117,7 +117,7 @@ def main():
 
     # 필수인자가 들어가는곳입니다. API키,json,xml등 받을방식등등..
     # 아무값이 없으니 샘플키로 요청합니다.
-    neis = neispy.SyncClient()
+    neis = neispy.SyncClient(force=True)
 
     # 학교이름으로 학교정보를 요청하고 교육청코드 와 학교코드로 가져옵니다.
     scinfo = neis.schoolInfo(SCHUL_NM=name)
@@ -197,6 +197,8 @@ main()
 * [데이터셋](https://open.neis.go.kr/portal/data/dataset/searchDatasetPage.do)
 
 **시간표 같은 부분은 초,중,고,특수인걸 제외하고는 모두 같습니다.**
+
+**Attribute도 데이터셋을 참고해주시기바랍니다.**
 
 ## Patch note
 
