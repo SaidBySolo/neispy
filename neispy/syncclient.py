@@ -13,8 +13,8 @@ from .model import (
 )
 from .error import ArgumentError
 
-n = datetime.datetime.now()
-now = n.strftime("%Y%m%d")
+KST = datetime.timezone(datetime.timedelta(hours=9))
+now = datetime.datetime.now(tz=KST).strftime("%Y%m%d")
 
 
 class SyncClient:
