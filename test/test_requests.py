@@ -1,5 +1,6 @@
-import neispy
 import pytest
+
+import neispy
 
 fail_list = []
 
@@ -11,7 +12,7 @@ async def test_requests():
     SE2 = "test002"
     SE3 = "test003"
     itsok = "DataNotFound"
-    neis = neispy.AsyncClient(force=True)
+    neis = neispy.Client()
 
     try:
         await neis.schoolInfo()

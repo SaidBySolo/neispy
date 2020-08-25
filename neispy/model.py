@@ -1,112 +1,109 @@
-from .error import ArgumentError
+from typing import Any
+
+import ujson
 
 
-class NeispyResponse:
-    def __init__(self, response, sort, rawdata: bool):
-        """모든 모델의 기본이되는 클래스입니다.
-
-        Arguments:
-
-            `response` {str} -- json형식의 값을 넣어주셔야합니다.
-
-            `sort` {str} -- 밑의 항목에 있는 정리하고자하는 정보를 넣어주셔야하는 곳입니다.
-
-        Keyword Arguments:
-
-            `rawdata` {bool} -- 여러개의 리스트를 받아올것인지에 대한 여부입니다. (default: {False})
-
-        Lists:
-
-            `schoolInfo` -- 학교정보입니다.
-
-            `SchoolSchedule` -- 학사일정입니다.
-
-            `mealServiceDietInfo` -- 급식및식단표입니다.
-
-            `elsTimetable` -- 초등학교 시간표입니다.
-
-            `misTimetable` -- 중학교 시간표입니다.
-
-            `hisTimetable` -- 고등학교 시간표입니다.
-
-        Raises:
-
-            ArgumentError: sort에 Lists에있지않은 값을 넣을경우 Raise합니다.
-
-        """
-        sort_list = [
-            "schoolInfo",
-            "SchoolSchedule",
-            "mealServiceDietInfo",
-            "acaInsTiInfo",
-            "classInfo",
-            "schoolMajorinfo",
-            "schulAflcoinfo",
-            "tiClrminfo",
-            "elsTimetable",
-            "misTimetable",
-            "hisTimetable",
-            "spsTimetable",
-        ]
-        if sort in sort_list:
-            if rawdata is True:
-                datalist = response[sort]
-                datadict = datalist[1]["row"]
-                self.data = datadict
-            else:
-                datalist = response[sort]
-                datadict = datalist[1]["row"]
-                self.data = datadict[0]
+class AttributeDict:
+    def __init__(self, value={}, **kwargs):
+        if isinstance(value, list):
+            self.value = [
+                self.__make(Item) if isinstance(Item, dict) else Item for Item in value
+            ]
         else:
-            raise ArgumentError
+            self.value = dict(value, **kwargs)
 
-    def __getattr__(self, attr):
-        return self.data.get(attr)
+    def __len__(self) -> int:
+        return len(self.value)
+
+    def __str__(self) -> str:
+        return ujson.dumps(self.value)
+
+    def __repr__(self) -> str:
+        return self.value.__repr__()
 
     def __dict__(self) -> dict:
-        return self.data
+        return self.value
+
+    def __getattr__(self, name: str) -> Any:
+        if isinstance(self.value, list):
+            return self.value[name]
+
+        return self.__get(name)
+
+    def __getitem__(self, key: str) -> Any:
+        return self.__getattr__(key)
+
+    def __contains__(self, element: Any) -> bool:
+        return element in self.value
+
+    def __get(self, name: str) -> Any:
+        Value = self.value.get(name)
+
+        if Value:
+            if isinstance(Value, dict):
+                Value = self.__make(Value)
+            elif isinstance(Value, list):
+                Value = [
+                    Item if not isinstance(Item, dict) else self.__make(Item)
+                    for Item in Value
+                ]
+            elif isinstance(Value, tuple):
+                Value = (
+                    Item if not isinstance(Item, dict) else self.__make(Item)
+                    for Item in Value
+                )
+            elif isinstance(Value, set):
+                Value = {
+                    Item if not isinstance(Item, dict) else self.__make(Item)
+                    for Item in Value
+                }
+        else:
+            if hasattr(name, self.value):
+                Value = getattr(name, self.value)
+
+        return Value
+
+    @classmethod
+    def __make(cls, *args, **kwargs):
+        return cls(*args, **kwargs)
+
+
+class NeispyResponse(AttributeDict):
+    def __init__(self, response: dict):
+        super().__init__(response)
 
 
 class SchoolInfo(NeispyResponse):
-    def __init__(self, response, sort, rawdata):
-        super().__init__(response, sort, rawdata)
+    pass
 
 
 class SchoolSchedule(NeispyResponse):
-    def __init__(self, response, sort, rawdata):
-        super().__init__(response, sort, rawdata)
+    pass
 
 
 class MealServiceDietInfo(NeispyResponse):
-    def __init__(self, response, sort, rawdata):
-        super().__init__(response, sort, rawdata)
+    pass
 
 
 class TimeTable(NeispyResponse):
-    def __init__(self, response, sort, rawdata):
-        super().__init__(response, sort, rawdata)
+    pass
 
 
 class ClassInfo(NeispyResponse):
-    def __init__(self, response, sort, rawdata):
-        super().__init__(response, sort, rawdata)
+    pass
 
 
 class AcaInsTiInfo(NeispyResponse):
-    def __init__(self, response, sort, rawdata):
-        super().__init__(response, sort, rawdata)
+    pass
 
 
 class SchoolMajorInfo(NeispyResponse):
-    def __init__(self, response, sort, rawdata):
-        super().__init__(response, sort, rawdata)
+    pass
 
 
 class SchulAflcoInfo(NeispyResponse):
-    def __init__(self, response, sort, rawdata):
-        super().__init__(response, sort, rawdata)
+    pass
 
 
 class TiClrmInfo(NeispyResponse):
-    def __init__(self, response, sort, rawdata):
-        super().__init__(response, sort, rawdata)
+    pass
