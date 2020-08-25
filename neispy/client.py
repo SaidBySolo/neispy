@@ -5,14 +5,32 @@ from typing import Any
 
 import aiohttp
 
-from .error import (ArgumentError, AuthenticationKeyInvaild, CannotExceed1000,
-                    DailyTrafficLimit, DatabaseConnectionError, DataNotFound,
-                    HTTPException, LimitUseAuthenticationkey,
-                    LocationValueTypeInvaild, MissingRequiredValues,
-                    ServerError, ServiceNotFound, SQLStatementError)
-from .model import (AcaInsTiInfo, ClassInfo, MealServiceDietInfo, SchoolInfo,
-                    SchoolMajorInfo, SchoolSchedule, SchulAflcoInfo,
-                    TiClrmInfo, TimeTable)
+from .error import (
+    ArgumentError,
+    AuthenticationKeyInvaild,
+    CannotExceed1000,
+    DailyTrafficLimit,
+    DatabaseConnectionError,
+    DataNotFound,
+    HTTPException,
+    LimitUseAuthenticationkey,
+    LocationValueTypeInvaild,
+    MissingRequiredValues,
+    ServerError,
+    ServiceNotFound,
+    SQLStatementError,
+)
+from .model import (
+    AcaInsTiInfo,
+    ClassInfo,
+    MealServiceDietInfo,
+    SchoolInfo,
+    SchoolMajorInfo,
+    SchoolSchedule,
+    SchulAflcoInfo,
+    TiClrmInfo,
+    TimeTable,
+)
 from .utils import concatDict
 
 HTTPExceptions = {
