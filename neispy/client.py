@@ -531,12 +531,10 @@ class Client(_Client):
         self.loop = asyncio.get_event_loop()
 
     def __run_coroutine(self, coroutine, *args, **kwargs):
-        try:
-            asyncio.get_running_loop()
-        except RuntimeError:
-            return self.loop.run_until_complete(coroutine(*args, **kwargs))
-        else:
+        if self.loop.is_running():
             return coroutine(*args, **kwargs)
+
+        return self.loop.run_until_complete(coroutine(*args, **kwargs))
 
     def __getattribute__(self, name: str) -> Any:
         attribute = getattr(super(), name, None)
