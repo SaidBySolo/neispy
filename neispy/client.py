@@ -1,3 +1,4 @@
+import ujson
 import asyncio
 import datetime
 import functools
@@ -85,7 +86,8 @@ class _Client:
         if not "params" in kwargs:
             kwargs["params"] = {}
 
-        kwargs["params"]["KEY"] = self.KEY
+        if self.KEY:
+            kwargs["params"]["KEY"] = self.KEY
         kwargs["params"]["Type"] = "json"
         kwargs["params"]["pindex"] = self.pIndex
         kwargs["params"]["pSize"] = self.pSize
@@ -156,7 +158,7 @@ class _Client:
         if FOND_SC_NM:
             params["FOND_SC_NM"] = FOND_SC_NM
 
-        Data = await self.request("GET", "schoolInfo", params=params)
+        Data = await self.request("GET", "/schoolInfo", params=params)
         return SchoolInfo(Data)
 
     async def mealServiceDietInfo(
@@ -203,7 +205,7 @@ class _Client:
         if MLSV_TO_YMD:
             params["MLSV_TO_YMD"] = MLSV_TO_YMD
 
-        Data = await self.request("GET", "mealServiceDietInfo", params=params)
+        Data = await self.request("GET", "/mealServiceDietInfo", params=params)
         return MealServiceDietInfo(Data)
 
     async def SchoolSchedule(
@@ -257,7 +259,7 @@ class _Client:
         if AA_TO_YMD:
             params["AA_TO_YMD"] = AA_TO_YMD
 
-        Data = await self.request("GET", "SchoolSchedule", params=params)
+        Data = await self.request("GET", "/SchoolSchedule", params=params)
         return SchoolSchedule(Data)
 
     async def acaInsTiInfo(
@@ -309,7 +311,7 @@ class _Client:
         if LE_CRSE_NM:
             params["LE_CRSE_NM"] = LE_CRSE_NM
 
-        Data = await self.request("GET", "acaInsTiInfo", params=params)
+        Data = await self.request("GET", "/acaInsTiInfo", params=params)
         return AcaInsTiInfo(Data)
 
     async def timeTable(
@@ -410,7 +412,7 @@ class _Client:
         if TI_TO_YMD:
             params["TI_TO_YMD"] = TI_TO_YMD
 
-        Data = await self.request("GET", schclass + "Timetable", params=params)
+        Data = await self.request("GET", f"/{schclass}Timetable", params=params)
         return TimeTable(Data)
 
     async def classInfo(
@@ -443,7 +445,7 @@ class _Client:
         if DDDEP_NM:
             params["DDDEP_NM"] = DDDEP_NM
 
-        Data = await self.request("GET", "classInfo", params=params)
+        Data = await self.request("GET", "/classInfo", params=params)
         return ClassInfo(Data)
 
     async def schoolMajorinfo(
@@ -464,7 +466,7 @@ class _Client:
         if ORD_SC_NM:
             params["ORD_SC_NM"] = ORD_SC_NM
 
-        Data = await self.request("GET", "schoolMajorinfo", params=params)
+        Data = await self.request("GET", "/schoolMajorinfo", params=params)
         return SchoolMajorInfo(Data)
 
     async def schulAflcoinfo(
@@ -482,7 +484,7 @@ class _Client:
         if DGHT_CRSE_SC_NM:
             params["DGHT_CRSE_SCNM"] = DGHT_CRSE_SC_NM
 
-        Data = await self.request("GET", "schulAflcoinfo", params=params)
+        Data = await self.request("GET", "/schulAflcoinfo", params=params)
         return SchulAflcoInfo(Data)
 
     async def tiClrminfo(
@@ -518,7 +520,7 @@ class _Client:
         if DDDEP_NM:
             params["DDDEP_NM"] = DDDEP_NM
 
-        Data = await self.request("GET", "tiClrminfo", params=params)
+        Data = await self.request("GET", "/tiClrminfo", params=params)
         return TiClrmInfo(Data)
 
 
