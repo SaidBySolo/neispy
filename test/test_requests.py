@@ -1,5 +1,6 @@
-import neispy
 import pytest
+
+import neispy
 
 fail_list = []
 
