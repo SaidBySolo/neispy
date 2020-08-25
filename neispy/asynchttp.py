@@ -19,13 +19,10 @@ from .error import (
 
 
 class AsyncHttp:
-    def __init__(self, KEY, Type, pIndex, pSize):
-        try:
+    def __init__(self, KEY, Type, pIndex, pSize, force):
+        if force is False:
             check_apikey(KEY)
-        except APIKeyNotFound:
-            import traceback
 
-            traceback.print_exc()
         self.requirement_query = self.requirement(KEY, Type, pIndex, pSize)
 
     async def request(self, method, url, query) -> dict:
@@ -35,7 +32,12 @@ class AsyncHttp:
         async with aiohttp.ClientSession() as cs:
             async with cs.request(method, URL) as r:
                 response = await r.text()
-                data = ujson.loads(response)
+                try:
+                    data = ujson.loads(response)
+                except Exception:
+                    raise HTTPException(
+                        r.status, "API서버로부터 잘못된 응답을 받았습니다. 서버 상태를 확인해주세요"
+                    )
                 code, msg = status_info(data, url)
 
                 if code == "INFO-000":
