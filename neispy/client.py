@@ -1,37 +1,19 @@
 import asyncio
-import aiohttp
 import datetime
 import functools
 from typing import Any
 
-from .utils import concatDict
-from .model import (
-    SchoolInfo,
-    SchoolSchedule,
-    MealServiceDietInfo,
-    TimeTable,
-    ClassInfo,
-    AcaInsTiInfo,
-    SchoolMajorInfo,
-    SchulAflcoInfo,
-    TiClrmInfo,
-)
-from .error import (
-    ArgumentError,
-    MissingRequiredValues,
-    AuthenticationKeyInvaild,
-    ServiceNotFound,
-    LocationValueTypeInvaild,
-    CannotExceed1000,
-    DailyTrafficLimit,
-    ServerError,
-    DatabaseConnectionError,
-    SQLStatementError,
-    LimitUseAuthenticationkey,
-    DataNotFound,
-    HTTPException,
-)
+import aiohttp
 
+from .error import (ArgumentError, AuthenticationKeyInvaild, CannotExceed1000,
+                    DailyTrafficLimit, DatabaseConnectionError, DataNotFound,
+                    HTTPException, LimitUseAuthenticationkey,
+                    LocationValueTypeInvaild, MissingRequiredValues,
+                    ServerError, ServiceNotFound, SQLStatementError)
+from .model import (AcaInsTiInfo, ClassInfo, MealServiceDietInfo, SchoolInfo,
+                    SchoolMajorInfo, SchoolSchedule, SchulAflcoInfo,
+                    TiClrmInfo, TimeTable)
+from .utils import concatDict
 
 HTTPExceptions = {
     "INFO-200": DataNotFound,
@@ -546,4 +528,3 @@ class Client(_Client):
             return functools.partial(self.__run_coroutine, attribute)
 
         return attribute
-
