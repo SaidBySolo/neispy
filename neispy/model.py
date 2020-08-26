@@ -23,8 +23,8 @@ class AttributeDict:
 
     def __dict__(self) -> dict:
         return self.value
-    
-    def __bool__(self):
+
+    def __bool__(self) -> bool:
         return bool(self.value)
 
     def __getattr__(self, name: str) -> Any:
