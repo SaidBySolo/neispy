@@ -23,6 +23,9 @@ class AttributeDict:
 
     def __dict__(self) -> dict:
         return self.value
+    
+    def __bool__(self):
+        return bool(self.value)
 
     def __getattr__(self, name: str) -> Any:
         if isinstance(self.value, list):
