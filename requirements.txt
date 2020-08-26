@@ -1,3 +1,2 @@
-﻿aiohttp[speedup]
-requests
+aiohttp[speedup]
 ujson
