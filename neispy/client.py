@@ -1,4 +1,3 @@
-import ujson
 import asyncio
 import datetime
 import functools
@@ -355,7 +354,7 @@ class _Client:
             `DGHT_CRSE_SC_NM` {str} -- 주야과정명(고등학교일 경우만 받음) (default: {None})
 
            ` ORD_SC_NM` {str} -- 계열명(고등학교일 경우만 받음) (default: {None})
-            
+
             `DDDEP_NM` {str} -- 학과명(고등학교일 경우만 받음) (default: {None})
 
             `GRADE` {int} -- 학년 (default: {None})

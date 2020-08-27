@@ -1,6 +1,6 @@
 from typing import Any
 
-import ujson
+import json
 
 
 class AttributeDict:
@@ -16,7 +16,7 @@ class AttributeDict:
         return len(self.value)
 
     def __str__(self) -> str:
-        return ujson.dumps(self.value)
+        return json.dumps(self.value, default=lambda x: x.__dict__)
 
     def __repr__(self) -> str:
         return self.value.__repr__()
