@@ -1,4 +1,3 @@
-import ujson
 import asyncio
 import datetime
 import functools
