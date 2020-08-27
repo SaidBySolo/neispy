@@ -36,7 +36,11 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Lint with black
       run: |
-        black . --check
+          if ! black --check --diff . ; then
+              msg="file formatting does not match $(black --version); fix using \`black .\`"
+              black --check . 2>&1 | sed "s/would reformat \(.*\)/::error file=\1::$msg/"
+              exit 1
+          fi
     - name: Test with pytest
       run: |
         pytest
