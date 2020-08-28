@@ -111,7 +111,8 @@ class _Client:
 
                 raise HTTPExceptions.get(Code, HTTPException)(Code, Msg)
 
-    async def schoolInfo(self,
+    async def schoolInfo(
+        self,
         ATPT_OFCDC_SC_CODE: str = None,
         SD_SCHUL_CODE: str = None,
         SCHUL_NM: str = None,
