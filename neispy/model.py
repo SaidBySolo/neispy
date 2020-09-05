@@ -42,7 +42,7 @@ class AttributeDict:
     def __get(self, name: str) -> Any:
         Value = self.value.get(name)
 
-        if Value:
+        if name in self.value:
             if isinstance(Value, dict):
                 Value = self.__make(Value)
             elif isinstance(Value, list):
