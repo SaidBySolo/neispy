@@ -330,6 +330,7 @@ class _Client:
         PERIO: int = None,
         TI_FROM_YMD: int = None,
         TI_TO_YMD: int = None,
+        SCHUL_CRSE_SC_NM: str = None,
     ) -> TimeTable:
         """초,중,고 시간표
 
@@ -337,7 +338,7 @@ class _Client:
 
         Arguments:
 
-            schclass {str} -- 초등학교(els),중학교(mis),고등학교(his)중 선택을 하는 인자입니다.
+            schclass {str} -- 초등학교(els),중학교(mis),고등학교(his),특수학교(sps)중 선택을 하는 인자입니다.
 
         Keyword Arguments:
 
@@ -368,6 +369,8 @@ class _Client:
             `TI_FROM_YMD` {int} -- 시간표시작일자 (default: {None})
 
             `TI_TO_YMD` {int} -- 시간표종료일자 (default: {None})
+
+            `SCHUL_CRSE_SC_NM` {str} -- 과정명(특수학교일 경우만 받음) (default: {None})
 
         Raises:
 
@@ -410,6 +413,8 @@ class _Client:
             params["TI_FROM_YMD"] = TI_FROM_YMD
         if TI_TO_YMD:
             params["TI_TO_YMD"] = TI_TO_YMD
+        if SCHUL_CRSE_SC_NM:
+            params["SCHUL_CRSE_SC_NM"] = SCHUL_CRSE_SC_NM
 
         Data = await self.request("GET", f"/{schclass}Timetable", params=params)
         return TimeTable(Data)
