@@ -6,7 +6,7 @@ with open("requirements.txt") as f:
 
 setuptools.setup(
     name="neispy",
-    version="3.2.1",
+    version="3.2.2",
     license="MIT",
     author="Ryu ju heon",
     author_email="SaidBySolo@gmail.com",
