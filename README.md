@@ -6,8 +6,6 @@
 ![Python package](https://github.com/SaidBySolo/neispy/workflows/Python%20package/badge.svg)
 [![PyPI - Downloads](https://img.shields.io/pypi/dm/neispy)](https://pypi.org/project/neispy/)
 
-기초적인 사용법은 [이곳](https://www.koreaminecraft.net/dev_portal/1790805)을 봐주세요!
-
 api키는 [이곳](https://open.neis.go.kr/portal/guide/actKeyPage.do)에서 받으실 수 있습니다.
 
 [open Neis api](https://open.neis.go.kr/)의 모든 엔드포인트가 래핑되어있습니다
