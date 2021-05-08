@@ -165,7 +165,7 @@ class _Client:
         ATPT_OFCDC_SC_CODE: str = None,
         SD_SCHUL_CODE: str = None,
         MMEAL_SC_CODE: str = None,
-        MLSV_YMD: str = now(),
+        MLSV_YMD: str = None,
         MLSV_FROM_YMD: str = None,
         MLSV_TO_YMD: str = None,
     ) -> MealServiceDietInfo:
@@ -199,6 +199,8 @@ class _Client:
             params["MMEAL_SC_CODE"] = MMEAL_SC_CODE
         if MLSV_YMD:
             params["MLSV_YMD"] = MLSV_YMD
+        else:
+            params["MLSV_YMD"] = now()
         if MLSV_FROM_YMD:
             params["MLSV_FROM_YMD"] = MLSV_FROM_YMD
         if MLSV_TO_YMD:
@@ -213,7 +215,7 @@ class _Client:
         SD_SCHUL_CODE: str = None,
         DGHT_CRSE_SC_NM: str = None,
         SCHUL_CRSE_SC_NM: str = None,
-        AA_YMD: int = now(),
+        AA_YMD: int = None,
         AA_FROM_YMD: int = None,
         AA_TO_YMD: int = None,
     ) -> SchoolSchedule:
@@ -253,6 +255,8 @@ class _Client:
             params["SCHUL_CRSE_SC_NM"] = SCHUL_CRSE_SC_NM
         if AA_YMD:
             params["AA_YMD"] = AA_YMD
+        else:
+            params["AA_YMD"] = now()
         if AA_FROM_YMD:
             params["AA_FROM_YMD"] = AA_FROM_YMD
         if AA_TO_YMD:
@@ -320,7 +324,7 @@ class _Client:
         SD_SCHUL_CODE: str = None,
         AY: int = None,
         SEM: int = None,
-        ALL_TI_YMD: int = now(),
+        ALL_TI_YMD: int = None,
         DGHT_CRSE_SC_NM=None,
         ORD_SC_NM=None,
         DDDEP_NM=None,
@@ -395,6 +399,8 @@ class _Client:
             params["SEM"] = SEM
         if ALL_TI_YMD:
             params["ALL_TI_YMD"] = ALL_TI_YMD
+        else:
+            params["ALL_TI_YMD"] = now()
         if DGHT_CRSE_SC_NM:
             params["DGHT_CRSE_SCNM"] = DGHT_CRSE_SC_NM
         if ORD_SC_NM:
