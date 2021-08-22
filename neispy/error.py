@@ -8,7 +8,7 @@ class ArgumentError(NeispyException):
 
 
 class HTTPException(NeispyException):
-    def __init__(self, code, message):
+    def __init__(self, code: int, message: str):
         super().__init__(f"{code} {message}")
 
 
@@ -54,3 +54,18 @@ class LimitUseAuthenticationkey(HTTPException):
 
 class DataNotFound(HTTPException):
     pass
+
+
+ExceptionsMapping = {
+    "INFO-200": DataNotFound,
+    "INFO-300": LimitUseAuthenticationkey,
+    "ERROR-290": AuthenticationKeyInvaild,
+    "ERROR-300": MissingRequiredValues,
+    "ERROR-310": ServiceNotFound,
+    "ERROR-333": LocationValueTypeInvaild,
+    "ERROR-336": CannotExceed1000,
+    "ERROR-337": DailyTrafficLimit,
+    "ERROR-500": ServerError,
+    "ERROR-600": DatabaseConnectionError,
+    "ERROR-601": SQLStatementError,
+}
