@@ -1,5 +1,5 @@
 from types import TracebackType
-from typing import Dict, Optional, Type, Union
+from typing import Any, Dict, Optional, Type, Union
 
 try:
     from typing import Literal
@@ -9,6 +9,8 @@ except ImportError:
 from aiohttp.client import ClientSession
 from warnings import warn
 from neispy.error import ExceptionsMapping
+from types import SimpleNamespace
+from json import loads
 
 
 class NeispyRequest:
@@ -21,6 +23,7 @@ class NeispyRequest:
         pIndex: int,
         pSize: int,
         session: Optional[ClientSession],
+        only_rows: bool = True,
     ) -> None:
         self.KEY = KEY
         if not KEY:
@@ -30,6 +33,7 @@ class NeispyRequest:
         self.pSize = pSize
         self.Type = Type
         self.session = session
+        self.only_rows = only_rows
 
     def _default_params(self) -> Dict[str, Union[str, int]]:
         default_params = {
@@ -42,6 +46,9 @@ class NeispyRequest:
             default_params["KEY"] = self.KEY
 
         return default_params
+
+    def __loads(self, data: Any):
+        return loads(data, object_hook=lambda d: SimpleNamespace(**d))
 
     async def request(
         self,
@@ -58,15 +65,18 @@ class NeispyRequest:
         default_params.update(params)
 
         async with self.session.request(method, URL, params=default_params) as response:
-            data = await response.json(content_type=None)
+            data = await response.json(content_type=None, loads=self.__loads)
 
-            if result := data.get("RESULT"):
-                code = result["CODE"]
+            if result := getattr(data, "RESULT", None):
+                code = result.CODE
                 if code != "INFO-000":
-                    msg = result["MESSAGE"]
-                    raise ExceptionsMapping[result["CODE"]](code, msg)
+                    msg = result.MESSAGE
+                    raise ExceptionsMapping[result.CODE](code, msg)
 
-            return data["row"]
+            if self.only_rows:
+                return list(data.__dict__.values())[0][1].row
+
+            return data
 
     async def get_schoolInfo(self, params: Dict[str, Union[str, int]]):
         return await self.request("GET", "/schoolInfo", params)
@@ -75,22 +85,22 @@ class NeispyRequest:
         return await self.request("GET", "/mealServiceDietInfo", params)
 
     async def get_SchoolSchedule(self, params: Dict[str, Union[str, int]]):
-        return await self.request("GET", "/schoolSchedule", params)
+        return await self.request("GET", "/SchoolSchedule", params)
 
     async def get_acaInsTiInfo(self, params: Dict[str, Union[str, int]]):
         return await self.request("GET", "/acaInsTiInfo", params)
 
-    async def get_elstimeTable(self, params: Dict[str, Union[str, int]]):
-        return await self.request("GET", "/elstimeTable", params)
+    async def get_elsTimetable(self, params: Dict[str, Union[str, int]]):
+        return await self.request("GET", "/elsTimetable", params)
 
-    async def get_mistimeTable(self, params: Dict[str, Union[str, int]]):
-        return await self.request("GET", "/mistimeTable", params)
+    async def get_misTimetable(self, params: Dict[str, Union[str, int]]):
+        return await self.request("GET", "/misTimetable", params)
 
-    async def get_histimeTable(self, params: Dict[str, Union[str, int]]):
-        return await self.request("GET", "/histimeTable", params)
+    async def get_hisTimetable(self, params: Dict[str, Union[str, int]]):
+        return await self.request("GET", "/hisTimetable", params)
 
-    async def get_spstimeTable(self, params: Dict[str, Union[str, int]]):
-        return await self.request("GET", "/spstimeTable", params)
+    async def get_spsTimetable(self, params: Dict[str, Union[str, int]]):
+        return await self.request("GET", "/spsTimetable", params)
 
     async def get_classInfo(self, params: Dict[str, Union[str, int]]):
         return await self.request("GET", "/classInfo", params)
