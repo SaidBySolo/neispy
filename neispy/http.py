@@ -31,6 +31,18 @@ class NeispyRequest:
         self.Type = Type
         self.session = session
 
+    def _default_params(self) -> Dict[str, Union[str, int]]:
+        default_params = {
+            "pIndex": self.pIndex,
+            "pSize": self.pSize,
+            "type": self.Type,
+        }
+
+        if self.KEY:
+            default_params["KEY"] = self.KEY
+
+        return default_params
+
     async def request(
         self,
         method: str,
@@ -42,7 +54,10 @@ class NeispyRequest:
         if not self.session:
             self.session = ClientSession()
 
-        async with self.session.request(method, URL, params=params) as response:
+        default_params = self._default_params()
+        default_params.update(params)
+
+        async with self.session.request(method, URL, params=default_params) as response:
             data = await response.json(content_type=None)
 
             if result := data.get("RESULT"):
