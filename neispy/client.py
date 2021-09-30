@@ -10,7 +10,7 @@ from aiohttp.client import ClientSession
 # KST = datetime.timezone(datetime.timedelta(hours=9))
 
 
-# def now():
+# def now() -> Any:
 #     return datetime.datetime.now(tz=KST).strftime("%Y%m%d")
 
 
@@ -27,7 +27,7 @@ class Neispy(NeispyRequest):
             KEY=KEY, Type=Type, pIndex=pIndex, pSize=pSize, session=session
         )
 
-    def __get_params(self, locals: dict[str, Any]):
+    def __get_params(self, locals: dict[str, Any]) -> Any:
         locals.pop("self")
         return {k: v for k, v in locals.items() if v is not None}
 
@@ -39,7 +39,7 @@ class Neispy(NeispyRequest):
         SCHUL_KND_SC_NM: Optional[str] = None,
         LCTN_SC_NM: Optional[str] = None,
         FOND_SC_NM: Optional[str] = None,
-    ):
+    ) -> Any:
         params = self.__get_params(locals())
         return await self.get_schoolInfo(params)
 
@@ -51,7 +51,7 @@ class Neispy(NeispyRequest):
         MLSV_YMD: Optional[str] = None,
         MLSV_FROM_YMD: Optional[str] = None,
         MLSV_TO_YMD: Optional[str] = None,
-    ):
+    ) -> Any:
         params = self.__get_params(locals())
         return await self.get_mealServiceDietInfo(params)
 
@@ -64,7 +64,7 @@ class Neispy(NeispyRequest):
         AA_YMD: Optional[int] = None,
         AA_FROM_YMD: Optional[int] = None,
         AA_TO_YMD: Optional[int] = None,
-    ):
+    ) -> Any:
         params = self.__get_params(locals())
         return await self.get_SchoolSchedule(params)
 
@@ -76,7 +76,7 @@ class Neispy(NeispyRequest):
         REALM_SC_NM: Optional[str] = None,
         LE_ORD_NM: Optional[str] = None,
         LE_CRSE_NM: Optional[str] = None,
-    ):
+    ) -> Any:
         params = self.__get_params(locals())
         return await self.get_acaInsTiInfo(params)
 
@@ -97,7 +97,7 @@ class Neispy(NeispyRequest):
         TI_FROM_YMD: Optional[int] = None,
         TI_TO_YMD: Optional[int] = None,
         SCHUL_CRSE_SC_NM: Optional[str] = None,
-    ):
+    ) -> Any:
         params = self.__get_params(locals())
         return await self.get_elstimeTable(params)
 
@@ -118,7 +118,7 @@ class Neispy(NeispyRequest):
         TI_FROM_YMD: Optional[int] = None,
         TI_TO_YMD: Optional[int] = None,
         SCHUL_CRSE_SC_NM: Optional[str] = None,
-    ):
+    ) -> Any:
         params = self.__get_params(locals())
         return await self.get_mistimeTable(params)
 
@@ -139,7 +139,7 @@ class Neispy(NeispyRequest):
         TI_FROM_YMD: Optional[int] = None,
         TI_TO_YMD: Optional[int] = None,
         SCHUL_CRSE_SC_NM: Optional[str] = None,
-    ):
+    ) -> Any:
         params = self.__get_params(locals())
         return await self.get_histimeTable(params)
 
@@ -160,7 +160,7 @@ class Neispy(NeispyRequest):
         TI_FROM_YMD: Optional[int] = None,
         TI_TO_YMD: Optional[int] = None,
         SCHUL_CRSE_SC_NM: Optional[str] = None,
-    ):
+    ) -> Any:
         params = self.__get_params(locals())
         return await self.get_spstimeTable(params)
 
@@ -174,7 +174,7 @@ class Neispy(NeispyRequest):
         SCHUL_CRSE_SC_NM: Optional[str] = None,
         ORD_SC_NM: Optional[str] = None,
         DDDEP_NM: Optional[str] = None,
-    ):
+    ) -> Any:
         params = self.__get_params(locals())
         return await self.get_classInfo(params)
 
@@ -184,7 +184,7 @@ class Neispy(NeispyRequest):
         SD_SCHUL_CODE: Optional[str] = None,
         DGHT_CRSE_SC_NM: Optional[str] = None,
         ORD_SC_NM: Optional[str] = None,
-    ):
+    ) -> Any:
         params = self.__get_params(locals())
         return await self.get_schoolMajorinfo(params)
 
@@ -193,7 +193,7 @@ class Neispy(NeispyRequest):
         ATPT_OFCDC_SC_CODE: Optional[str] = None,
         SD_SCHUL_CODE: Optional[str] = None,
         DGHT_CRSE_SC_NM: Optional[str] = None,
-    ):
+    ) -> Any:
         params = self.__get_params(locals())
         return await self.get_schulAflcoinfo(params)
 
@@ -208,6 +208,6 @@ class Neispy(NeispyRequest):
         DGHT_CRSE_SC_NM: Optional[str] = None,
         ORD_SC_NM: Optional[str] = None,
         DDDEP_NM: Optional[str] = None,
-    ):
+    ) -> Any:
         params = self.__get_params(locals())
         return await self.get_tiClrminfo(params)
