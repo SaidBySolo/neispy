@@ -3,9 +3,9 @@ try:
 except ImportError:
     from typing_extensions import Literal
 from neispy.http import NeispyRequest
-from typing import Any, Optional
+from typing import Any, Dict, Optional
 from aiohttp.client import ClientSession
-
+from asyncio.events import get_event_loop
 
 # KST = datetime.timezone(datetime.timedelta(hours=9))
 
@@ -22,14 +22,65 @@ class Neispy(NeispyRequest):
         pIndex: int = 1,
         pSize: int = 100,
         session: Optional[ClientSession] = None,
+        only_rows: bool = True,
     ) -> None:
         super().__init__(
-            KEY=KEY, Type=Type, pIndex=pIndex, pSize=pSize, session=session
+            KEY=KEY,
+            Type=Type,
+            pIndex=pIndex,
+            pSize=pSize,
+            session=session,
+            only_rows=only_rows,
         )
 
-    def __get_params(self, locals: dict[str, Any]) -> Any:
+    def __get_params(self, locals: Dict[str, Any]) -> Any:
         locals.pop("self")
         return {k: v for k, v in locals.items() if v is not None}
+
+    @classmethod
+    def sync(
+        cls,
+        KEY: Optional[str] = None,
+        Type: Literal["json", "xml"] = "json",
+        pIndex: int = 1,
+        pSize: int = 100,
+        only_rows: bool = True,
+    ):
+        neispy = cls(KEY, Type, pIndex, pSize, only_rows=only_rows)
+        origin_func = getattr(neispy, "request")
+
+        async def close_session_request(*args: Any, **kwargs: Any) -> Any:
+            try:
+                if neispy.session and neispy.session.closed or not neispy.session:
+                    neispy.session = ClientSession()
+                return await origin_func(*args, **kwargs)
+            finally:
+                if neispy.session:
+                    await neispy.session.close()
+
+        def to_sync_func(func: Any):
+            def wrapper(*args: Any, **kwargs: Any):
+                loop = get_event_loop()
+
+                if loop.is_running():
+                    return func(*args, **kwargs)
+
+                return loop.run_until_complete(func(*args, **kwargs))
+
+            return wrapper
+
+        method_list = [
+            func
+            for func in dir(neispy)
+            if callable(getattr(neispy, func))
+            and not func.startswith("__")
+            and not func.startswith("_")
+        ]
+        neispy.__setattr__("request", close_session_request)
+        for method in method_list:
+            neispy.__setattr__(method, to_sync_func(getattr(neispy, method)))
+
+        return neispy
 
     async def schoolInfo(
         self,
@@ -80,7 +131,7 @@ class Neispy(NeispyRequest):
         params = self.__get_params(locals())
         return await self.get_acaInsTiInfo(params)
 
-    async def elstimeTable(
+    async def elsTimetable(
         self,
         ATPT_OFCDC_SC_CODE: Optional[str] = None,
         SD_SCHUL_CODE: Optional[str] = None,
@@ -99,9 +150,9 @@ class Neispy(NeispyRequest):
         SCHUL_CRSE_SC_NM: Optional[str] = None,
     ) -> Any:
         params = self.__get_params(locals())
-        return await self.get_elstimeTable(params)
+        return await self.get_elsTimetable(params)
 
-    async def mistimeTable(
+    async def misTimetable(
         self,
         ATPT_OFCDC_SC_CODE: Optional[str] = None,
         SD_SCHUL_CODE: Optional[str] = None,
@@ -120,9 +171,9 @@ class Neispy(NeispyRequest):
         SCHUL_CRSE_SC_NM: Optional[str] = None,
     ) -> Any:
         params = self.__get_params(locals())
-        return await self.get_mistimeTable(params)
+        return await self.get_misTimetable(params)
 
-    async def histimeTable(
+    async def hisTimetable(
         self,
         ATPT_OFCDC_SC_CODE: Optional[str] = None,
         SD_SCHUL_CODE: Optional[str] = None,
@@ -141,9 +192,9 @@ class Neispy(NeispyRequest):
         SCHUL_CRSE_SC_NM: Optional[str] = None,
     ) -> Any:
         params = self.__get_params(locals())
-        return await self.get_histimeTable(params)
+        return await self.get_hisTimetable(params)
 
-    async def spstimeTable(
+    async def spsTimetable(
         self,
         ATPT_OFCDC_SC_CODE: Optional[str] = None,
         SD_SCHUL_CODE: Optional[str] = None,
@@ -162,7 +213,7 @@ class Neispy(NeispyRequest):
         SCHUL_CRSE_SC_NM: Optional[str] = None,
     ) -> Any:
         params = self.__get_params(locals())
-        return await self.get_spstimeTable(params)
+        return await self.get_spsTimetable(params)
 
     async def classInfo(
         self,
