@@ -40,11 +40,11 @@ async def main():
         SE = scinfo[0].SD_SCHUL_CODE  # 학교코드
 
         # 학교코드와 교육청 코드로 2019년 1월 22일의 급식 정보 요청
-        scmeal = await neis.mealServiceDietInfo(AE, SE, MLSV_YMD="20201002")
+        scmeal = await neis.mealServiceDietInfo(AE, SE, MLSV_YMD="20190122")
         meal = scmeal[0].DDISH_NM.replace("<br/>", "\n")  # 줄바꿈으로 만든뒤 출력
 
         # 학교코드와 교육청 코드로 2019년 3월 7일날 학사일정 요청
-        scschedule = await neis.SchoolSchedule(AE, SE, AA_YMD=20190307)
+        scschedule = await neis.SchoolSchedule(AE, SE, AA_YMD=20201002)
         schedule = scschedule[0].EVENT_NM  # 학사일정명 가져옴
 
         # 학교코드와 교육청 코드로 초등학교의 2020년 1월 22일의 시간표가져옴
@@ -71,17 +71,6 @@ async def main():
 
         sctiClrm = await neis.tiClrminfo(hAE, hSE)  # 시간표 강의실 정보 요청
         tiClem = [t.CLRM_NM for t in sctiClrm]
-
-        print(AE)
-        print(SE)
-        print(meal)
-        print(schedule)
-        print(academy)
-        print(class_info)
-        print(timetable)
-        print(majorinfo)
-        print(Aflco)
-        print(tiClem)
 
 
 get_event_loop().run_until_complete(main())
@@ -128,11 +117,11 @@ def main():
     SE = scinfo[0].SD_SCHUL_CODE  # 학교코드
 
     # 학교코드와 교육청 코드로 2019년 1월 22일의 급식 정보 요청
-    scmeal = neis.mealServiceDietInfo(AE, SE, MLSV_YMD="20201002")
+    scmeal = neis.mealServiceDietInfo(AE, SE, MLSV_YMD="20190122")
     meal = scmeal[0].DDISH_NM.replace("<br/>", "\n")  # 줄바꿈으로 만든뒤 출력
 
     # 학교코드와 교육청 코드로 2019년 3월 7일날 학사일정 요청
-    scschedule = neis.SchoolSchedule(AE, SE, AA_YMD=20190307)
+    scschedule = neis.SchoolSchedule(AE, SE, AA_YMD=20201002)
     schedule = scschedule[0].EVENT_NM  # 학사일정명 가져옴
 
     # 학교코드와 교육청 코드로 초등학교의 2020년 1월 22일의 시간표가져옴
