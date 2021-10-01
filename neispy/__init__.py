@@ -1,2 +1,3 @@
-from .client import Client, now
-from .error import *
+from neispy.client import Neispy as Neispy
+
+__version__ = "4.0.0"
