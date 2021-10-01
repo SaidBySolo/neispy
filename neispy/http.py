@@ -51,7 +51,10 @@ class NeispyRequest:
         return loads(data, object_hook=lambda d: SimpleNamespace(**d))
 
     async def request(
-        self, method: str, endpoint: str, params: Dict[str, Union[str, int]],
+        self,
+        method: str,
+        endpoint: str,
+        params: Dict[str, Union[str, int]],
     ):
         URL = self.BASE + endpoint
 

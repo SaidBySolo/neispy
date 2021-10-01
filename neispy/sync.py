@@ -34,7 +34,10 @@ class SyncNeispyRequest:
         ...
 
     def request(
-        self, method: str, endpoint: str, params: Dict[str, Union[str, int]],
+        self,
+        method: str,
+        endpoint: str,
+        params: Dict[str, Union[str, int]],
     ):
         ...
 
