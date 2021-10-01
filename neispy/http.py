@@ -51,7 +51,10 @@ class NeispyRequest:
         return loads(data, object_hook=lambda d: SimpleNamespace(**d))
 
     async def request(
-        self, method: str, endpoint: str, params: Dict[str, Union[str, int]],
+        self,
+        method: str,
+        endpoint: str,
+        params: Dict[str, Union[str, int]],
     ):
         URL = self.BASE + endpoint
 
@@ -64,7 +67,8 @@ class NeispyRequest:
         async with self.session.request(method, URL, params=default_params) as response:
             data = await response.json(content_type=None, loads=self.__loads)
 
-            if result := getattr(data, "RESULT", None):
+            if getattr(data, "RESULT", None):
+                result = data.RESULT
                 code = result.CODE
                 if code != "INFO-000":
                     msg = result.MESSAGE
