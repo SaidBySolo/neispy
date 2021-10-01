@@ -195,9 +195,19 @@ main()
 
 **Attribute도 데이터셋을 참고해주시기바랍니다.**
 
-## Patch note
+## Release note
 
-## 3.2.2
+### 4.0.0
+
+* 클래스명 변경 ``Client`` -> ``Neispy``.
+* 이제 ``ClientSession``을 요청마다 생성하지 않습니다.
+* ``now()``함수가 더 이상 적용되지않음.
+* ``async with`` 구문을 지원함.
+* 기존 모델에서 SimpleNamespace로 변경
+* 동기로 사용할시 클래스메소드 ``.sync()``의 반환값인 ``SyncNeispy``를 사용해야함
+* 타입힌트가 좀 더 정확히 적용됨
+
+### 3.2.2
 
 * 사용하지 않는 모듈 제거후 재배포
 
