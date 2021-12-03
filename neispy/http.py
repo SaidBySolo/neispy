@@ -1,5 +1,5 @@
 from types import TracebackType
-from typing import Any, Dict, Optional, Type, Union
+from typing import Dict, Optional, Type, Union
 
 try:
     from typing import Literal
@@ -9,8 +9,6 @@ except ImportError:
 from aiohttp.client import ClientSession
 from warnings import warn
 from neispy.error import ExceptionsMapping
-from types import SimpleNamespace
-from json import loads
 
 
 class NeispyRequest:
@@ -47,9 +45,6 @@ class NeispyRequest:
 
         return default_params
 
-    def __loads(self, data: Any):
-        return loads(data, object_hook=lambda d: SimpleNamespace(**d))
-
     async def request(
         self,
         method: str,
@@ -65,17 +60,17 @@ class NeispyRequest:
         default_params.update(params)
 
         async with self.session.request(method, URL, params=default_params) as response:
-            data = await response.json(content_type=None, loads=self.__loads)
+            data = await response.json(content_type=None)
 
-            if getattr(data, "RESULT", None):
-                result = data.RESULT
-                code = result.CODE
+            if data.get("RESULT"):
+                result = data["RESULT"]
+                code = result["CODE"]
                 if code != "INFO-000":
-                    msg = result.MESSAGE
-                    raise ExceptionsMapping[result.CODE](code, msg)
+                    msg = result["MESSAGE"]
+                    raise ExceptionsMapping[result["CODE"]](code, msg)
 
             if self.only_rows:
-                return list(data.__dict__.values())[0][1].row
+                return list(data.values())[0][1]["row"]
 
             return data
 

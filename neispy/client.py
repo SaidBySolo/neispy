@@ -2,18 +2,33 @@ try:
     from typing import Literal
 except ImportError:
     from typing_extensions import Literal
+from json import loads, dumps
+from types import SimpleNamespace
 from neispy.http import NeispyRequest
-from typing import Any, Dict, Optional, cast
+from typing import Any, Callable, Coroutine, Dict, Optional, TypeVar, cast
 from aiohttp.client import ClientSession
 from asyncio.events import get_event_loop
 
 from neispy.sync import SyncNeispy
+from functools import wraps
 
 # KST = datetime.timezone(datetime.timedelta(hours=9))
 
 
 # def now() -> Any:
 #     return datetime.datetime.now(tz=KST).strftime("%Y%m%d")
+
+
+CORO = TypeVar("CORO", bound=Callable[..., Coroutine[Any, Any, Any]])
+
+
+def to_obj(func: CORO) -> CORO:
+    @wraps(func)
+    async def inner(*args: Any, **kwargs: Any) -> Any:
+        data = await func(*args, **kwargs)
+        return loads(dumps(data), object_hook=lambda d: SimpleNamespace(**d))
+
+    return cast(CORO, inner)
 
 
 class Neispy(NeispyRequest):
@@ -94,6 +109,7 @@ class Neispy(NeispyRequest):
 
         return cast(SyncNeispy, neispy)
 
+    @to_obj
     async def schoolInfo(
         self,
         ATPT_OFCDC_SC_CODE: Optional[str] = None,
@@ -106,6 +122,7 @@ class Neispy(NeispyRequest):
         params = self.__get_params(locals())
         return await self.get_schoolInfo(params)
 
+    @to_obj
     async def mealServiceDietInfo(
         self,
         ATPT_OFCDC_SC_CODE: Optional[str] = None,
@@ -118,6 +135,7 @@ class Neispy(NeispyRequest):
         params = self.__get_params(locals())
         return await self.get_mealServiceDietInfo(params)
 
+    @to_obj
     async def SchoolSchedule(
         self,
         ATPT_OFCDC_SC_CODE: Optional[str] = None,
@@ -131,6 +149,7 @@ class Neispy(NeispyRequest):
         params = self.__get_params(locals())
         return await self.get_SchoolSchedule(params)
 
+    @to_obj
     async def acaInsTiInfo(
         self,
         ATPT_OFCDC_SC_CODE: Optional[str] = None,
@@ -143,6 +162,7 @@ class Neispy(NeispyRequest):
         params = self.__get_params(locals())
         return await self.get_acaInsTiInfo(params)
 
+    @to_obj
     async def elsTimetable(
         self,
         ATPT_OFCDC_SC_CODE: Optional[str] = None,
@@ -164,6 +184,7 @@ class Neispy(NeispyRequest):
         params = self.__get_params(locals())
         return await self.get_elsTimetable(params)
 
+    @to_obj
     async def misTimetable(
         self,
         ATPT_OFCDC_SC_CODE: Optional[str] = None,
@@ -185,6 +206,7 @@ class Neispy(NeispyRequest):
         params = self.__get_params(locals())
         return await self.get_misTimetable(params)
 
+    @to_obj
     async def hisTimetable(
         self,
         ATPT_OFCDC_SC_CODE: Optional[str] = None,
@@ -206,6 +228,7 @@ class Neispy(NeispyRequest):
         params = self.__get_params(locals())
         return await self.get_hisTimetable(params)
 
+    @to_obj
     async def spsTimetable(
         self,
         ATPT_OFCDC_SC_CODE: Optional[str] = None,
@@ -227,6 +250,7 @@ class Neispy(NeispyRequest):
         params = self.__get_params(locals())
         return await self.get_spsTimetable(params)
 
+    @to_obj
     async def classInfo(
         self,
         ATPT_OFCDC_SC_CODE: Optional[str] = None,
@@ -241,6 +265,7 @@ class Neispy(NeispyRequest):
         params = self.__get_params(locals())
         return await self.get_classInfo(params)
 
+    @to_obj
     async def schoolMajorinfo(
         self,
         ATPT_OFCDC_SC_CODE: Optional[str] = None,
@@ -251,6 +276,7 @@ class Neispy(NeispyRequest):
         params = self.__get_params(locals())
         return await self.get_schoolMajorinfo(params)
 
+    @to_obj
     async def schulAflcoinfo(
         self,
         ATPT_OFCDC_SC_CODE: Optional[str] = None,
@@ -260,6 +286,7 @@ class Neispy(NeispyRequest):
         params = self.__get_params(locals())
         return await self.get_schulAflcoinfo(params)
 
+    @to_obj
     async def tiClrminfo(
         self,
         ATPT_OFCDC_SC_CODE: Optional[str] = None,
