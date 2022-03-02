@@ -18,7 +18,7 @@ setuptools.setup(
     long_description=open("README.md", "rt", encoding="UTF8").read(),
     long_description_content_type="text/markdown",
     url="https://github.com/SaidBySolo/neispy",
-    package_data={"koreanbots": ["py.typed"]},
+    package_data={"neispy": ["py.typed"]},
     packages=setuptools.find_packages(),
     install_requires=requirements,
     classifiers=[
