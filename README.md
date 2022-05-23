@@ -41,16 +41,16 @@ async def main():
         AE = scinfo[0].ATPT_OFCDC_SC_CODE  # 교육청코드
         SE = scinfo[0].SD_SCHUL_CODE  # 학교코드
 
-        # 학교코드와 교육청 코드로 2019년 1월 22일의 급식 정보 요청
-        scmeal = await neis.mealServiceDietInfo(AE, SE, MLSV_YMD="20190122")
+        # 학교코드와 교육청 코드로 2022년 5월 23일의 급식 정보 요청
+        scmeal = await neis.mealServiceDietInfo(AE, SE, MLSV_YMD="20220523")
         meal = scmeal[0].DDISH_NM.replace("<br/>", "\n")  # 줄바꿈으로 만든뒤 출력
 
-        # 학교코드와 교육청 코드로 2019년 3월 7일날 학사일정 요청
-        scschedule = await neis.SchoolSchedule(AE, SE, AA_YMD=20201002)
+        # 학교코드와 교육청 코드로 2022년 6월 1일날 학사일정 요청
+        scschedule = await neis.SchoolSchedule(AE, SE, AA_YMD=20220601)
         schedule = scschedule[0].EVENT_NM  # 학사일정명 가져옴
 
         # 학교코드와 교육청 코드로 초등학교의 2020년 1월 22일의 시간표가져옴
-        sctimetable = await neis.elsTimetable(AE, SE, 2019, 2, 20200122, "1", "1")
+        sctimetable = await neis.elsTimetable(AE, SE, 2022, 1, 20220523, "1", "1")
         timetable = [i.ITRT_CNTNT for i in sctimetable]  # 리스트로 만듬
 
         academyinfo = await neis.acaInsTiInfo(AE)  # 교육청 코드로 학원및 교습소 정보 요청
@@ -80,19 +80,19 @@ get_event_loop().run_until_complete(main())
 # 출력값
 
 # E10
-# 7341038
-# 보리밥
-# 사과
-# 비엔나소시지케첩조림2.5.6.10.12.13.
-# 궁중떡볶이1.5.6.13.
-# 알타리김치9.13.
-# 청국장찌개(신)5.9.13.
-# 학급임원선거
+# 7341025
+# 보리밥c  
+# 감자국c  (5.6.9.13.)
+# 순대볶음c  (5.6.10.13.)
+# 고구마돈가스c  (1.2.5.6.10.12.13.)
+# 배추김치  (9.13.)
+# 참외  
+# 지방선거일
 # A+수학교습소
-# ['1', '2', '3', '4', '5']
-# ['즐거운생활', '수학', '국어', '즐거운생활']
-# ['기계과', '공동실습소', '건축과', '건축디자인과', '금속과']
-# ['공업계', '공동실습소', '공업계']
+# ['1', '2', '3', '4', '1']
+# ['국어', '수학', '즐거운생활', '즐거운생활', '봉사활동']
+# ['공동실습소', '건축과', '건축디자인과', '금속과', '기계공작과']
+# ['공동실습소', '공업계', '공업계']
 # ['건축1-1', '건축1-2', '도시1-1', '도시1-2', '메카1-1']
 
 ```
@@ -111,23 +111,21 @@ def main():
     # 아무값이 없으니 샘플키로 요청합니다.
     neis = Neispy.sync()
 
-    print(dir(neis))
-
     # 학교이름으로 학교정보를 요청하고 교육청코드 와 학교코드로 가져옵니다.
-    scinfo = neis.schoolInfo(SCHUL_NM=name)
+    scinfo = neis.schoolInfo(SCHUL_NM="인천동방초등학교")
     AE = scinfo[0].ATPT_OFCDC_SC_CODE  # 교육청코드
     SE = scinfo[0].SD_SCHUL_CODE  # 학교코드
 
-    # 학교코드와 교육청 코드로 2019년 1월 22일의 급식 정보 요청
-    scmeal = neis.mealServiceDietInfo(AE, SE, MLSV_YMD="20190122")
+    # 학교코드와 교육청 코드로 2022년 5월 23일의 급식 정보 요청
+    scmeal = neis.mealServiceDietInfo(AE, SE, MLSV_YMD="20220523")
     meal = scmeal[0].DDISH_NM.replace("<br/>", "\n")  # 줄바꿈으로 만든뒤 출력
 
-    # 학교코드와 교육청 코드로 2019년 3월 7일날 학사일정 요청
-    scschedule = neis.SchoolSchedule(AE, SE, AA_YMD=20201002)
+    # 학교코드와 교육청 코드로 2022년 6월 1일날 학사일정 요청
+    scschedule = neis.SchoolSchedule(AE, SE, AA_YMD=20220601)
     schedule = scschedule[0].EVENT_NM  # 학사일정명 가져옴
 
-    # 학교코드와 교육청 코드로 초등학교의 2020년 1월 22일의 시간표가져옴
-    sctimetable = neis.elsTimetable(AE, SE, 2019, 2, 20200122, "1", "1")
+    # 학교코드와 교육청 코드로 초등학교의 2022년 1월 22일의 시간표가져옴
+    sctimetable = neis.elsTimetable(AE, SE, 2022, 1, 20220523, "1", "1")
     timetable = [i.ITRT_CNTNT for i in sctimetable]  # 리스트로 만듬
 
     academyinfo = neis.acaInsTiInfo(AE)  # 교육청 코드로 학원및 교습소 정보 요청
@@ -166,19 +164,19 @@ main()
 # 출력값
 
 # E10
-# 7341038
-# 보리밥
-# 사과
-# 비엔나소시지케첩조림2.5.6.10.12.13.
-# 궁중떡볶이1.5.6.13.
-# 알타리김치9.13.
-# 청국장찌개(신)5.9.13.
-# 학급임원선거
+# 7341025
+# 보리밥c  
+# 감자국c  (5.6.9.13.)
+# 순대볶음c  (5.6.10.13.)
+# 고구마돈가스c  (1.2.5.6.10.12.13.)
+# 배추김치  (9.13.)
+# 참외  
+# 지방선거일
 # A+수학교습소
-# ['1', '2', '3', '4', '5']
-# ['즐거운생활', '수학', '국어', '즐거운생활']
-# ['기계과', '공동실습소', '건축과', '건축디자인과', '금속과']
-# ['공업계', '공동실습소', '공업계']
+# ['1', '2', '3', '4', '1']
+# ['국어', '수학', '즐거운생활', '즐거운생활', '봉사활동']
+# ['공동실습소', '건축과', '건축디자인과', '금속과', '기계공작과']
+# ['공동실습소', '공업계', '공업계']
 # ['건축1-1', '건축1-2', '도시1-1', '도시1-2', '메카1-1']
 ```
 
