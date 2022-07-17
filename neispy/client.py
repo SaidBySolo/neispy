@@ -74,7 +74,6 @@ class Neispy(NeispyRequest):
         del neispy.__aenter__
         del neispy.__aexit__
         del neispy.sync
-        
 
         async def close_session_request(*args: Any, **kwargs: Any) -> Any:
             try:
@@ -84,7 +83,6 @@ class Neispy(NeispyRequest):
             finally:
                 if neispy.session:
                     await neispy.session.close()
-
 
         def to_sync_func(func: Any):
             def wrapper(*args: Any, **kwargs: Any):
