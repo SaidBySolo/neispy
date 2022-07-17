@@ -1,5 +1,5 @@
 import os
-
+from neispy import __version__
 import setuptools
 
 requirements = []
@@ -10,7 +10,7 @@ with open("requirements.txt") as f:
 
 setuptools.setup(
     name="neispy",
-    version="4.0.2",
+    version=__version__,
     license="MIT",
     author="Ryu ju heon",
     author_email="SaidBySolo@gmail.com",
