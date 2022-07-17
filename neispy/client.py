@@ -65,6 +65,7 @@ class Neispy(NeispyRequest):
     ) -> SyncNeispy:
         neispy = cls(KEY, Type, pIndex, pSize, only_rows=only_rows)
         origin_request_func = getattr(neispy, "request")
+        loop = get_event_loop()
 
         # Remove some methods
         setattr(neispy, "__aenter__", None)
@@ -73,6 +74,7 @@ class Neispy(NeispyRequest):
         del neispy.__aenter__
         del neispy.__aexit__
         del neispy.sync
+        
 
         async def close_session_request(*args: Any, **kwargs: Any) -> Any:
             try:
@@ -83,10 +85,9 @@ class Neispy(NeispyRequest):
                 if neispy.session:
                     await neispy.session.close()
 
+
         def to_sync_func(func: Any):
             def wrapper(*args: Any, **kwargs: Any):
-                loop = get_event_loop()
-
                 if loop.is_running():
                     return func(*args, **kwargs)
 
