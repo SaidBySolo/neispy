@@ -49,7 +49,7 @@ async def main():
         scschedule = await neis.SchoolSchedule(AE, SE, AA_YMD=20220601)
         schedule = scschedule[0].EVENT_NM  # 학사일정명 가져옴
 
-        # 학교 코드와 교육청 코드로 초등학교의 2020년 1월 22일의 시간표 가져옴
+        # 학교 코드와 교육청 코드로 초등학교의 2022년 5월 23일의 시간표 가져옴
         sctimetable = await neis.elsTimetable(AE, SE, 2022, 1, 20220523, "1", "1")
         timetable = [i.ITRT_CNTNT for i in sctimetable]  # 리스트로 만듦
 
@@ -124,7 +124,7 @@ def main():
     scschedule = neis.SchoolSchedule(AE, SE, AA_YMD=20220601)
     schedule = scschedule[0].EVENT_NM  # 학사일정명 가져옴
 
-    # 학교 코드와 교육청 코드로 초등학교의 2022년 1월 22일의 시간표가져옴
+    # 학교 코드와 교육청 코드로 초등학교의 2022년 5월 23일의 시간표가져옴
     sctimetable = neis.elsTimetable(AE, SE, 2022, 1, 20220523, "1", "1")
     timetable = [i.ITRT_CNTNT for i in sctimetable]  # 리스트로 만듦
 
