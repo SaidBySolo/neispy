@@ -2,21 +2,16 @@ try:
     from typing import Literal
 except ImportError:
     from typing_extensions import Literal
-from json import loads, dumps
-from types import SimpleNamespace
-from neispy.http import NeispyRequest
-from typing import Any, Callable, Coroutine, Dict, Optional, TypeVar, cast
-from aiohttp.client import ClientSession
-from asyncio.events import get_event_loop
 
-from neispy.sync import SyncNeispy
 from functools import wraps
+from json import dumps, loads
+from types import SimpleNamespace
+from typing import Any, Callable, Coroutine, Dict, Optional, TypeVar, cast
 
-# KST = datetime.timezone(datetime.timedelta(hours=9))
+from aiohttp.client import ClientSession
 
-
-# def now() -> Any:
-#     return datetime.datetime.now(tz=KST).strftime("%Y%m%d")
+from neispy.http import NeispyRequest
+from neispy.sync import SyncNeispy
 
 
 CORO = TypeVar("CORO", bound=Callable[..., Coroutine[Any, Any, Any]])
@@ -63,50 +58,9 @@ class Neispy(NeispyRequest):
         pSize: int = 100,
         only_rows: bool = True,
     ) -> SyncNeispy:
-        neispy = cls(KEY, Type, pIndex, pSize, only_rows=only_rows)
-        origin_request_func = getattr(neispy, "request")
-        loop = get_event_loop()
-
-        # Remove some methods
-        setattr(neispy, "__aenter__", None)
-        setattr(neispy, "__aexit__", None)
-        setattr(neispy, "sync", None)
-        del neispy.__aenter__
-        del neispy.__aexit__
-        del neispy.sync
-
-        async def close_session_request(*args: Any, **kwargs: Any) -> Any:
-            try:
-                if neispy.session and neispy.session.closed or not neispy.session:
-                    neispy.session = ClientSession()
-                return await origin_request_func(*args, **kwargs)
-            finally:
-                if neispy.session:
-                    await neispy.session.close()
-
-        def to_sync_func(func: Any):
-            def wrapper(*args: Any, **kwargs: Any):
-                if loop.is_running():
-                    return func(*args, **kwargs)
-
-                return loop.run_until_complete(func(*args, **kwargs))
-
-            return wrapper
-
-        method_list = [
-            func
-            for func in dir(neispy)
-            if callable(getattr(neispy, func))
-            and not func.startswith("__")
-            and not func.startswith("_")
-        ]
-
-        neispy.__setattr__("request", close_session_request)
-
-        for method in method_list:
-            neispy.__setattr__(method, to_sync_func(getattr(neispy, method)))
-
-        return cast(SyncNeispy, neispy)
+        return cast(
+            SyncNeispy, super().sync(KEY, Type, pIndex, pSize, only_rows=only_rows)
+        )
 
     @to_obj
     async def schoolInfo(
