@@ -1,13 +1,18 @@
+from asyncio import get_event_loop
 from types import TracebackType
-from typing import Dict, Optional, Type, Union
+from typing import Any, Dict, Optional, Type, Union, cast
+
+from neispy.sync import SyncNeispyRequest
 
 try:
     from typing import Literal
 except ImportError:
     from typing_extensions import Literal
 
-from aiohttp.client import ClientSession
 from warnings import warn
+
+from aiohttp.client import ClientSession
+
 from neispy.error import ExceptionsMapping
 
 
@@ -32,6 +37,63 @@ class NeispyRequest:
         self.Type = Type
         self.session = session
         self.only_rows = only_rows
+
+    @classmethod
+    def sync(
+        cls,
+        KEY: Optional[str],
+        Type: Literal["json", "xml"],
+        pIndex: int,
+        pSize: int,
+        only_rows: bool = True,
+    ) -> SyncNeispyRequest:
+        http = cls(KEY, Type, pIndex, pSize, None, only_rows=only_rows)
+        origin_request_func = getattr(http, "request")
+        loop = get_event_loop()
+
+        # Remove some methods
+        setattr(http, "__aenter__", None)
+        setattr(http, "__aexit__", None)
+
+        del http.__aenter__
+        del http.__aexit__
+
+        async def close_session_request(*args: Any, **kwargs: Any) -> Any:
+            try:
+                if http.session and http.session.closed or not http.session:
+                    http.session = ClientSession()
+                return await origin_request_func(*args, **kwargs)
+            finally:
+                if http.session:
+                    await http.session.close()
+
+        def to_sync_func(func: Any):
+            def wrapper(*args: Any, **kwargs: Any):
+                if loop.is_running():
+                    return func(*args, **kwargs)
+
+                return loop.run_until_complete(func(*args, **kwargs))
+
+            return wrapper
+
+        def dont_use_sync(*args: Any, **kwargs: Any):
+            raise AttributeError("Already synced")
+
+        method_list = [
+            func
+            for func in dir(http)
+            if callable(getattr(http, func))
+            and not func.startswith("__")
+            and not func.startswith("_")
+        ]
+
+        http.__setattr__("request", close_session_request)
+
+        for method in method_list:
+            http.__setattr__(method, to_sync_func(getattr(http, method)))
+
+        setattr(http.__class__, "sync", property(dont_use_sync))
+        return cast(SyncNeispyRequest, http)
 
     def _default_params(self) -> Dict[str, Union[str, int]]:
         default_params = {
