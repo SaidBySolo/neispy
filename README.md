@@ -22,6 +22,11 @@ pip install neispy
 pip install --upgrade neispy
 ```
 
+## 비슷한 프로젝트
+
+* [neis.kt](https://github.com/kimcore/neis.kt)
+  * OPEN NEIS API를 코틀린으로 래핑한 라이브러리입니다.
+
 ## 사용 예시(비동기)
 
 ```py
