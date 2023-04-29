@@ -26,6 +26,8 @@ pip install --upgrade neispy
 
 * [neis.kt](https://github.com/kimcore/neis.kt)
   * OPEN NEIS API를 코틀린으로 래핑한 라이브러리입니다.
+* [neis.ts](https://github.com/star0202/neis.ts)
+  * TypeScript로 만들어진 NEIS Open API Wrapper
 
 ## 사용 예시(비동기)
 
