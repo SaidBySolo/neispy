@@ -1,5 +1,5 @@
 from asyncio import get_event_loop
-from functools import cached_property
+from functools import lru_cache
 from types import TracebackType
 from typing import Any, Dict, Optional, Type, Union, cast
 from warnings import warn
@@ -93,7 +93,8 @@ class NeispyRequest:
         setattr(http.__class__, "sync", property(dont_use_sync))
         return cast(SyncNeispyRequest, http)
 
-    @cached_property
+    @property
+    @lru_cache
     def _default_params(self) -> Dict[str, Union[str, int]]:
         default_params = {
             "pIndex": self.pIndex,
