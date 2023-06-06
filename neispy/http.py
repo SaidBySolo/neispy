@@ -94,7 +94,7 @@ class NeispyRequest:
         return cast(SyncNeispyRequest, http)
 
     @property
-    @lru_cache
+    @lru_cache()
     def _default_params(self) -> Dict[str, Union[str, int]]:
         default_params = {
             "pIndex": self.pIndex,
