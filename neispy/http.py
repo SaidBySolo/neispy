@@ -1,19 +1,17 @@
 from asyncio import get_event_loop
+from functools import cached_property
 from types import TracebackType
 from typing import Any, Dict, Optional, Type, Union, cast
-
-from neispy.sync import SyncNeispyRequest
-
-try:
-    from typing import Literal
-except ImportError:
-    from typing_extensions import Literal
-
 from warnings import warn
 
 from aiohttp.client import ClientSession
+from typing_extensions import Literal
 
 from neispy.error import ExceptionsMapping
+from neispy.params import *
+from neispy.params.abc import AbstractRequestParams
+from neispy.params.schoolinfo import SchoolInfoParams
+from neispy.sync import SyncNeispyRequest
 
 
 class NeispyRequest:
@@ -95,6 +93,7 @@ class NeispyRequest:
         setattr(http.__class__, "sync", property(dont_use_sync))
         return cast(SyncNeispyRequest, http)
 
+    @cached_property
     def _default_params(self) -> Dict[str, Union[str, int]]:
         default_params = {
             "pIndex": self.pIndex,
@@ -111,17 +110,16 @@ class NeispyRequest:
         self,
         method: str,
         endpoint: str,
-        params: Dict[str, Union[str, int]],
+        params: AbstractRequestParams,
     ):
         URL = self.BASE + endpoint
 
         if not self.session:
             self.session = ClientSession()
 
-        default_params = self._default_params()
-        default_params.update(params)
-
-        async with self.session.request(method, URL, params=default_params) as response:
+        async with self.session.request(
+            method, URL, params={**self._default_params, **params}
+        ) as response:
             data = await response.json(content_type=None)
 
             if data.get("RESULT"):
@@ -136,40 +134,40 @@ class NeispyRequest:
 
             return data
 
-    async def get_schoolInfo(self, params: Dict[str, Union[str, int]]):
+    async def get_schoolInfo(self, params: SchoolInfoParams):
         return await self.request("GET", "/schoolInfo", params)
 
-    async def get_mealServiceDietInfo(self, params: Dict[str, Union[str, int]]):
+    async def get_mealServiceDietInfo(self, params: MealServiceDietInfoParams):
         return await self.request("GET", "/mealServiceDietInfo", params)
 
-    async def get_SchoolSchedule(self, params: Dict[str, Union[str, int]]):
+    async def get_SchoolSchedule(self, params: SchoolScheduleParams):
         return await self.request("GET", "/SchoolSchedule", params)
 
-    async def get_acaInsTiInfo(self, params: Dict[str, Union[str, int]]):
+    async def get_acaInsTiInfo(self, params: AcaInsTiInfoParams):
         return await self.request("GET", "/acaInsTiInfo", params)
 
-    async def get_elsTimetable(self, params: Dict[str, Union[str, int]]):
+    async def get_elsTimetable(self, params: TimetableParams):
         return await self.request("GET", "/elsTimetable", params)
 
-    async def get_misTimetable(self, params: Dict[str, Union[str, int]]):
+    async def get_misTimetable(self, params: TimetableParams):
         return await self.request("GET", "/misTimetable", params)
 
-    async def get_hisTimetable(self, params: Dict[str, Union[str, int]]):
+    async def get_hisTimetable(self, params: TimetableParams):
         return await self.request("GET", "/hisTimetable", params)
 
-    async def get_spsTimetable(self, params: Dict[str, Union[str, int]]):
+    async def get_spsTimetable(self, params: TimetableParams):
         return await self.request("GET", "/spsTimetable", params)
 
-    async def get_classInfo(self, params: Dict[str, Union[str, int]]):
+    async def get_classInfo(self, params: ClassInfoParams):
         return await self.request("GET", "/classInfo", params)
 
-    async def get_schoolMajorinfo(self, params: Dict[str, Union[str, int]]):
+    async def get_schoolMajorinfo(self, params: SchoolMajorInfoParams):
         return await self.request("GET", "/schoolMajorinfo", params)
 
-    async def get_schulAflcoinfo(self, params: Dict[str, Union[str, int]]):
+    async def get_schulAflcoinfo(self, params: SchulAflcoInfoParams):
         return await self.request("GET", "/schulAflcoinfo", params)
 
-    async def get_tiClrminfo(self, params: Dict[str, Union[str, int]]):
+    async def get_tiClrminfo(self, params: TiClrmInfoParams):
         return await self.request("GET", "/tiClrminfo", params)
 
     async def __aenter__(self):

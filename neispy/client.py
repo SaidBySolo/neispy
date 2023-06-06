@@ -1,29 +1,11 @@
-try:
-    from typing import Literal
-except ImportError:
-    from typing_extensions import Literal
-
-from functools import wraps
-from json import dumps, loads
-from types import SimpleNamespace
-from typing import Any, Callable, Coroutine, Dict, Optional, TypeVar, cast
+from typing import Any, Optional, cast
 
 from aiohttp.client import ClientSession
+from typing_extensions import Literal, Unpack
 
 from neispy.http import NeispyRequest
+from neispy.params import *
 from neispy.sync import SyncNeispy
-
-
-CORO = TypeVar("CORO", bound=Callable[..., Coroutine[Any, Any, Any]])
-
-
-def to_obj(func: CORO) -> CORO:
-    @wraps(func)
-    async def inner(*args: Any, **kwargs: Any) -> Any:
-        data = await func(*args, **kwargs)
-        return loads(dumps(data), object_hook=lambda d: SimpleNamespace(**d))
-
-    return cast(CORO, inner)
 
 
 class Neispy(NeispyRequest):
@@ -45,10 +27,6 @@ class Neispy(NeispyRequest):
             only_rows=only_rows,
         )
 
-    def __get_params(self, locals: Dict[str, Any]) -> Any:
-        locals.pop("self")
-        return {k: v for k, v in locals.items() if v is not None}
-
     @classmethod
     def sync(
         cls,
@@ -62,195 +40,62 @@ class Neispy(NeispyRequest):
             SyncNeispy, super().sync(KEY, Type, pIndex, pSize, only_rows=only_rows)
         )
 
-    @to_obj
     async def schoolInfo(
         self,
-        ATPT_OFCDC_SC_CODE: Optional[str] = None,
-        SD_SCHUL_CODE: Optional[str] = None,
-        SCHUL_NM: Optional[str] = None,
-        SCHUL_KND_SC_NM: Optional[str] = None,
-        LCTN_SC_NM: Optional[str] = None,
-        FOND_SC_NM: Optional[str] = None,
+        **kwargs: Unpack[SchoolInfoParams],
     ) -> Any:
-        params = self.__get_params(locals())
-        return await self.get_schoolInfo(params)
+        return await self.get_schoolInfo(kwargs)
 
-    @to_obj
     async def mealServiceDietInfo(
         self,
-        ATPT_OFCDC_SC_CODE: Optional[str] = None,
-        SD_SCHUL_CODE: Optional[str] = None,
-        MMEAL_SC_CODE: Optional[str] = None,
-        MLSV_YMD: Optional[str] = None,
-        MLSV_FROM_YMD: Optional[str] = None,
-        MLSV_TO_YMD: Optional[str] = None,
+        **kwargs: Unpack[MealServiceDietInfoParams],
     ) -> Any:
-        params = self.__get_params(locals())
-        return await self.get_mealServiceDietInfo(params)
+        return await self.get_mealServiceDietInfo(kwargs)
 
-    @to_obj
     async def SchoolSchedule(
         self,
-        ATPT_OFCDC_SC_CODE: Optional[str] = None,
-        SD_SCHUL_CODE: Optional[str] = None,
-        DGHT_CRSE_SC_NM: Optional[str] = None,
-        SCHUL_CRSE_SC_NM: Optional[str] = None,
-        AA_YMD: Optional[int] = None,
-        AA_FROM_YMD: Optional[int] = None,
-        AA_TO_YMD: Optional[int] = None,
+        **kwargs: Unpack[SchoolScheduleParams],
     ) -> Any:
-        params = self.__get_params(locals())
-        return await self.get_SchoolSchedule(params)
+        return await self.get_SchoolSchedule(kwargs)
 
-    @to_obj
     async def acaInsTiInfo(
         self,
-        ATPT_OFCDC_SC_CODE: Optional[str] = None,
-        ADMST_ZONE_NM: Optional[str] = None,
-        ACA_ASNUM: Optional[str] = None,
-        REALM_SC_NM: Optional[str] = None,
-        LE_ORD_NM: Optional[str] = None,
-        LE_CRSE_NM: Optional[str] = None,
+        **kwargs: Unpack[AcaInsTiInfoParams],
     ) -> Any:
-        params = self.__get_params(locals())
-        return await self.get_acaInsTiInfo(params)
+        return await self.get_acaInsTiInfo(kwargs)
 
-    @to_obj
-    async def elsTimetable(
-        self,
-        ATPT_OFCDC_SC_CODE: Optional[str] = None,
-        SD_SCHUL_CODE: Optional[str] = None,
-        AY: Optional[int] = None,
-        SEM: Optional[int] = None,
-        ALL_TI_YMD: Optional[int] = None,
-        DGHT_CRSE_SC_NM: Optional[str] = None,
-        ORD_SC_NM: Optional[str] = None,
-        DDDEP_NM: Optional[str] = None,
-        GRADE: Optional[int] = None,
-        CLRM_NM: Optional[str] = None,
-        CLASS_NM: Optional[str] = None,
-        PERIO: Optional[int] = None,
-        TI_FROM_YMD: Optional[int] = None,
-        TI_TO_YMD: Optional[int] = None,
-        SCHUL_CRSE_SC_NM: Optional[str] = None,
-    ) -> Any:
-        params = self.__get_params(locals())
-        return await self.get_elsTimetable(params)
+    async def elsTimetable(self, **kwargs: Unpack[TimetableParams]) -> Any:
+        return await self.get_elsTimetable(kwargs)
 
-    @to_obj
-    async def misTimetable(
-        self,
-        ATPT_OFCDC_SC_CODE: Optional[str] = None,
-        SD_SCHUL_CODE: Optional[str] = None,
-        AY: Optional[int] = None,
-        SEM: Optional[int] = None,
-        ALL_TI_YMD: Optional[int] = None,
-        DGHT_CRSE_SC_NM: Optional[str] = None,
-        ORD_SC_NM: Optional[str] = None,
-        DDDEP_NM: Optional[str] = None,
-        GRADE: Optional[int] = None,
-        CLRM_NM: Optional[str] = None,
-        CLASS_NM: Optional[str] = None,
-        PERIO: Optional[int] = None,
-        TI_FROM_YMD: Optional[int] = None,
-        TI_TO_YMD: Optional[int] = None,
-        SCHUL_CRSE_SC_NM: Optional[str] = None,
-    ) -> Any:
-        params = self.__get_params(locals())
-        return await self.get_misTimetable(params)
+    async def misTimetable(self, **kwargs: Unpack[TimetableParams]) -> Any:
+        return await self.get_misTimetable(kwargs)
 
-    @to_obj
-    async def hisTimetable(
-        self,
-        ATPT_OFCDC_SC_CODE: Optional[str] = None,
-        SD_SCHUL_CODE: Optional[str] = None,
-        AY: Optional[int] = None,
-        SEM: Optional[int] = None,
-        ALL_TI_YMD: Optional[int] = None,
-        DGHT_CRSE_SC_NM: Optional[str] = None,
-        ORD_SC_NM: Optional[str] = None,
-        DDDEP_NM: Optional[str] = None,
-        GRADE: Optional[int] = None,
-        CLRM_NM: Optional[str] = None,
-        CLASS_NM: Optional[str] = None,
-        PERIO: Optional[int] = None,
-        TI_FROM_YMD: Optional[int] = None,
-        TI_TO_YMD: Optional[int] = None,
-        SCHUL_CRSE_SC_NM: Optional[str] = None,
-    ) -> Any:
-        params = self.__get_params(locals())
-        return await self.get_hisTimetable(params)
+    async def hisTimetable(self, **kwargs: Unpack[TimetableParams]) -> Any:
+        return await self.get_hisTimetable(kwargs)
 
-    @to_obj
-    async def spsTimetable(
-        self,
-        ATPT_OFCDC_SC_CODE: Optional[str] = None,
-        SD_SCHUL_CODE: Optional[str] = None,
-        AY: Optional[int] = None,
-        SEM: Optional[int] = None,
-        ALL_TI_YMD: Optional[int] = None,
-        DGHT_CRSE_SC_NM: Optional[str] = None,
-        ORD_SC_NM: Optional[str] = None,
-        DDDEP_NM: Optional[str] = None,
-        GRADE: Optional[int] = None,
-        CLRM_NM: Optional[str] = None,
-        CLASS_NM: Optional[str] = None,
-        PERIO: Optional[int] = None,
-        TI_FROM_YMD: Optional[int] = None,
-        TI_TO_YMD: Optional[int] = None,
-        SCHUL_CRSE_SC_NM: Optional[str] = None,
-    ) -> Any:
-        params = self.__get_params(locals())
-        return await self.get_spsTimetable(params)
+    async def spsTimetable(self, **kwargs: Unpack[TimetableParams]) -> Any:
+        return await self.get_spsTimetable(kwargs)
 
-    @to_obj
     async def classInfo(
         self,
-        ATPT_OFCDC_SC_CODE: Optional[str] = None,
-        SD_SCHUL_CODE: Optional[str] = None,
-        AY: Optional[str] = None,
-        GRADE: Optional[str] = None,
-        DGHT_CRSE_SC_NM: Optional[str] = None,
-        SCHUL_CRSE_SC_NM: Optional[str] = None,
-        ORD_SC_NM: Optional[str] = None,
-        DDDEP_NM: Optional[str] = None,
+        **kwargs: Unpack[ClassInfoParams],
     ) -> Any:
-        params = self.__get_params(locals())
-        return await self.get_classInfo(params)
+        return await self.get_classInfo(kwargs)
 
-    @to_obj
     async def schoolMajorinfo(
         self,
-        ATPT_OFCDC_SC_CODE: Optional[str] = None,
-        SD_SCHUL_CODE: Optional[str] = None,
-        DGHT_CRSE_SC_NM: Optional[str] = None,
-        ORD_SC_NM: Optional[str] = None,
+        **kwargs: Unpack[SchoolMajorInfoParams],
     ) -> Any:
-        params = self.__get_params(locals())
-        return await self.get_schoolMajorinfo(params)
+        return await self.get_schoolMajorinfo(kwargs)
 
-    @to_obj
     async def schulAflcoinfo(
         self,
-        ATPT_OFCDC_SC_CODE: Optional[str] = None,
-        SD_SCHUL_CODE: Optional[str] = None,
-        DGHT_CRSE_SC_NM: Optional[str] = None,
+        **kwargs: Unpack[SchulAflcoInfoParams],
     ) -> Any:
-        params = self.__get_params(locals())
-        return await self.get_schulAflcoinfo(params)
+        return await self.get_schulAflcoinfo(kwargs)
 
-    @to_obj
     async def tiClrminfo(
         self,
-        ATPT_OFCDC_SC_CODE: Optional[str] = None,
-        SD_SCHUL_CODE: Optional[str] = None,
-        AY: Optional[str] = None,
-        GRADE: Optional[str] = None,
-        SEM: Optional[str] = None,
-        SCHUL_CRSE_SC_NM: Optional[str] = None,
-        DGHT_CRSE_SC_NM: Optional[str] = None,
-        ORD_SC_NM: Optional[str] = None,
-        DDDEP_NM: Optional[str] = None,
+        **kwargs: Unpack[TiClrmInfoParams],
     ) -> Any:
-        params = self.__get_params(locals())
-        return await self.get_tiClrminfo(params)
+        return await self.get_tiClrminfo(kwargs)

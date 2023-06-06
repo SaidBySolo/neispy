@@ -1,6 +1,8 @@
 import os
-from neispy import __version__
+
 import setuptools
+
+from neispy import __version__
 
 requirements = []
 

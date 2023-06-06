@@ -1,5 +1,6 @@
-from neispy import Neispy
 import pytest
+
+from neispy import Neispy
 
 
 @pytest.fixture
