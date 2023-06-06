@@ -59,6 +59,7 @@ class NeispyRequest:
         async def close_session_request(*args: Any, **kwargs: Any) -> Any:
             try:
                 if http.session and http.session.closed or not http.session:
+                    print("Session is closed, creating new session")
                     http.session = ClientSession()
                 return await origin_request_func(*args, **kwargs)
             finally:

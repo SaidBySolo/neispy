@@ -1,13 +1,8 @@
 from typing_extensions import NotRequired
 
-from neispy.params.abc import AbstractSchoolRelatedRequestParams
+
+from neispy.params.classinfo import ClassInfoParams
 
 
-class TiClrmInfoParams(AbstractSchoolRelatedRequestParams):
-    AY: NotRequired[str]
-    GRADE: NotRequired[str]
+class TiClrmInfoParams(ClassInfoParams):
     SEM: NotRequired[str]
-    SCHUL_CRSE_SC_NM: NotRequired[str]
-    DGHT_CRSE_SC_NM: NotRequired[str]
-    ORD_SC_NM: NotRequired[str]
-    DDDEP_NM: NotRequired[str]
