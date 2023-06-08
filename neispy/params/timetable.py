@@ -10,4 +10,3 @@ class TimetableParams(TiClrmInfoParams):
     PERIO: NotRequired[int]
     TI_FROM_YMD: NotRequired[int]
     TI_TO_YMD: NotRequired[int]
-    SCHUL_CRSE_SC_NM: NotRequired[str]

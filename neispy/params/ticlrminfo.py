@@ -1,6 +1,5 @@
 from typing_extensions import NotRequired
 
-
 from neispy.params.classinfo import ClassInfoParams
 
 

@@ -10,7 +10,7 @@ from typing_extensions import Literal
 from neispy.error import ExceptionsMapping
 from neispy.params import *
 from neispy.params.abc import AbstractRequestParams
-from neispy.params.schoolinfo import SchoolInfoParams
+from neispy.types.schoolinfo import SchoolInfoDict
 from neispy.sync import SyncNeispyRequest
 
 
@@ -24,7 +24,6 @@ class NeispyRequest:
         pIndex: int,
         pSize: int,
         session: Optional[ClientSession],
-        only_rows: bool = True,
     ) -> None:
         self.KEY = KEY
         if not KEY:
@@ -34,7 +33,6 @@ class NeispyRequest:
         self.pSize = pSize
         self.Type = Type
         self.session = session
-        self.only_rows = only_rows
 
     @classmethod
     def sync(
@@ -43,9 +41,8 @@ class NeispyRequest:
         Type: Literal["json", "xml"],
         pIndex: int,
         pSize: int,
-        only_rows: bool = True,
     ) -> SyncNeispyRequest:
-        http = cls(KEY, Type, pIndex, pSize, None, only_rows=only_rows)
+        http = cls(KEY, Type, pIndex, pSize, None)
         origin_request_func = getattr(http, "request")
         loop = get_event_loop()
 
@@ -59,7 +56,6 @@ class NeispyRequest:
         async def close_session_request(*args: Any, **kwargs: Any) -> Any:
             try:
                 if http.session and http.session.closed or not http.session:
-                    print("Session is closed, creating new session")
                     http.session = ClientSession()
                 return await origin_request_func(*args, **kwargs)
             finally:
@@ -95,9 +91,9 @@ class NeispyRequest:
         return cast(SyncNeispyRequest, http)
 
     @property
-    @lru_cache()
-    def _default_params(self) -> Dict[str, Union[str, int]]:
-        default_params = {
+    @lru_cache(typed=True)
+    def _default_params(self) -> Dict[str, Any]:
+        default_params: Dict[str, Any] = {
             "pIndex": self.pIndex,
             "pSize": self.pSize,
             "type": self.Type,
@@ -131,12 +127,9 @@ class NeispyRequest:
                     msg = result["MESSAGE"]
                     raise ExceptionsMapping[result["CODE"]](code, msg)
 
-            if self.only_rows:
-                return list(data.values())[0][1]["row"]
-
             return data
 
-    async def get_schoolInfo(self, params: SchoolInfoParams):
+    async def get_schoolInfo(self, params: SchoolInfoParams) -> SchoolInfoDict:
         return await self.request("GET", "/schoolInfo", params)
 
     async def get_mealServiceDietInfo(self, params: MealServiceDietInfoParams):
@@ -181,5 +174,5 @@ class NeispyRequest:
         exc_val: Optional[BaseException],
         exc_tb: Optional[TracebackType],
     ):
-        if self.session:
+        if self.session and not self.session.closed:
             await self.session.close()

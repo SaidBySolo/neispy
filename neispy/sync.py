@@ -1,11 +1,9 @@
 from typing import Any, Dict, Optional, Union
-from typing_extensions import Unpack, Literal
-
-from neispy.params import *
-
 
 from aiohttp.client import ClientSession
+from typing_extensions import Literal, Unpack
 
+from neispy.params import *
 from neispy.params.abc import AbstractRequestParams
 
 
