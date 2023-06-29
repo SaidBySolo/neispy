@@ -26,6 +26,17 @@ def to_obj(func: CORO) -> CORO:
     return cast(CORO, inner)
 
 
+def is_legacy_timetable(
+    params: Dict[str, Any],
+) -> bool:
+    return (
+        (params["AY"] and params["AY"] < 2023)
+        or (params["ALL_TI_YMD"] and int(str(params["ALL_TI_YMD"])[:4]) < 2023)
+        or (params["TI_FROM_YMD"] and int(str(params["TI_FROM_YMD"])[:4]) < 2023)
+        or (params["TI_TO_YMD"] and int(str(params["TI_TO_YMD"])[:4]) < 2023)
+    )
+
+
 class Neispy(NeispyRequest):
     def __init__(
         self,
@@ -135,7 +146,11 @@ class Neispy(NeispyRequest):
         SCHUL_CRSE_SC_NM: Optional[str] = None,
     ) -> Any:
         params = self.__get_params(locals())
-        return await self.get_elsTimetable(params)
+        return await (
+            self.get_elsTimetablebgs(params)
+            if is_legacy_timetable(params)
+            else self.get_elsTimetable(params)
+        )
 
     @to_obj
     async def misTimetable(
@@ -157,7 +172,11 @@ class Neispy(NeispyRequest):
         SCHUL_CRSE_SC_NM: Optional[str] = None,
     ) -> Any:
         params = self.__get_params(locals())
-        return await self.get_misTimetable(params)
+        return await (
+            self.get_misTimetablebgs(params)
+            if is_legacy_timetable(params)
+            else self.get_misTimetable(params)
+        )
 
     @to_obj
     async def hisTimetable(
@@ -179,7 +198,11 @@ class Neispy(NeispyRequest):
         SCHUL_CRSE_SC_NM: Optional[str] = None,
     ) -> Any:
         params = self.__get_params(locals())
-        return await self.get_hisTimetable(params)
+        return await (
+            self.get_hisTimetablebgs(params)
+            if is_legacy_timetable(params)
+            else self.get_hisTimetable(params)
+        )
 
     @to_obj
     async def spsTimetable(
@@ -201,7 +224,11 @@ class Neispy(NeispyRequest):
         SCHUL_CRSE_SC_NM: Optional[str] = None,
     ) -> Any:
         params = self.__get_params(locals())
-        return await self.get_spsTimetable(params)
+        return await (
+            self.get_spsTimetablebgs(params)
+            if is_legacy_timetable(params)
+            else self.get_spsTimetable(params)
+        )
 
     @to_obj
     async def classInfo(
