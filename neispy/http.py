@@ -151,14 +151,26 @@ class NeispyRequest:
     async def get_elsTimetable(self, params: Dict[str, Union[str, int]]):
         return await self.request("GET", "/elsTimetable", params)
 
+    async def get_elsTimetablebgs(self, params: Dict[str, Union[str, int]]):
+        return await self.request("GET", "/elsTimetablebgs", params)
+
     async def get_misTimetable(self, params: Dict[str, Union[str, int]]):
         return await self.request("GET", "/misTimetable", params)
+
+    async def get_misTimetablebgs(self, params: Dict[str, Union[str, int]]):
+        return await self.request("GET", "/misTimetablebgs", params)
 
     async def get_hisTimetable(self, params: Dict[str, Union[str, int]]):
         return await self.request("GET", "/hisTimetable", params)
 
+    async def get_hisTimetablebgs(self, params: Dict[str, Union[str, int]]):
+        return await self.request("GET", "/hisTimetablebgs", params)
+
     async def get_spsTimetable(self, params: Dict[str, Union[str, int]]):
         return await self.request("GET", "/spsTimetable", params)
+
+    async def get_spsTimetablebgs(self, params: Dict[str, Union[str, int]]):
+        return await self.request("GET", "/spsTimetablebgs", params)
 
     async def get_classInfo(self, params: Dict[str, Union[str, int]]):
         return await self.request("GET", "/classInfo", params)
