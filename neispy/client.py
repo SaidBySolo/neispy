@@ -9,6 +9,17 @@ from neispy.sync import SyncNeispy
 from neispy.domain import *
 
 
+def is_legacy_timetable(
+    params: Dict[str, Any],
+) -> bool:
+    return (
+        (params["AY"] and params["AY"] < 2023)
+        or (params["ALL_TI_YMD"] and int(str(params["ALL_TI_YMD"])[:4]) < 2023)
+        or (params["TI_FROM_YMD"] and int(str(params["TI_FROM_YMD"])[:4]) < 2023)
+        or (params["TI_TO_YMD"] and int(str(params["TI_TO_YMD"])[:4]) < 2023)
+    )
+
+
 class Neispy(NeispyRequest):
     def __init__(
         self,
@@ -59,17 +70,34 @@ class Neispy(NeispyRequest):
     ) -> Any:
         return await self.get_acaInsTiInfo(kwargs)
 
+
     async def elsTimetable(self, **kwargs: Unpack[TimetableParams]) -> Any:
-        return await self.get_elsTimetable(kwargs)
+        return await (
+            self.get_elsTimetablebgs(params)
+            if is_legacy_timetable(params)
+            else self.get_elsTimetable(params)
+        ))
 
     async def misTimetable(self, **kwargs: Unpack[TimetableParams]) -> Any:
-        return await self.get_misTimetable(kwargs)
+        return await (
+            self.get_misTimetablebgs(params)
+            if is_legacy_timetable(params)
+            else self.get_misTimetable(params)
+        ))
 
     async def hisTimetable(self, **kwargs: Unpack[TimetableParams]) -> Any:
-        return await self.get_hisTimetable(kwargs)
+        return await (
+            self.get_hisTimetablebgs(params)
+            if is_legacy_timetable(params)
+            else self.get_hisTimetable(params)
+        ))
 
     async def spsTimetable(self, **kwargs: Unpack[TimetableParams]) -> Any:
-        return await self.get_spsTimetable(kwargs)
+        return await (
+            self.get_spsTimetablebgs(params)
+            if is_legacy_timetable(params)
+            else self.get_spsTimetable(params)
+        )
 
     async def classInfo(
         self,
