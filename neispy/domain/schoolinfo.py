@@ -1,6 +1,8 @@
+from __future__ import annotations
+
 from dataclasses import dataclass
 
-from neispy.domain.abc import NeisData, AbstractRow
+from neispy.domain.abc import NeisObject, AbstractRow
 from neispy.types.schoolinfo import SchoolInfoDict
 from neispy.utils import Deserializer
 
@@ -61,8 +63,8 @@ class SchoolInfoRow(AbstractRow):
 
 @dataclass
 class SchoolInfo(Deserializer):
-    schoolInfo: NeisData[SchoolInfoRow]
+    schoolInfo: NeisObject[SchoolInfoRow]
 
     @classmethod
-    def from_dict(cls, d: SchoolInfoDict) -> "SchoolInfo":
+    def from_dict(cls, d: SchoolInfoDict) -> SchoolInfo:
         return super().from_dict(d)

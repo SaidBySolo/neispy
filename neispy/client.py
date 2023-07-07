@@ -1,56 +1,51 @@
 from typing import Any, Optional, cast
 
 from aiohttp.client import ClientSession
-from typing_extensions import Literal, Unpack
+from typing_extensions import Unpack
 
 from neispy.http import NeispyRequest
 from neispy.params import *
 from neispy.sync import SyncNeispy
+from neispy.domain import *
 
 
 class Neispy(NeispyRequest):
     def __init__(
         self,
         KEY: Optional[str] = None,
-        Type: Literal["json", "xml"] = "json",
         pIndex: int = 1,
         pSize: int = 100,
         session: Optional[ClientSession] = None,
-        only_rows: bool = True,
     ) -> None:
         super().__init__(
             KEY=KEY,
-            Type=Type,
             pIndex=pIndex,
             pSize=pSize,
             session=session,
-            only_rows=only_rows,
         )
 
     @classmethod
     def sync(
         cls,
         KEY: Optional[str] = None,
-        Type: Literal["json", "xml"] = "json",
         pIndex: int = 1,
         pSize: int = 100,
-        only_rows: bool = True,
     ) -> SyncNeispy:
-        return cast(
-            SyncNeispy, super().sync(KEY, Type, pIndex, pSize, only_rows=only_rows)
-        )
+        return cast(SyncNeispy, super().sync(KEY, pIndex, pSize))
 
     async def schoolInfo(
         self,
         **kwargs: Unpack[SchoolInfoParams],
-    ) -> Any:
-        return await self.get_schoolInfo(kwargs)
+    ) -> SchoolInfo:
+        r = await self.get_schoolInfo(kwargs)
+        return SchoolInfo.from_dict(r)
 
     async def mealServiceDietInfo(
         self,
         **kwargs: Unpack[MealServiceDietInfoParams],
     ) -> Any:
-        return await self.get_mealServiceDietInfo(kwargs)
+        r = await self.get_mealServiceDietInfo(kwargs)
+        return MealServiceDietInfo.from_dict(r)
 
     async def SchoolSchedule(
         self,

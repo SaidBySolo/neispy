@@ -1,6 +1,6 @@
 from typing_extensions import TypedDict
 
-from neispy.types.base import RawData
+from neispy.types.base import NeisDict
 
 
 class SchoolInfoRowDict(TypedDict):
@@ -57,4 +57,4 @@ class SchoolInfoRowDict(TypedDict):
 
 
 class SchoolInfoDict(TypedDict):
-    schoolInfo: RawData[SchoolInfoRowDict]
+    schoolInfo: NeisDict[SchoolInfoRowDict]

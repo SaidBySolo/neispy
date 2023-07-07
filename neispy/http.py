@@ -1,16 +1,14 @@
 from asyncio import get_event_loop
-from functools import lru_cache
 from types import TracebackType
-from typing import Any, Dict, Optional, Type, Union, cast
+from typing import Any, Dict, Optional, Type, cast
 from warnings import warn
 
 from aiohttp.client import ClientSession
-from typing_extensions import Literal
 
 from neispy.error import ExceptionsMapping
 from neispy.params import *
 from neispy.params.abc import AbstractRequestParams
-from neispy.types.schoolinfo import SchoolInfoDict
+from neispy.types import *
 from neispy.sync import SyncNeispyRequest
 
 
@@ -20,7 +18,6 @@ class NeispyRequest:
     def __init__(
         self,
         KEY: Optional[str],
-        Type: Literal["json", "xml"],
         pIndex: int,
         pSize: int,
         session: Optional[ClientSession],
@@ -31,18 +28,25 @@ class NeispyRequest:
 
         self.pIndex = pIndex
         self.pSize = pSize
-        self.Type = Type
         self.session = session
+
+        self.__default_params: Dict[str, Any] = {
+            "pIndex": self.pIndex,
+            "pSize": self.pSize,
+            "type": "json",
+        }
+
+        if self.KEY:
+            self.__default_params["KEY"] = self.KEY
 
     @classmethod
     def sync(
         cls,
         KEY: Optional[str],
-        Type: Literal["json", "xml"],
         pIndex: int,
         pSize: int,
     ) -> SyncNeispyRequest:
-        http = cls(KEY, Type, pIndex, pSize, None)
+        http = cls(KEY, pIndex, pSize, None)
         origin_request_func = getattr(http, "request")
         loop = get_event_loop()
 
@@ -90,20 +94,6 @@ class NeispyRequest:
         setattr(http.__class__, "sync", property(dont_use_sync))
         return cast(SyncNeispyRequest, http)
 
-    @property
-    @lru_cache(typed=True)
-    def _default_params(self) -> Dict[str, Any]:
-        default_params: Dict[str, Any] = {
-            "pIndex": self.pIndex,
-            "pSize": self.pSize,
-            "type": self.Type,
-        }
-
-        if self.KEY:
-            default_params["KEY"] = self.KEY
-
-        return default_params
-
     async def request(
         self,
         method: str,
@@ -116,7 +106,7 @@ class NeispyRequest:
             self.session = ClientSession()
 
         async with self.session.request(
-            method, URL, params={**self._default_params, **params}
+            method, URL, params={**self.__default_params, **params}
         ) as response:
             data = await response.json(content_type=None)
 
@@ -132,7 +122,9 @@ class NeispyRequest:
     async def get_schoolInfo(self, params: SchoolInfoParams) -> SchoolInfoDict:
         return await self.request("GET", "/schoolInfo", params)
 
-    async def get_mealServiceDietInfo(self, params: MealServiceDietInfoParams):
+    async def get_mealServiceDietInfo(
+        self, params: MealServiceDietInfoParams
+    ) -> MealServiceDietInfoDict:
         return await self.request("GET", "/mealServiceDietInfo", params)
 
     async def get_SchoolSchedule(self, params: SchoolScheduleParams):

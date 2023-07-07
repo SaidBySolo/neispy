@@ -26,4 +26,4 @@ class RowDict(TypedDict, Generic[T]):
     row: list[T]
 
 
-RawData = Tuple[HeadDict, RowDict[T]]
+NeisDict = Tuple[HeadDict, RowDict[T]]
