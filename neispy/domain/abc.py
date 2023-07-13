@@ -1,5 +1,7 @@
+from __future__ import annotations
+
 from dataclasses import dataclass
-from typing import Any, Dict, Generic, List, Tuple, TypeVar
+from typing import Generic, List, Tuple, TypeVar
 
 
 from typing_extensions import Self
@@ -9,7 +11,6 @@ from neispy.types.base import (
     ResultDict,
     ListTotalCountDict,
     HeadDict,
-    RowDict,
 )
 
 
@@ -22,7 +23,7 @@ class Description:
     MESSAGE: str
 
     @classmethod
-    def from_dict(cls, d: DescriptionDict) -> "Description":
+    def from_dict(cls, d: DescriptionDict) -> Description:
         return cls(
             CODE=d["CODE"],
             MESSAGE=d["MESSAGE"],
@@ -34,7 +35,7 @@ class Result:
     RESULT: Description
 
     @classmethod
-    def from_dict(cls, d: ResultDict) -> "Result":
+    def from_dict(cls, d: ResultDict) -> Result:
         return cls(RESULT=Description.from_dict(d["RESULT"]))
 
 
@@ -43,7 +44,7 @@ class ListTotalCount:
     list_total_count: int
 
     @classmethod
-    def from_dict(cls, d: ListTotalCountDict) -> "ListTotalCount":
+    def from_dict(cls, d: ListTotalCountDict) -> ListTotalCount:
         return cls(list_total_count=d["list_total_count"])
 
 
@@ -52,7 +53,7 @@ class Head:
     head: Tuple[ListTotalCount, Result]
 
     @classmethod
-    def from_dict(cls, d: HeadDict) -> "Head":
+    def from_dict(cls, d: HeadDict) -> Head:
         return cls(
             head=(
                 ListTotalCount.from_dict(d["head"][0]),
@@ -72,8 +73,8 @@ class Row(Generic[R]):
     row: List[R]
 
     @classmethod
-    def from_dict(cls, d: List[R]) -> "Row[R]":
+    def from_dict(cls, d: List[R]) -> Row[R]:
         return cls(row=d)
 
 
-NeisData = Tuple[Head, Row[R]]
+NeisObject = Tuple[Head, Row[R]]

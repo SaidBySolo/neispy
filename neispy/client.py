@@ -3,6 +3,7 @@ from typing import Any, Optional, cast
 from aiohttp.client import ClientSession
 from typing_extensions import Unpack
 
+
 from neispy.http import NeispyRequest
 from neispy.params import *
 from neispy.sync import SyncNeispy
@@ -51,7 +52,8 @@ class Neispy(NeispyRequest):
         self,
         **kwargs: Unpack[SchoolScheduleParams],
     ) -> Any:
-        return await self.get_SchoolSchedule(kwargs)
+        r = await self.get_SchoolSchedule(kwargs)
+        return SchoolSchedule.from_dict(r)
 
     async def acaInsTiInfo(
         self,

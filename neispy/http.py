@@ -127,7 +127,9 @@ class NeispyRequest:
     ) -> MealServiceDietInfoDict:
         return await self.request("GET", "/mealServiceDietInfo", params)
 
-    async def get_SchoolSchedule(self, params: SchoolScheduleParams):
+    async def get_SchoolSchedule(
+        self, params: SchoolScheduleParams
+    ) -> SchoolScheduleDict:
         return await self.request("GET", "/SchoolSchedule", params)
 
     async def get_acaInsTiInfo(self, params: AcaInsTiInfoParams):
