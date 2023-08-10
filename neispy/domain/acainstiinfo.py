@@ -3,7 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 from neispy.domain.abc import NeisObject, AbstractRow
-from neispy.types.acainstiinfo import AcaInsTiInfoRowDict
+from neispy.types.acainstiinfo import AcaInsTiInfoDict
 from neispy.utils import Deserializer
 
 
@@ -64,5 +64,5 @@ class AcaInsTiInfo(Deserializer):
     acaInsTiInfo: NeisObject[AcaInsTiInfoRow]
 
     @classmethod
-    def from_dict(cls, d: AcaInsTiInfoRowDict) -> AcaInsTiInfo:
+    def from_dict(cls, d: AcaInsTiInfoDict) -> AcaInsTiInfo:
         return super().from_dict(d)

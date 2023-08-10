@@ -132,7 +132,7 @@ class NeispyRequest:
     ) -> SchoolScheduleDict:
         return await self.request("GET", "/SchoolSchedule", params)
 
-    async def get_acaInsTiInfo(self, params: AcaInsTiInfoParams):
+    async def get_acaInsTiInfo(self, params: AcaInsTiInfoParams) -> AcaInsTiInfoDict:
         return await self.request("GET", "/acaInsTiInfo", params)
 
     async def get_elsTimetable(self, params: TimetableParams):

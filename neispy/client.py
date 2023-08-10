@@ -58,22 +58,23 @@ class Neispy(NeispyRequest):
     async def mealServiceDietInfo(
         self,
         **kwargs: Unpack[MealServiceDietInfoParams],
-    ) -> Any:
+    ) -> MealServiceDietInfo:
         r = await self.get_mealServiceDietInfo(kwargs)
         return MealServiceDietInfo.from_dict(r)
 
     async def SchoolSchedule(
         self,
         **kwargs: Unpack[SchoolScheduleParams],
-    ) -> Any:
+    ) -> SchoolSchedule:
         r = await self.get_SchoolSchedule(kwargs)
         return SchoolSchedule.from_dict(r)
 
     async def acaInsTiInfo(
         self,
         **kwargs: Unpack[AcaInsTiInfoParams],
-    ) -> Any:
-        return await self.get_acaInsTiInfo(kwargs)
+    ) -> AcaInsTiInfo:
+        r = await self.get_acaInsTiInfo(kwargs)
+        return AcaInsTiInfo.from_dict(r)
 
     async def elsTimetable(self, **kwargs: Unpack[TimetableParams]) -> Any:
         return await (
