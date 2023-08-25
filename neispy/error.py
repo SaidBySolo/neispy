@@ -3,12 +3,12 @@ class NeispyException(Exception):
 
 
 class ArgumentError(NeispyException):
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__("인자값이 틀립니다.")
 
 
 class HTTPException(NeispyException):
-    def __init__(self, code: int, message: str):
+    def __init__(self, code: int, message: str) -> None:
         super().__init__(f"{code} {message}")
 
 

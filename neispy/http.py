@@ -1,19 +1,16 @@
 from asyncio import get_event_loop
 from types import TracebackType
-from typing import Any, Dict, Optional, Type, Union, cast
-
-from neispy.sync import SyncNeispyRequest
-
-try:
-    from typing import Literal
-except ImportError:
-    from typing_extensions import Literal
-
+from typing import Any, Dict, NoReturn, Optional, Type, cast
 from warnings import warn
-
+from typing_extensions import Self
 from aiohttp.client import ClientSession
 
+
 from neispy.error import ExceptionsMapping
+from neispy.params import *
+from neispy.params.abc import AbstractRequestParams
+from neispy.types import *
+from neispy.sync import SyncNeispyRequest
 
 
 class NeispyRequest:
@@ -22,11 +19,9 @@ class NeispyRequest:
     def __init__(
         self,
         KEY: Optional[str],
-        Type: Literal["json", "xml"],
         pIndex: int,
         pSize: int,
         session: Optional[ClientSession],
-        only_rows: bool = True,
     ) -> None:
         self.KEY = KEY
         if not KEY:
@@ -34,20 +29,25 @@ class NeispyRequest:
 
         self.pIndex = pIndex
         self.pSize = pSize
-        self.Type = Type
         self.session = session
-        self.only_rows = only_rows
+
+        self.__default_params: Dict[str, Any] = {
+            "pIndex": self.pIndex,
+            "pSize": self.pSize,
+            "type": "json",
+        }
+
+        if self.KEY:
+            self.__default_params["KEY"] = self.KEY
 
     @classmethod
     def sync(
         cls,
         KEY: Optional[str],
-        Type: Literal["json", "xml"],
         pIndex: int,
         pSize: int,
-        only_rows: bool = True,
     ) -> SyncNeispyRequest:
-        http = cls(KEY, Type, pIndex, pSize, None, only_rows=only_rows)
+        http = cls(KEY, pIndex, pSize, None)
         origin_request_func = getattr(http, "request")
         loop = get_event_loop()
 
@@ -67,8 +67,8 @@ class NeispyRequest:
                 if http.session:
                     await http.session.close()
 
-        def to_sync_func(func: Any):
-            def wrapper(*args: Any, **kwargs: Any):
+        def to_sync_func(func: Any) -> Any:
+            def wrapper(*args: Any, **kwargs: Any) -> Any:
                 if loop.is_running():
                     return func(*args, **kwargs)
 
@@ -76,7 +76,7 @@ class NeispyRequest:
 
             return wrapper
 
-        def dont_use_sync(*args: Any, **kwargs: Any):
+        def dont_use_sync(*args: Any, **kwargs: Any) -> NoReturn:
             raise AttributeError("Already synced")
 
         method_list = [
@@ -95,33 +95,20 @@ class NeispyRequest:
         setattr(http.__class__, "sync", property(dont_use_sync))
         return cast(SyncNeispyRequest, http)
 
-    def _default_params(self) -> Dict[str, Union[str, int]]:
-        default_params = {
-            "pIndex": self.pIndex,
-            "pSize": self.pSize,
-            "type": self.Type,
-        }
-
-        if self.KEY:
-            default_params["KEY"] = self.KEY
-
-        return default_params
-
     async def request(
         self,
         method: str,
         endpoint: str,
-        params: Dict[str, Union[str, int]],
-    ):
+        params: AbstractRequestParams,
+    ) -> Any:
         URL = self.BASE + endpoint
 
         if not self.session:
             self.session = ClientSession()
 
-        default_params = self._default_params()
-        default_params.update(params)
-
-        async with self.session.request(method, URL, params=default_params) as response:
+        async with self.session.request(
+            method, URL, params={**self.__default_params, **params}
+        ) as response:
             data = await response.json(content_type=None)
 
             if data.get("RESULT"):
@@ -131,60 +118,83 @@ class NeispyRequest:
                     msg = result["MESSAGE"]
                     raise ExceptionsMapping[result["CODE"]](code, msg)
 
-            if self.only_rows:
-                return list(data.values())[0][1]["row"]
-
             return data
 
-    async def get_schoolInfo(self, params: Dict[str, Union[str, int]]):
-        return await self.request("GET", "/schoolInfo", params)
+    async def get_schoolInfo(self, params: SchoolInfoParams) -> SchoolInfoDict:
+        r: SchoolInfoDict = await self.request("GET", "/schoolInfo", params)
+        return r
 
-    async def get_mealServiceDietInfo(self, params: Dict[str, Union[str, int]]):
-        return await self.request("GET", "/mealServiceDietInfo", params)
+    async def get_mealServiceDietInfo(
+        self, params: MealServiceDietInfoParams
+    ) -> MealServiceDietInfoDict:
+        r: MealServiceDietInfoDict = await self.request(
+            "GET", "/mealServiceDietInfo", params
+        )
+        return r
 
-    async def get_SchoolSchedule(self, params: Dict[str, Union[str, int]]):
-        return await self.request("GET", "/SchoolSchedule", params)
+    async def get_SchoolSchedule(
+        self, params: SchoolScheduleParams
+    ) -> SchoolScheduleDict:
+        r: SchoolScheduleDict = await self.request("GET", "/SchoolSchedule", params)
+        return r
 
-    async def get_acaInsTiInfo(self, params: Dict[str, Union[str, int]]):
-        return await self.request("GET", "/acaInsTiInfo", params)
+    async def get_acaInsTiInfo(self, params: AcaInsTiInfoParams) -> AcaInsTiInfoDict:
+        r: AcaInsTiInfoDict = await self.request("GET", "/acaInsTiInfo", params)
+        return r
 
-    async def get_elsTimetable(self, params: Dict[str, Union[str, int]]):
-        return await self.request("GET", "/elsTimetable", params)
+    async def get_elsTimetable(self, params: TimetableParams) -> ElsTimeTableDict:
+        r: ElsTimeTableDict = await self.request("GET", "/elsTimetable", params)
+        return r
 
-    async def get_elsTimetablebgs(self, params: Dict[str, Union[str, int]]):
-        return await self.request("GET", "/elsTimetablebgs", params)
+    async def get_misTimetable(self, params: TimetableParams) -> MisTimeTableDict:
+        r: MisTimeTableDict = await self.request("GET", "/misTimetable", params)
+        return r
 
-    async def get_misTimetable(self, params: Dict[str, Union[str, int]]):
-        return await self.request("GET", "/misTimetable", params)
+    async def get_hisTimetable(self, params: TimetableParams) -> HisTimeTableDict:
+        r: HisTimeTableDict = await self.request("GET", "/hisTimetable", params)
+        return r
 
-    async def get_misTimetablebgs(self, params: Dict[str, Union[str, int]]):
-        return await self.request("GET", "/misTimetablebgs", params)
+    async def get_spsTimetable(self, params: TimetableParams) -> SpsTimeTableDict:
+        r: SpsTimeTableDict = await self.request("GET", "/spsTimetable", params)
+        return r
 
-    async def get_hisTimetable(self, params: Dict[str, Union[str, int]]):
-        return await self.request("GET", "/hisTimetable", params)
+    async def get_elsTimetablebgs(self, params: TimetableParams) -> ElsTimeTableDict:
+        r: ElsTimeTableDict = await self.request("GET", "/elsTimetablebgs", params)
+        return r
 
-    async def get_hisTimetablebgs(self, params: Dict[str, Union[str, int]]):
-        return await self.request("GET", "/hisTimetablebgs", params)
+    async def get_misTimetablebgs(self, params: TimetableParams) -> MisTimeTableDict:
+        r: MisTimeTableDict = await self.request("GET", "/misTimetablebgs", params)
+        return r
 
-    async def get_spsTimetable(self, params: Dict[str, Union[str, int]]):
-        return await self.request("GET", "/spsTimetable", params)
+    async def get_hisTimetablebgs(self, params: TimetableParams) -> HisTimeTableDict:
+        r: HisTimeTableDict = await self.request("GET", "/hisTimetablebgs", params)
+        return r
 
-    async def get_spsTimetablebgs(self, params: Dict[str, Union[str, int]]):
-        return await self.request("GET", "/spsTimetablebgs", params)
+    async def get_spsTimetablebgs(self, params: TimetableParams) -> SpsTimeTableDict:
+        r: SpsTimeTableDict = await self.request("GET", "/spsTimetablebgs", params)
+        return r
 
-    async def get_classInfo(self, params: Dict[str, Union[str, int]]):
-        return await self.request("GET", "/classInfo", params)
+    async def get_classInfo(self, params: ClassInfoParams) -> ClassInfoDict:
+        r: ClassInfoDict = await self.request("GET", "/classInfo", params)
+        return r
 
-    async def get_schoolMajorinfo(self, params: Dict[str, Union[str, int]]):
-        return await self.request("GET", "/schoolMajorinfo", params)
+    async def get_schoolMajorinfo(
+        self, params: SchoolMajorInfoParams
+    ) -> SchoolMajorInfoDict:
+        r: SchoolMajorInfoDict = await self.request("GET", "/schoolMajorinfo", params)
+        return r
 
-    async def get_schulAflcoinfo(self, params: Dict[str, Union[str, int]]):
-        return await self.request("GET", "/schulAflcoinfo", params)
+    async def get_schulAflcoinfo(
+        self, params: SchulAflcoInfoParams
+    ) -> SchulAflcoInfoDict:
+        r: SchulAflcoInfoDict = await self.request("GET", "/schulAflcoinfo", params)
+        return r
 
-    async def get_tiClrminfo(self, params: Dict[str, Union[str, int]]):
-        return await self.request("GET", "/tiClrminfo", params)
+    async def get_tiClrminfo(self, params: TiClrmInfoParams) -> TiClrmInfoDict:
+        r: TiClrmInfoDict = await self.request("GET", "/tiClrminfo", params)
+        return r
 
-    async def __aenter__(self):
+    async def __aenter__(self) -> Self:
         return self
 
     async def __aexit__(
@@ -192,6 +202,6 @@ class NeispyRequest:
         exc_type: Optional[Type[BaseException]],
         exc_val: Optional[BaseException],
         exc_tb: Optional[TracebackType],
-    ):
-        if self.session:
+    ) -> None:
+        if self.session and not self.session.closed:
             await self.session.close()
