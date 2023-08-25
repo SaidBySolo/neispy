@@ -1,4 +1,4 @@
-from typing import Optional, TypedDict
+from typing_extensions import Optional, TypedDict
 from neispy.types.base import NeisDict, SchoolRelatedBaseDict
 
 
