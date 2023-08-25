@@ -45,5 +45,10 @@ class SchoolSchedule(Deserializer):
     SchoolSchedule: NeisObject[SchoolScheduleRow]
 
     @classmethod
-    def from_dict(cls, d: SchoolScheduleDict) -> SchoolSchedule:
+    def from_dict(
+        cls, d: SchoolScheduleDict
+    ) -> SchoolSchedule:  # type: ignore[valid-type]
         return super().from_dict(d)
+
+
+SchoolSchedule.SchoolSchedule[1].row[0].AY
