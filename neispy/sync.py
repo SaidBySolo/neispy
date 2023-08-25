@@ -1,10 +1,12 @@
-from typing import Any, Dict, Optional, Union
+from typing import Optional
 
 from aiohttp.client import ClientSession
 from typing_extensions import Literal, Unpack
 
 from neispy.params import *
 from neispy.params.abc import AbstractRequestParams
+from neispy.domain import *
+from neispy.types import *
 
 
 class SyncNeispyRequest:
@@ -34,52 +36,54 @@ class SyncNeispyRequest:
     ):
         ...
 
-    def get_schoolInfo(self, params: SchoolInfoParams):
+    def get_schoolInfo(self, params: SchoolInfoParams) -> SchoolInfoDict:
         ...
 
-    def get_mealServiceDietInfo(self, params: MealServiceDietInfoParams):
+    def get_mealServiceDietInfo(
+        self, params: MealServiceDietInfoParams
+    ) -> MealServiceDietInfoDict:
         ...
 
-    def get_SchoolSchedule(self, params: SchoolScheduleParams):
+    def get_SchoolSchedule(self, params: SchoolScheduleParams) -> SchoolScheduleDict:
         ...
 
-    def get_acaInsTiInfo(self, params: AcaInsTiInfoParams):
+    def get_acaInsTiInfo(self, params: AcaInsTiInfoParams) -> AcaInsTiInfoDict:
         ...
 
-    def get_elsTimetable(self, params: TimetableParams):
+    def get_elsTimetable(self, params: TimetableParams) -> ElsTimeTableDict:
         ...
 
-    def get_misTimetable(self, params: TimetableParams):
+    def get_misTimetable(self, params: TimetableParams) -> MisTimeTableDict:
         ...
 
-    def get_hisTimetable(self, params: TimetableParams):
+    def get_hisTimetable(self, params: TimetableParams) -> HisTimeTableDict:
         ...
 
-    def get_spsTimetable(self, params: TimetableParams):
+    def get_spsTimetable(self, params: TimetableParams) -> SpsTimeTableDict:
         ...
 
-    def get_elsTimetablebgs(self, params: TimetableParams):
+    def get_elsTimetablebgs(self, params: TimetableParams) -> ElsTimeTableDict:
         ...
 
-    def get_misTimetablebgs(self, params: TimetableParams):
+    def get_misTimetablebgs(self, params: TimetableParams) -> MisTimeTableDict:
         ...
 
-    def get_hisTimetablebgs(self, params: TimetableParams):
+    def get_hisTimetablebgs(self, params: TimetableParams) -> HisTimeTableDict:
         ...
 
-    def get_spsTimetablebgs(self, params: TimetableParams):
+    def get_spsTimetablebgs(self, params: TimetableParams) -> SpsTimeTableDict:
         ...
 
-    def get_classInfo(self, params: ClassInfoParams):
+    def get_classInfo(self, params: ClassInfoParams) -> ClassInfoDict:
         ...
 
-    def get_schoolMajorinfo(self, params: SchoolMajorInfoParams):
+    def get_schoolMajorinfo(self, params: SchoolMajorInfoParams) -> SchoolMajorInfoDict:
         ...
 
-    def get_schulAflcoinfo(self, params: SchulAflcoInfoParams):
+    def get_schulAflcoinfo(self, params: SchulAflcoInfoParams) -> SchulAflcoInfoDict:
         ...
 
-    def get_tiClrminfo(self, params: TiClrmInfoParams):
+    def get_tiClrminfo(self, params: TiClrmInfoParams) -> TiClrmInfoDict:
         ...
 
 
@@ -105,59 +109,59 @@ class SyncNeispy(SyncNeispyRequest):
     def schoolInfo(
         self,
         **kwargs: Unpack[SchoolInfoParams],
-    ) -> Any:
+    ) -> SchoolInfo:
         ...
 
     def mealServiceDietInfo(
         self,
         **kwargs: Unpack[MealServiceDietInfoParams],
-    ) -> Any:
+    ) -> MealServiceDietInfo:
         ...
 
     def SchoolSchedule(
         self,
         **kwargs: Unpack[SchoolScheduleParams],
-    ) -> Any:
+    ) -> SchoolSchedule:
         ...
 
     def acaInsTiInfo(
         self,
         **kwargs: Unpack[AcaInsTiInfoParams],
-    ) -> Any:
+    ) -> AcaInsTiInfo:
         ...
 
-    def elsTimetable(self, **kwargs: Unpack[TimetableParams]) -> Any:
+    def elsTimetable(self, **kwargs: Unpack[TimetableParams]) -> ElsTimeTable:
         ...
 
-    def misTimetable(self, **kwargs: Unpack[TimetableParams]) -> Any:
+    def misTimetable(self, **kwargs: Unpack[TimetableParams]) -> MisTimeTable:
         ...
 
-    def hisTimetable(self, **kwargs: Unpack[TimetableParams]) -> Any:
+    def hisTimetable(self, **kwargs: Unpack[TimetableParams]) -> HisTimeTable:
         ...
 
-    def spsTimetable(self, **kwargs: Unpack[TimetableParams]) -> Any:
+    def spsTimetable(self, **kwargs: Unpack[TimetableParams]) -> SpsTimeTable:
         ...
 
     def classInfo(
         self,
         **kwargs: Unpack[ClassInfoParams],
-    ) -> Any:
+    ) -> ClassInfo:
         ...
 
     def schoolMajorinfo(
         self,
         **kwargs: Unpack[SchoolMajorInfoParams],
-    ) -> Any:
+    ) -> SchoolMajorInfo:
         ...
 
     def schulAflcoinfo(
         self,
         **kwargs: Unpack[SchulAflcoInfoParams],
-    ) -> Any:
+    ) -> SchulAflcoInfo:
         ...
 
     def tiClrminfo(
         self,
         **kwargs: Unpack[TiClrmInfoParams],
-    ) -> Any:
+    ) -> TiClrmInfo:
         ...
