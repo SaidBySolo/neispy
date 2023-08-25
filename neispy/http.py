@@ -135,40 +135,44 @@ class NeispyRequest:
     async def get_acaInsTiInfo(self, params: AcaInsTiInfoParams) -> AcaInsTiInfoDict:
         return await self.request("GET", "/acaInsTiInfo", params)
 
-    async def get_elsTimetable(self, params: TimetableParams):
+    async def get_elsTimetable(self, params: TimetableParams) -> ElsTimeTableDict:
         return await self.request("GET", "/elsTimetable", params)
 
-    async def get_misTimetable(self, params: TimetableParams):
+    async def get_misTimetable(self, params: TimetableParams) -> MisTimeTableDict:
         return await self.request("GET", "/misTimetable", params)
 
-    async def get_hisTimetable(self, params: TimetableParams):
+    async def get_hisTimetable(self, params: TimetableParams) -> HisTimeTableDict:
         return await self.request("GET", "/hisTimetable", params)
 
-    async def get_spsTimetable(self, params: TimetableParams):
+    async def get_spsTimetable(self, params: TimetableParams) -> SpsTimeTableDict:
         return await self.request("GET", "/spsTimetable", params)
 
-    async def get_elsTimetablebgs(self, params: TimetableParams):
+    async def get_elsTimetablebgs(self, params: TimetableParams) -> ElsTimeTableDict:
         return await self.request("GET", "/elsTimetablebgs", params)
-  
-    async def get_misTimetablebgs(self, params: TimetableParams):
+
+    async def get_misTimetablebgs(self, params: TimetableParams) -> MisTimeTableDict:
         return await self.request("GET", "/misTimetablebgs", params)
 
-    async def get_hisTimetablebgs(self, params: TimetableParams):
+    async def get_hisTimetablebgs(self, params: TimetableParams) -> HisTimeTableDict:
         return await self.request("GET", "/hisTimetablebgs", params)
 
-    async def get_spsTimetablebgs(self, params: TimetableParams):
+    async def get_spsTimetablebgs(self, params: TimetableParams) -> SpsTimeTableDict:
         return await self.request("GET", "/spsTimetablebgs", params)
 
-    async def get_classInfo(self, params: ClassInfoParams):
+    async def get_classInfo(self, params: ClassInfoParams) -> ClassInfoDict:
         return await self.request("GET", "/classInfo", params)
 
-    async def get_schoolMajorinfo(self, params: SchoolMajorInfoParams):
+    async def get_schoolMajorinfo(
+        self, params: SchoolMajorInfoParams
+    ) -> SchoolMajorInfoDict:
         return await self.request("GET", "/schoolMajorinfo", params)
 
-    async def get_schulAflcoinfo(self, params: SchulAflcoInfoParams):
+    async def get_schulAflcoinfo(
+        self, params: SchulAflcoInfoParams
+    ) -> SchulAflcoInfoDict:
         return await self.request("GET", "/schulAflcoinfo", params)
 
-    async def get_tiClrminfo(self, params: TiClrmInfoParams):
+    async def get_tiClrminfo(self, params: TiClrmInfoParams) -> TiClrmInfoDict:
         return await self.request("GET", "/tiClrminfo", params)
 
     async def __aenter__(self):

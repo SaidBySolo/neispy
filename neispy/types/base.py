@@ -26,4 +26,18 @@ class RowDict(TypedDict, Generic[T]):
     row: list[T]
 
 
+class BaseDict(TypedDict):
+    ATPT_OFCDC_SC_CODE: str
+    "시도교육청코드"
+    ATPT_OFCDC_SC_NM: str
+    "시도교육청명"
+
+
+class SchoolRelatedBaseDict(BaseDict):
+    SD_SCHUL_CODE: str
+    "표준학교코드"
+    SCHUL_NM: str
+    "학교명"
+
+
 NeisDict = Tuple[HeadDict, RowDict[T]]

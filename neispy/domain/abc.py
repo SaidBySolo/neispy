@@ -62,12 +62,6 @@ class Head:
         )
 
 
-class AbstractRow:
-    @classmethod
-    def from_dict(cls, d: dict[str, str]) -> Self:
-        return cls(**d)
-
-
 @dataclass
 class Row(Generic[R]):
     row: List[R]
@@ -75,6 +69,25 @@ class Row(Generic[R]):
     @classmethod
     def from_dict(cls, d: List[R]) -> Row[R]:
         return cls(row=d)
+
+
+@dataclass
+class AbstractRow:
+    ATPT_OFCDC_SC_CODE: str
+    "시도교육청코드"
+    ATPT_OFCDC_SC_NM: str
+    "시도교육청명"
+
+    @classmethod
+    def from_dict(cls, d: dict[str, str]) -> Self:
+        return cls(**d)
+
+
+@dataclass
+class SchoolRelated(AbstractRow):
+    SD_SCHUL_CODE: str
+    "표준학교코드"
+    SCHUL_NM: str
 
 
 NeisObject = Tuple[Head, Row[R]]

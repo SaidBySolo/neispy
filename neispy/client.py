@@ -76,54 +76,62 @@ class Neispy(NeispyRequest):
         r = await self.get_acaInsTiInfo(kwargs)
         return AcaInsTiInfo.from_dict(r)
 
-    async def elsTimetable(self, **kwargs: Unpack[TimetableParams]) -> Any:
-        return await (
+    async def elsTimetable(self, **kwargs: Unpack[TimetableParams]) -> ElsTimeTable:
+        r = await (
             self.get_elsTimetablebgs(kwargs)
             if is_legacy_timetable(kwargs)
             else self.get_elsTimetable(kwargs)
         )
+        return ElsTimeTable.from_dict(r)
 
-    async def misTimetable(self, **kwargs: Unpack[TimetableParams]) -> Any:
-        return await (
+    async def misTimetable(self, **kwargs: Unpack[TimetableParams]) -> MisTimeTable:
+        r = await (
             self.get_misTimetablebgs(kwargs)
             if is_legacy_timetable(kwargs)
             else self.get_misTimetable(kwargs)
         )
+        return MisTimeTable.from_dict(r)
 
-    async def hisTimetable(self, **kwargs: Unpack[TimetableParams]) -> Any:
-        return await (
+    async def hisTimetable(self, **kwargs: Unpack[TimetableParams]) -> HisTimeTable:
+        r = await (
             self.get_hisTimetablebgs(kwargs)
             if is_legacy_timetable(kwargs)
             else self.get_hisTimetable(kwargs)
         )
+        return HisTimeTable.from_dict(r)
 
     async def spsTimetable(self, **kwargs: Unpack[TimetableParams]) -> Any:
-        return await (
+        r = await (
             self.get_spsTimetablebgs(kwargs)
             if is_legacy_timetable(kwargs)
             else self.get_spsTimetable(kwargs)
         )
+        return SpsTimeTable.from_dict(r)
 
     async def classInfo(
         self,
         **kwargs: Unpack[ClassInfoParams],
-    ) -> Any:
-        return await self.get_classInfo(kwargs)
+    ) -> ClassInfo:
+        r = await self.get_classInfo(kwargs)
+        return ClassInfo.from_dict(r)
 
     async def schoolMajorinfo(
         self,
         **kwargs: Unpack[SchoolMajorInfoParams],
-    ) -> Any:
-        return await self.get_schoolMajorinfo(kwargs)
+    ) -> SchoolMajorInfo:
+        r = await self.get_schoolMajorinfo(kwargs)
+        return SchoolMajorInfo.from_dict(r)
 
     async def schulAflcoinfo(
         self,
         **kwargs: Unpack[SchulAflcoInfoParams],
-    ) -> Any:
-        return await self.get_schulAflcoinfo(kwargs)
+    ) -> SchulAflcoInfo:
+        r = await self.get_schulAflcoinfo(kwargs)
+        return SchulAflcoInfo.from_dict(r)
 
     async def tiClrminfo(
         self,
         **kwargs: Unpack[TiClrmInfoParams],
     ) -> Any:
-        return await self.get_tiClrminfo(kwargs)
+        r = await self.get_tiClrminfo(kwargs)
+        return TiClrmInfo.from_dict(r)

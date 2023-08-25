@@ -8,3 +8,4 @@ class ClassInfoParams(SchoolMajorInfoParams):
     GRADE: NotRequired[str]
     SCHUL_CRSE_SC_NM: NotRequired[str]
     DDDEP_NM: NotRequired[str]
+

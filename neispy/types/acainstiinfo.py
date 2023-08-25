@@ -1,13 +1,9 @@
 from typing_extensions import TypedDict
 
-from neispy.types.base import NeisDict
+from neispy.types.base import NeisDict, BaseDict
 
 
-class AcaInsTiInfoRowDict(TypedDict):
-    ATPT_OFCDC_SC_CODE: str
-    "시도교육청코드"
-    ATPT_OFCDC_SC_NM: str
-    "시도교육청명"
+class AcaInsTiInfoRowDict(BaseDict):
     ADMST_ZONE_NM: str
     "행정구역명"
     ACA_INSTI_SC_NM: str

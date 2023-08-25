@@ -1,17 +1,9 @@
 from typing_extensions import TypedDict
 
-from neispy.types.base import NeisDict
+from neispy.types.base import NeisDict, SchoolRelatedBaseDict
 
 
-class SchoolInfoRowDict(TypedDict):
-    ATPT_OFCDC_SC_CODE: str
-    """시도교육청코드"""
-    ATPT_OFCDC_SC_NM: str
-    """시도교육청명"""
-    SD_SCHUL_CODE: str
-    """표준학교코드"""
-    SCHUL_NM: str
-    """학교명"""
+class SchoolInfoRowDict(SchoolRelatedBaseDict):
     ENG_SCHUL_NM: str
     """영문학교명"""
     SCHUL_KND_SC_NM: str

@@ -2,21 +2,13 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from neispy.domain.abc import NeisObject, AbstractRow
+from neispy.domain.abc import NeisObject, SchoolRelated
 from neispy.types.mealservicedietinfo import MealServiceDietInfoDict
 from neispy.utils import Deserializer
 
 
 @dataclass
-class MealServiceDietInfoRow(AbstractRow):
-    ATPT_OFCDC_SC_CODE: str
-    "시도교육청코드"
-    ATPT_OFCDC_SC_NM: str
-    "시도교육청명"
-    SD_SCHUL_CODE: str
-    "표준학교코드"
-    SCHUL_NM: str
-    "학교명"
+class MealServiceDietInfoRow(SchoolRelated):
     MMEAL_SC_CODE: str
     "식사코드"
     MMEAL_SC_NM: str

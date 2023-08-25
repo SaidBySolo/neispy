@@ -9,10 +9,6 @@ from neispy.utils import Deserializer
 
 @dataclass
 class AcaInsTiInfoRow(AbstractRow):
-    ATPT_OFCDC_SC_CODE: str
-    "시도교육청코드"
-    ATPT_OFCDC_SC_NM: str
-    "시도교육청명"
     ADMST_ZONE_NM: str
     "행정구역명"
     ACA_INSTI_SC_NM: str
