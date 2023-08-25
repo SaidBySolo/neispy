@@ -1,4 +1,4 @@
-from typing_extensions import TypedDict
+from typing_extensions import TypedDict, NotRequired
 
 
 class AbstractRequestParams(TypedDict):
@@ -7,3 +7,11 @@ class AbstractRequestParams(TypedDict):
 
 class AbstractSchoolRelatedRequestParams(AbstractRequestParams):
     SD_SCHUL_CODE: str
+
+
+class AbstractNotRequiredRequestParams(TypedDict):
+    ATPT_OFCDC_SC_CODE: NotRequired[str]
+
+
+class AbstractNotRequiredSchoolRelatedRequestParams(AbstractRequestParams):
+    SD_SCHUL_CODE: NotRequired[str]
