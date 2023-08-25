@@ -15,7 +15,8 @@ def is_legacy_timetable(
 ) -> bool:
     check_params = ("AY", "ALL_TI_YMD", "TI_FROM_YMD", "TI_TO_YMD")
     for param in check_params:
-        if p := params.get(param):
+        p = params.get(param)
+        if p:
             p = cast(str, p)
             if int(p) < 2023:
                 return True
