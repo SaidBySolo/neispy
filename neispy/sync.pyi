@@ -66,9 +66,7 @@ class SyncNeispy(SyncNeispyRequest):
         pSize: int = 100,
         session: Optional[ClientSession] = None,
         only_rows: bool = True,
-    ) -> None:
-        ...
-
+    ) -> None: ...
     def schoolInfo(
         self,
         **kwargs: Unpack[SchoolInfoParams],
