@@ -1,4 +1,4 @@
-from typing import Generic, Tuple, TypeVar
+from typing import Generic, List, Tuple, TypeVar
 
 T = TypeVar("T")
 
@@ -23,7 +23,7 @@ class HeadDict(TypedDict):
 
 
 class RowDict(TypedDict, Generic[T]):
-    row: list[T]
+    row: List[T]
 
 
 class BaseDict(TypedDict):
