@@ -33,7 +33,7 @@ class MealServiceDietInfoRow(SchoolRelated):
 
 @dataclass
 class MealServiceDietInfo(Deserializer):
-    schoolInfo: NeisObject[MealServiceDietInfoRow]
+    mealServiceDietInfo: NeisObject[MealServiceDietInfoRow]
 
     @classmethod
     def from_dict(cls, d: MealServiceDietInfoDict) -> MealServiceDietInfo:
