@@ -3,9 +3,9 @@ from typing import Any, Optional
 from aiohttp.client import ClientSession
 from typing_extensions import Literal, Unpack
 
+from neispy.domain import *
 from neispy.params import *
 from neispy.params.abc import AbstractRequestParams
-from neispy.domain import *
 from neispy.types import *
 
 class SyncNeispyRequest:

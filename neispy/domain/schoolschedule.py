@@ -3,9 +3,8 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 from neispy.domain.abc import NeisObject, SchoolRelated
-
-from neispy.utils import Deserializer
 from neispy.types import SchoolScheduleDict
+from neispy.utils import Deserializer
 
 
 @dataclass

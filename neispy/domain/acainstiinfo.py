@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from neispy.domain.abc import NeisObject, AbstractRow
+from neispy.domain.abc import AbstractRow, NeisObject
 from neispy.types.acainstiinfo import AcaInsTiInfoDict
 from neispy.utils import Deserializer
 

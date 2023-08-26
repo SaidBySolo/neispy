@@ -1,4 +1,5 @@
 from typing_extensions import TypedDict
+
 from neispy.types.base import NeisDict, SchoolRelatedBaseDict
 
 

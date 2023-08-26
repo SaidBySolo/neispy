@@ -1,16 +1,18 @@
 from asyncio import get_event_loop
 from types import TracebackType
-from typing import Any, Dict, NoReturn, Optional, Type, Union, cast
+from typing import TYPE_CHECKING, Any, Dict, NoReturn, Optional, Type, Union, cast
 from warnings import warn
-from typing_extensions import Self
-from aiohttp.client import ClientSession
 
+from aiohttp.client import ClientSession
+from typing_extensions import Self
 
 from neispy.error import ExceptionsMapping
 from neispy.params import *
-from neispy.params.abc import AbstractRequestParams, AbstractNotRequiredRequestParams
+from neispy.params.abc import AbstractNotRequiredRequestParams, AbstractRequestParams
 from neispy.types import *
-from neispy.sync import SyncNeispyRequest
+
+if TYPE_CHECKING:
+    from neispy.sync import SyncNeispyRequest
 
 
 class NeispyRequest:

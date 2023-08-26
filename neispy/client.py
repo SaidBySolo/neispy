@@ -1,13 +1,14 @@
-from typing import Any, Optional, cast
+from typing import TYPE_CHECKING, Any, Optional, cast
 
 from aiohttp.client import ClientSession
 from typing_extensions import Unpack
 
-
+from neispy.domain import *
 from neispy.http import NeispyRequest
 from neispy.params import *
-from neispy.sync import SyncNeispy
-from neispy.domain import *
+
+if TYPE_CHECKING:
+    from neispy.sync import SyncNeispy
 
 
 def is_legacy_timetable(
