@@ -1,6 +1,6 @@
 from asyncio import get_event_loop
 from types import TracebackType
-from typing import Any, Dict, NoReturn, Optional, Type, cast
+from typing import Any, Dict, NoReturn, Optional, Type, Union, cast
 from warnings import warn
 from typing_extensions import Self
 from aiohttp.client import ClientSession
@@ -8,7 +8,7 @@ from aiohttp.client import ClientSession
 
 from neispy.error import ExceptionsMapping
 from neispy.params import *
-from neispy.params.abc import AbstractRequestParams
+from neispy.params.abc import AbstractRequestParams, AbstractNotRequiredRequestParams
 from neispy.types import *
 from neispy.sync import SyncNeispyRequest
 
@@ -99,7 +99,7 @@ class NeispyRequest:
         self,
         method: str,
         endpoint: str,
-        params: AbstractRequestParams,
+        params: Union[AbstractRequestParams, AbstractNotRequiredRequestParams],
     ) -> Any:
         URL = self.BASE + endpoint
 
