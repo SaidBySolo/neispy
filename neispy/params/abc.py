@@ -13,5 +13,5 @@ class AbstractNotRequiredRequestParams(TypedDict):
     ATPT_OFCDC_SC_CODE: NotRequired[str]
 
 
-class AbstractNotRequiredSchoolRelatedRequestParams(AbstractRequestParams):
+class AbstractNotRequiredSchoolRelatedRequestParams(AbstractNotRequiredRequestParams):
     SD_SCHUL_CODE: NotRequired[str]
