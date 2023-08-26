@@ -103,7 +103,7 @@ class Neispy(NeispyRequest):
         )
         return HisTimeTable.from_dict(r)
 
-    async def spsTimetable(self, **kwargs: Unpack[TimetableParams]) -> Any:
+    async def spsTimetable(self, **kwargs: Unpack[TimetableParams]) -> SpsTimeTable:
         r = await (
             self.get_spsTimetablebgs(kwargs)
             if is_legacy_timetable(kwargs)
