@@ -3,16 +3,9 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Generic, List, Tuple, TypeVar
 
-
 from typing_extensions import Self
 
-from neispy.types.base import (
-    DescriptionDict,
-    ResultDict,
-    ListTotalCountDict,
-    HeadDict,
-)
-
+from neispy.types.base import DescriptionDict, HeadDict, ListTotalCountDict, ResultDict
 
 R = TypeVar("R", bound="AbstractRow")
 
@@ -88,6 +81,7 @@ class SchoolRelated(AbstractRow):
     SD_SCHUL_CODE: str
     "표준학교코드"
     SCHUL_NM: str
+    "학교명"
 
 
 NeisObject = Tuple[Head, Row[R]]

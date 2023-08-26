@@ -1,5 +1,6 @@
 from typing_extensions import TypedDict
-from neispy.types.base import SchoolRelatedBaseDict, NeisDict
+
+from neispy.types.base import NeisDict, SchoolRelatedBaseDict
 
 
 class SchulAflcoInfoRowDict(SchoolRelatedBaseDict):

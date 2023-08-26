@@ -19,7 +19,7 @@ class SchulAflcoInfoRow(SchoolRelated):
 
 @dataclass
 class SchulAflcoInfo(Deserializer):
-    schulAflcoInfo: NeisObject[SchulAflcoInfoRow]
+    schulAflcoinfo: NeisObject[SchulAflcoInfoRow]
 
     @classmethod
     def from_dict(cls, d: SchulAflcoInfoDict) -> SchulAflcoInfo:

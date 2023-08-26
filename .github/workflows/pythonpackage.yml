@@ -26,7 +26,7 @@ jobs:
     - name: Checking style
       run: |
         black ./neispy --check
-        isort ./neispy --profile=black
+        isort ./neispy --profile=black --check
   type:
     runs-on: ubuntu-latest
     strategy:

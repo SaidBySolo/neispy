@@ -1,6 +1,6 @@
 from typing_extensions import TypedDict
 
-from neispy.types.base import NeisDict, BaseDict
+from neispy.types.base import BaseDict, NeisDict
 
 
 class AcaInsTiInfoRowDict(BaseDict):

@@ -1,16 +1,18 @@
 from asyncio import get_event_loop
 from types import TracebackType
-from typing import Any, Dict, NoReturn, Optional, Type, cast
+from typing import TYPE_CHECKING, Any, Dict, NoReturn, Optional, Type, Union, cast
 from warnings import warn
-from typing_extensions import Self
-from aiohttp.client import ClientSession
 
+from aiohttp.client import ClientSession
+from typing_extensions import Self
 
 from neispy.error import ExceptionsMapping
 from neispy.params import *
-from neispy.params.abc import AbstractRequestParams
+from neispy.params.abc import AbstractNotRequiredRequestParams, AbstractRequestParams
 from neispy.types import *
-from neispy.sync import SyncNeispyRequest
+
+if TYPE_CHECKING:
+    from neispy.sync import SyncNeispyRequest
 
 
 class NeispyRequest:
@@ -46,7 +48,7 @@ class NeispyRequest:
         KEY: Optional[str],
         pIndex: int,
         pSize: int,
-    ) -> SyncNeispyRequest:
+    ) -> "SyncNeispyRequest":
         http = cls(KEY, pIndex, pSize, None)
         origin_request_func = getattr(http, "request")
         loop = get_event_loop()
@@ -93,13 +95,13 @@ class NeispyRequest:
             http.__setattr__(method, to_sync_func(getattr(http, method)))
 
         setattr(http.__class__, "sync", property(dont_use_sync))
-        return cast(SyncNeispyRequest, http)
+        return cast("SyncNeispyRequest", http)
 
     async def request(
         self,
         method: str,
         endpoint: str,
-        params: AbstractRequestParams,
+        params: Union[AbstractRequestParams, AbstractNotRequiredRequestParams],
     ) -> Any:
         URL = self.BASE + endpoint
 
