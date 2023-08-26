@@ -48,7 +48,7 @@ class NeispyRequest:
         KEY: Optional[str],
         pIndex: int,
         pSize: int,
-    ) -> SyncNeispyRequest:
+    ) -> "SyncNeispyRequest":
         http = cls(KEY, pIndex, pSize, None)
         origin_request_func = getattr(http, "request")
         loop = get_event_loop()
@@ -95,7 +95,7 @@ class NeispyRequest:
             http.__setattr__(method, to_sync_func(getattr(http, method)))
 
         setattr(http.__class__, "sync", property(dont_use_sync))
-        return cast(SyncNeispyRequest, http)
+        return cast("SyncNeispyRequest", http)
 
     async def request(
         self,

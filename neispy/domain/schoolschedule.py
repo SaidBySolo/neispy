@@ -48,6 +48,3 @@ class SchoolSchedule(Deserializer):
         cls, d: SchoolScheduleDict
     ) -> SchoolSchedule:  # type: ignore[valid-type]
         return super().from_dict(d)
-
-
-SchoolSchedule.SchoolSchedule[1].row[0].AY

@@ -48,8 +48,8 @@ class Neispy(NeispyRequest):
         KEY: Optional[str] = None,
         pIndex: int = 1,
         pSize: int = 100,
-    ) -> SyncNeispy:
-        return cast(SyncNeispy, super().sync(KEY, pIndex, pSize))
+    ) -> "SyncNeispy":
+        return cast("SyncNeispy", super().sync(KEY, pIndex, pSize))
 
     async def schoolInfo(
         self,

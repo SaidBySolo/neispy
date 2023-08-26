@@ -21,7 +21,7 @@ class SchoolMajorInfoRow(SchoolRelated):
 
 @dataclass
 class SchoolMajorInfo(Deserializer):
-    schoolMajorInfo: NeisObject[SchoolMajorInfoRow]
+    schoolMajorinfo: NeisObject[SchoolMajorInfoRow]
 
     @classmethod
     def from_dict(cls, d: SchoolMajorInfoDict) -> SchoolMajorInfo:
