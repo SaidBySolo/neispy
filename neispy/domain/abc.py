@@ -83,4 +83,5 @@ class SchoolRelated(AbstractRow):
     SCHUL_NM: str
     "학교명"
 
+
 NeisObject = Tuple[Head, Row[R]]
