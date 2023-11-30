@@ -60,5 +60,3 @@ class AcaInsTiInfo(Deserializer):
     @classmethod
     def from_dict(cls, d: AcaInsTiInfoDict) -> AcaInsTiInfo:
         return super().from_dict(d)
-
-
