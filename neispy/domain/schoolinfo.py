@@ -49,8 +49,6 @@ class SchoolInfoRow(SchoolRelated):
     """설립일자"""
     FOAS_MEMRD: str
     """개교기념일"""
-    LOAD_DTM: str
-    """수정일"""
 
 
 @dataclass

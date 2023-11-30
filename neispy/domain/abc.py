@@ -70,6 +70,8 @@ class AbstractRow:
     "시도교육청코드"
     ATPT_OFCDC_SC_NM: str
     "시도교육청명"
+    LOAD_DTM: str
+    "수정일"
 
     @classmethod
     def from_dict(cls, d: dict[str, str]) -> Self:

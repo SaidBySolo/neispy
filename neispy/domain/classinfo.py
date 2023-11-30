@@ -23,8 +23,6 @@ class ClassInfoRow(SchoolRelated):
     "학과명"
     CLASS_NM: str
     "학급명"
-    LOAD_DTM: str
-    "수정일"
 
 
 @dataclass

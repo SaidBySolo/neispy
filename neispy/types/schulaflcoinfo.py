@@ -8,8 +8,6 @@ class SchulAflcoInfoRowDict(SchoolRelatedBaseDict):
     "주야과정명"
     ORD_SC_NM: str
     "계열명"
-    LOAD_DTM: str
-    "수정일"
 
 
 class SchulAflcoInfoDict(TypedDict):
