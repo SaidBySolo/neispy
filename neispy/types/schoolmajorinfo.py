@@ -10,8 +10,6 @@ class SchoolMajorInfoRowDict(SchoolRelatedBaseDict):
     "계열명"
     DDDEP_NM: str
     "학과명"
-    LOAD_DTM: str
-    "수정일"
 
 
 class SchoolMajorInfoDict(TypedDict):

@@ -46,8 +46,6 @@ class AcaInsTiInfoRowDict(BaseDict):
     "도로명주소"
     FA_RDNDA: str
     "도로명상세주소"
-    LOAD_DTM: str
-    "수정일"
 
 
 class AcaInsTiInfoDict(TypedDict):

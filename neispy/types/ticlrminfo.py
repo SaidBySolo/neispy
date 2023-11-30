@@ -20,8 +20,6 @@ class TiClrmInfoRowDict(SchoolRelatedBaseDict):
     "학과명"
     CLRM_NM: str
     "강의실명"
-    LOAD_DTM: str
-    "수정일"
 
 
 class TiClrmInfoDict(TypedDict):

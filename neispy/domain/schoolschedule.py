@@ -35,8 +35,6 @@ class SchoolScheduleRow(SchoolRelated):
     "5학년행사여부"
     SIX_GRADE_EVENT_YN: str
     "6학년행사여부"
-    LOAD_DTM: str
-    "수정"
 
 
 @dataclass

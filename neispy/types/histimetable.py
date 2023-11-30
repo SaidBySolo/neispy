@@ -26,8 +26,6 @@ class HisTimeTableRowDict(SchoolRelatedBaseDict):
     "교시"
     ITRT_CNTNT: str
     "수업내용"
-    LOAD_DTM: str
-    "수정일"
 
 
 class HisTimeTableDict(TypedDict):
