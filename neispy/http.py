@@ -108,7 +108,7 @@ class NeispyRequest:
         if not self.session:
             self.session = ClientSession()
 
-        request_params: Dict[str, Any] = {**self.__default_params, **params}
+        request_params: dict[str, Any] = {**self.__default_params, **params}
 
         async with self.session.request(
             method, URL, params=request_params
