@@ -26,6 +26,7 @@ class SyncNeispyRequest:
         self.Type = Type
         self.session = session
         self.only_rows = only_rows
+
     def request(
         self,
         method: str,
