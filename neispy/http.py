@@ -110,9 +110,7 @@ class NeispyRequest:
 
         request_params: dict[str, Any] = {**self.__default_params, **params}
 
-        async with self.session.request(
-            method, URL, params=request_params
-        ) as response:
+        async with self.session.request(method, URL, params=request_params) as response:
             data = await response.json(content_type=None)
 
             if data.get("RESULT"):
