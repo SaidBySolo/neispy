@@ -4,7 +4,7 @@
 > **동기와 비동기 전부 지원합니다.** **문제 발생시 이슈 넣어주세요!**
 
 [![GitHub license](https://img.shields.io/github/license/SaidBySolo/neispy)](https://github.com/SaidBySolo/neispy/blob/master/LICENSE)
-![Python package](https://github.com/SaidBySolo/neispy/workflows/Python%20package/badge.svg)
+[![CI](https://github.com/SaidBySolo/neispy/actions/workflows/pythonpackage.yml/badge.svg)](https://github.com/SaidBySolo/neispy/actions/workflows/pythonpackage.yml)
 [![PyPI - Downloads](https://img.shields.io/pypi/dm/neispy)](https://pypi.org/project/neispy/)
 
 api키는 [이곳](https://open.neis.go.kr/portal/guide/actKeyPage.do)에서 받으실 수 있습니다.
